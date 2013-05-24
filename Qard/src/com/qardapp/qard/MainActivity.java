@@ -60,7 +60,7 @@ public class MainActivity extends FragmentActivity implements
 		actionBar.setDisplayShowHomeEnabled(false);
 
 		// !! NOTE: Reset database on app update for testing 
-		this.deleteDatabase("qard.db");
+		//this.deleteDatabase("qard.db");
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
