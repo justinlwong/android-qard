@@ -21,7 +21,7 @@ public class FacebookServiceManager extends ServiceManager {
 
 	@Override
 	public void switchToServiceApp() {
-		String uri = "fb://profile/" + data +"/wall";
+		String uri = "fb://profile/" + data;
 		Intent intent =  new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
 		activity.startActivity(intent);
 	}

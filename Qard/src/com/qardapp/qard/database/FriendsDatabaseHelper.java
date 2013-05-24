@@ -99,7 +99,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 		
 	//	db.execSQL(insertFriendService(3, Services.PHONE.id, ""));
 	//	db.execSQL(insertFriendService(3, Services.ADDRESS.id, ""));
-		db.execSQL(insertFriendService(3, Services.FACEBOOK.id, "bill.liu.12"));
+		db.execSQL(insertFriendService(3, Services.FACEBOOK.id, "511723429"));
 	}
 
 	@Override
