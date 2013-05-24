@@ -23,12 +23,14 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_PROFILE_PIC_LOC = "picture_loc";
 	public static final String COLUMN_DATE_ADDED = "date_added";
 
+	// Service Table
 	public static final String TABLE_SERVICES = "services";
 	public static final String COLUMN_SERVICE_ID = "service_id";
 	public static final String COLUMN_SERVICE_NAME = "service_name";
 	public static final String COLUMN_SERVICE_PRIORITY = "service_priority";
 	public static final String COLUMN_SERVICE_PIC_LOC = "service_pic_loc";
 
+	// Friend_Service Join Table
 	public static final String TABLE_FRIEND_SERVICES = "friend_services";
 	public static final String COLUMN_FS_FRIEND_ID = "fs_friend_id";
 	public static final String COLUMN_FS_SERVICE_ID = "fs_service_id";
