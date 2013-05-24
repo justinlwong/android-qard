@@ -2,9 +2,11 @@ package com.qardapp.qard.profile;
 
 
 import com.qardapp.qard.R;
+import com.qardapp.qard.Services;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -49,7 +51,22 @@ public class ProfileServicesAdapter extends BaseAdapter {
     	} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-    	holder.image.setImageResource(mThumbIds[position]);
+    	holder.service = Services.values()[position];
+    	holder.active = true;
+    	holder.image.setImageResource(holder.service.imageId);
+    	holder.image.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ViewHolder holder = (ViewHolder) ((View) v.getParent()).getTag();
+				if (holder.active) {
+					holder.image.setImageResource(holder.service.grayImageId);
+				}else {
+					holder.image.setImageResource(holder.service.imageId);
+				}
+				holder.active = !holder.active;
+			}
+		});
     	//holder.image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
     	//holder.image.setLayoutParams(new GridView.LayoutParams(200, 200));
         return convertView;
@@ -57,6 +74,8 @@ public class ProfileServicesAdapter extends BaseAdapter {
     
     static class ViewHolder {
     	ImageView image;
+    	Services service;
+    	boolean active;
     }
  
 }
