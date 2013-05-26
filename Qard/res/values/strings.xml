@@ -8,5 +8,6 @@
     <string name="title_settings">Settings</string>
     <string name="title_activity_friend_profile">Qard</string>
     <string name="hello_world">Hello world!</string>
+    <string name="app_id">184636185027824</string>
 
 </resources>

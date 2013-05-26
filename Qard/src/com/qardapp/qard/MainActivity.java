@@ -5,11 +5,13 @@ import java.util.Locale;
 import com.qardapp.qard.friends.FriendsFragment;
 import com.qardapp.qard.profile.ProfileFragment;
 import com.qardapp.qard.qrcode.QRCodeManager;
+import com.qardapp.qard.services.connect.FacebookConnect;
 import com.qardapp.qard.settings.SettingsFragment;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -61,7 +63,11 @@ public class MainActivity extends FragmentActivity implements
 
 		// !! NOTE: Reset database on app update for testing 
 		this.deleteDatabase("qard.db");
-
+		
+		// !! TEST: GET FACEBOOK USER INFO
+		FacebookConnect fc = new FacebookConnect(this);
+		fc.getUserInfo();
+		
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(

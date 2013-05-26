@@ -5,7 +5,7 @@ import com.qardapp.qard.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
+
 
 public class FacebookServiceManager extends ServiceManager {
 
@@ -42,4 +42,5 @@ public class FacebookServiceManager extends ServiceManager {
 			return false;
 		}
 	}
+	
 }
