@@ -28,6 +28,9 @@ public class FriendsProvider extends ContentProvider {
 	private static final String BASE_PATH = "qard";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
 			+ "/" + BASE_PATH);
+	
+	public static final Uri MY_URI = Uri.parse("content://" + AUTHORITY
+			+ "/" + BASE_PATH + "/0");
 
 	public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
 			+ "/friends";
@@ -130,6 +133,7 @@ public class FriendsProvider extends ContentProvider {
 			if (sortOrder == null)
 				sortOrder = FriendsDatabaseHelper.COLUMN_FIRST_NAME + " ASC, " 
 						+ FriendsDatabaseHelper.COLUMN_LAST_NAME + " ASC ";	
+			queryBuilder.appendWhere(FriendsDatabaseHelper.COLUMN_ID + "!= 0");
 			break;
 			// Returns a specific receipt
 		case FRIEND:
