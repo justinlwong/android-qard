@@ -16,12 +16,17 @@ import com.facebook.Session;
 import com.facebook.Session.StatusCallback;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
+import com.facebook.android.Facebook;
+import com.facebook.android.Facebook.DialogListener;
+import com.facebook.android.FacebookError;
+import com.facebook.android.DialogError;
 
 public class FacebookConnect extends ServiceConnect{
 	
 	public FacebookConnect(Activity activity) {
 		super(activity);
 	}
+	
 
 	// Note: Will need to convert this to an async operation if need to know when data is retrieved
 	public void getUserInfo() {
@@ -60,5 +65,7 @@ public class FacebookConnect extends ServiceConnect{
 	        });
 	    }
 	}
+	
+
 
 }

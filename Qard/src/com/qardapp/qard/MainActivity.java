@@ -65,8 +65,8 @@ public class MainActivity extends FragmentActivity implements
 		this.deleteDatabase("qard.db");
 		
 		// !! TEST: GET FACEBOOK USER INFO
-		FacebookConnect fc = new FacebookConnect(this);
-		fc.getUserInfo();
+		//FacebookConnect fc = new FacebookConnect(this);
+		//fc.getUserInfo();
 		
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
