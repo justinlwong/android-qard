@@ -5,7 +5,6 @@ import java.util.Locale;
 import com.qardapp.qard.friends.FriendsFragment;
 import com.qardapp.qard.profile.ProfileFragment;
 import com.qardapp.qard.qrcode.QRCodeManager;
-import com.qardapp.qard.services.connect.FacebookConnect;
 import com.qardapp.qard.settings.SettingsFragment;
 
 import android.app.ActionBar;
