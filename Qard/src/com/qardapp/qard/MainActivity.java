@@ -113,22 +113,6 @@ public class MainActivity extends FragmentActivity implements
 		// When the given tab is selected, switch to the corresponding page in
 		// the ViewPager.
 		mViewPager.setCurrentItem(tab.getPosition());
-		if (tab.getPosition() == 2) {
-			//QRCodeManager.scanQRCode(MainActivity.this);
-			String name = "raymond.lam.73";
-			String uri = "fb://profile/" + name +"/wall";
-			Intent intent;
-			try {
-			    MainActivity.this.getPackageManager().getPackageInfo("com.facebook.katana", 0);
-			    intent =  new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-			   } catch (Exception e) {
-				   intent =  new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/" + name));
-			   }
-			   intent =  new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/" + name));
-			   intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:4161234567"));
-			//Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-			startActivity(intent);
-		}
 	}
 
 	@Override
