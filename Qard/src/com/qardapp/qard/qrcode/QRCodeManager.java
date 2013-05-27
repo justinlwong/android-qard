@@ -16,7 +16,11 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.view.Display;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 
 public class QRCodeManager {
 
@@ -49,6 +53,10 @@ public class QRCodeManager {
 		return null;
 	}
 	
+	public static ImageView genQRCode (String text, ImageView imageView) {
+		return genQRCode (text, imageView, 0);
+	}
+	
 	public static ImageView genQRCode (String text, ImageView imageView, int scale) {
 		Hashtable<EncodeHintType, Object> hintMap = new Hashtable<EncodeHintType, Object>();
         hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
@@ -56,7 +64,7 @@ public class QRCodeManager {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         try {
 			BitMatrix bitMatrix = qrCodeWriter.encode(text,
-			        BarcodeFormat.QR_CODE, imageView.getWidth(), imageView.getHeight(), hintMap);
+			        BarcodeFormat.QR_CODE, 0, 0, hintMap);
 			int width = bitMatrix.getWidth();
             int height = bitMatrix.getHeight();
             int[] pixels = new int[width * height];
@@ -72,8 +80,13 @@ public class QRCodeManager {
             }
             Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+            // Set the size to around 200 and let it scale natively
+            scale = 200/width;
+            if (scale < 1)
+            	scale = 1;
             Bitmap scaled = Bitmap.createScaledBitmap(bitmap, width*scale, height*scale, false);
 			imageView.setImageBitmap(scaled);
+			imageView.setScaleType(ScaleType.FIT_CENTER);
 		} catch (WriterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -21,26 +21,34 @@ public class FriendProfileActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_friend_profile);
-		
-		// Check if NFC launched the app and gave use an receipt
-				Bundle extra = getIntent().getExtras();
-				if (extra != null) {
-					String id = extra.getString("id");
-					if (id != null) {
-						Cursor cursor = null;
-						ContentResolver res = getContentResolver();
-						cursor = res.query(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/" + id), null, null, null, null);
-						TextView view = (TextView) findViewById(R.id.friend_profile_name);
-						if (cursor.getCount() > 0) {
-							cursor.moveToFirst();
-							String first_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FIRST_NAME));
-							String last_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_LAST_NAME));
-							view.setText(first_name + " " + last_name);
-						}
-						GridView gridView = (GridView) findViewById(R.id.friend_profile_gridview);
-						gridView.setAdapter(new FriendsProfileCursorAdapter(this, cursor, FriendsProfileCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER));
-					}
+
+		Bundle extra = getIntent().getExtras();
+		if (extra != null) {
+			String id = extra.getString("id");
+			if (id != null) {
+				Cursor cursor = null;
+				ContentResolver res = getContentResolver();
+				cursor = res.query(
+						Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/"
+								+ id), null, null, null, null);
+				TextView view = (TextView) findViewById(R.id.friend_profile_name);
+				if (cursor.getCount() > 0) {
+					cursor.moveToFirst();
+					String first_name = cursor
+							.getString(cursor
+									.getColumnIndex(FriendsDatabaseHelper.COLUMN_FIRST_NAME));
+					String last_name = cursor
+							.getString(cursor
+									.getColumnIndex(FriendsDatabaseHelper.COLUMN_LAST_NAME));
+					view.setText(first_name + " " + last_name);
 				}
+				GridView gridView = (GridView) findViewById(R.id.friend_profile_gridview);
+				gridView.setAdapter(new FriendsProfileCursorAdapter(
+						this,
+						cursor,
+						FriendsProfileCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER));
+			}
+		}
 	}
 
 	@Override
