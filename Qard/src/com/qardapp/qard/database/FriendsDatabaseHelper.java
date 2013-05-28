@@ -98,7 +98,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 		
 		db.execSQL(insertFriendService(1, Services.PHONE.id, "4169285304"));
 		db.execSQL(insertFriendService(1, Services.ADDRESS.id, "32 Yonge St."));
-		//db.execSQL(insertFriendService(1, Services.FACEBOOK.id, "johndoe31"));
+		db.execSQL(insertFriendService(1, Services.FACEBOOK.id, "johndoe31"));
 		
 		db.execSQL(insertFriendService(2, Services.PHONE.id, "4161234456"));
 		db.execSQL(insertFriendService(2, Services.ADDRESS.id, "123 Dundas St."));
