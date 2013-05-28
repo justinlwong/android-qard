@@ -31,6 +31,7 @@ public class FacebookLoginActivity extends Activity {
 
     private Button buttonLoginLogout;
     private Session.StatusCallback statusCallback = new SessionStatusCallback();
+    private Activity activity = this;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,41 +86,18 @@ public class FacebookLoginActivity extends Activity {
     private void updateView() {
         Session session = Session.getActiveSession();
         if (session.isOpened()) {
-            Request.executeMeRequestAsync(session,
-                    new GraphUserCallback() {
-                        @Override
-                        public void onCompleted(GraphUser user,
-                                Response response) {
-
-                            if (user != null) {
-                            	String userId = null;
-                                Log.d("User",user.getId());
-                                userId = user.getId();
-
-	    						ContentResolver res = getContentResolver();
-	    						ContentValues values = new ContentValues();
-	    						values.put(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID, 0);
-	    						values.put(FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID, Services.FACEBOOK.id);
-	    						values.put(FriendsDatabaseHelper.COLUMN_FS_DATA, userId);
-	    						
-	    						// Delete existing entry and replace
-	    						String where = FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID + "=? AND " + FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID + "=?";
-	    						String[] args = new String[] { "0", String.valueOf(Services.FACEBOOK.id)};
-	    						res.delete(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+Services.FACEBOOK.id), where, args);
-	    						res.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+Services.FACEBOOK.id), values);
-	    						
-	                            buttonLoginLogout.setText("Added Info!");
-	                            buttonLoginLogout.setOnClickListener(new OnClickListener() {
-	                                public void onClick(View view) { onClickLogout(); }
-	                            });
-                            }
-                        }
-                    });
+            buttonLoginLogout.setText("Logged in. Click to Logout.");
+            buttonLoginLogout.setOnClickListener(new OnClickListener() {
+                public void onClick(View view) { onClickLogout(); }
+            });
 
         } else {    	
             buttonLoginLogout.setText("Add Facebook Info");
             buttonLoginLogout.setOnClickListener(new OnClickListener() {
-                public void onClick(View view) { onClickLogin(); }
+                public void onClick(View view) { 
+                	onClickLogin(); 
+
+                }
             });
         }
     }
@@ -143,6 +121,35 @@ public class FacebookLoginActivity extends Activity {
     private class SessionStatusCallback implements Session.StatusCallback {
         @Override
         public void call(Session session, SessionState state, Exception exception) {
+        	if (session.isOpened()) {
+	            Request.executeMeRequestAsync(session,
+	                    new GraphUserCallback() {
+                        @Override
+                        public void onCompleted(GraphUser user,
+                                Response response) {
+
+                            if (user != null) {
+                            	String userId = null;
+                                Log.d("User",user.getId());
+                                userId = user.getId();
+
+	    						ContentResolver res = getContentResolver();
+	    						ContentValues values = new ContentValues();
+	    						values.put(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID, 0);
+	    						values.put(FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID, Services.FACEBOOK.id);
+	    						values.put(FriendsDatabaseHelper.COLUMN_FS_DATA, userId);
+	    						
+	    						// Delete existing entry and replace
+	    						String where = FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID + "=? AND " + FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID + "=?";
+	    						String[] args = new String[] { "0", String.valueOf(Services.FACEBOOK.id)};
+	    						res.delete(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+Services.FACEBOOK.id), where, args);
+	    						res.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+Services.FACEBOOK.id), values);
+                            }
+                        }
+	            });
+
+            }
+        	
             updateView();
         }
     }

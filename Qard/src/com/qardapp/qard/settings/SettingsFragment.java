@@ -44,7 +44,7 @@ public class SettingsFragment extends Fragment{
 	
 	public void launch() {
 		Intent intent = new Intent(this.getActivity(),FacebookLoginActivity.class);
-		startActivity(intent);	
+		startActivityForResult(intent,0);	
 	}
 	
 }

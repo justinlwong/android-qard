@@ -8,7 +8,7 @@
         android:id="@+id/authButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log in"
+        android:text="Add Facebook Info"
     />    
     
 
