@@ -2,6 +2,7 @@ package com.qardapp.qard.settings;
 
 import com.qardapp.qard.MainActivity;
 import com.qardapp.qard.R;
+import com.qardapp.qard.Services;
 import com.qardapp.qard.qrcode.QRCodeManager;
 
 
@@ -29,12 +30,21 @@ public class SettingsFragment extends Fragment{
 		//ImageView image = (ImageView)rootView.findViewById(R.id.qrcode_image);
 		
 		//QRCodeManager.genQRCode("TESTING", image, 15);
-		Button b = (Button)rootView.findViewById(R.id.button1);
+		Button b1 = (Button)rootView.findViewById(R.id.facebookconnect);
+		Button b2 = (Button)rootView.findViewById(R.id.twitterconnect);
 
-		b.setOnClickListener(new View.OnClickListener() {
+		b1.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				launch();
+				launch(Services.FACEBOOK.id);
+				
+			}
+		});
+		
+		b2.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				launch(Services.TWITTER.id);
 				
 			}
 		});
@@ -42,8 +52,13 @@ public class SettingsFragment extends Fragment{
 		return rootView;
 	}
 	
-	public void launch() {
-		Intent intent = new Intent(this.getActivity(),FacebookLoginActivity.class);
+	public void launch( int serviceID) {
+		Intent intent = null;
+		if (serviceID == Services.FACEBOOK.id) {
+		    intent = new Intent(this.getActivity(),FacebookLoginActivity.class);
+		} else if (serviceID == Services.TWITTER.id) {
+		    intent = new Intent(this.getActivity(),TwitterLoginActivity.class);
+		}
 		startActivityForResult(intent,0);	
 	}
 	

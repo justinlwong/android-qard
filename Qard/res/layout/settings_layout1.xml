@@ -5,11 +5,16 @@
     android:orientation="vertical" >
     
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/facebookconnect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Connect to Facebook"
     />    
-    
+    <Button
+        android:id="@+id/twitterconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connect to Twitter"
+    />        
 
 </LinearLayout>

@@ -27,7 +27,6 @@ import com.facebook.Session.StatusCallback;
 import com.facebook.model.GraphUser;
 
 public class FacebookLoginActivity extends Activity {
-    private static final String URL_PREFIX_FRIENDS = "https://graph.facebook.com/me/friends?access_token=";
 
     private Button buttonLoginLogout;
     private Session.StatusCallback statusCallback = new SessionStatusCallback();
@@ -86,9 +85,9 @@ public class FacebookLoginActivity extends Activity {
     private void updateView() {
         Session session = Session.getActiveSession();
         if (session.isOpened()) {
-            buttonLoginLogout.setText("Logged in. Click to Logout.");
+            buttonLoginLogout.setText("Facebook Profile Info added");
             buttonLoginLogout.setOnClickListener(new OnClickListener() {
-                public void onClick(View view) { onClickLogout(); }
+                public void onClick(View view) { onClickLogin(); }
             });
 
         } else {    	
