@@ -50,26 +50,33 @@ public class SettingsFragment extends Fragment implements LoginDialogListener{
 		Intent intent = null;
 		if (serviceID == Services.FACEBOOK.id) {
 		    intent = new Intent(this.getActivity(),FacebookLoginActivity.class);
-		} else if (serviceID == Services.TWITTER.id) {
-		    intent = new Intent(this.getActivity(),TwitterLoginActivity.class);
-		}
+		} 
 		startActivityForResult(intent,0);	
 	}
 	
     private void showEditDialog(int serviceId) {
-        FragmentManager fm = getFragmentManager();
-        LoginDialog loginDialog = new LoginDialog();
+    	
+        FragmentManager fm = getFragmentManager();        
+        LoginDialog loginDialog = (LoginDialog) fm.findFragmentByTag("login_fragment");
+       		
+    	Log.d("logindialog","here");
+        loginDialog = new LoginDialog();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.add(loginDialog,"login_fragment").commit();
         Bundle bund = new Bundle();
         bund.putInt("serviceType",serviceId);
         loginDialog.setArguments(bund);
-        loginDialog.show(fm, "login_fragment");
+        //loginDialog.show(transaction, "login_fragment");
+        transaction.add(loginDialog,"login_fragment").commit();
     }
 
     @Override
-    public void onFinishEditDialog(String inputText) {
+    public void onFinishEditDialog(String inputText, int id) {
          Log.d("Text",inputText);
+//         if (dialog != null) {
+//             dialog.dismiss();
+//             fm.beginTransaction().detach(dialog);
+//             fm.beginTransaction().remove(dialog).commit();
+//         }
     }
 	
 }
