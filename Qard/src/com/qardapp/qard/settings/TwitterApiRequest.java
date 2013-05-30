@@ -48,6 +48,8 @@ public class TwitterApiRequest {
                 instream.close();
                 JSONObject mainObject = new JSONObject(result);
                 userId = mainObject.getString("id");
+            } else {
+            	return null;
             }
             
 

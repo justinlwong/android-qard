@@ -60,6 +60,14 @@ public class LoginDialog extends DialogFragment implements OnEditorActionListene
         		    }
         		});
   		   
+    	   } else {
+        	   getActivity().runOnUiThread(new Runnable() {
+       		    public void run() {
+   	               getDialog().setTitle("Invalid User Id");
+   	               getDialog().setCanceledOnTouchOutside(true); 
+       		    }
+       		});
+    		   
     	   }
     	   return null;
 
