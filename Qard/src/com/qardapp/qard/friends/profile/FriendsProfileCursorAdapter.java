@@ -4,6 +4,7 @@ import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.friends.profile.services.FacebookServiceManager;
+import com.qardapp.qard.friends.profile.services.PhoneServiceManager;
 import com.qardapp.qard.friends.profile.services.ServiceManager;
 
 import android.app.Activity;
@@ -13,9 +14,7 @@ import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class FriendsProfileCursorAdapter extends CursorAdapter{
 
@@ -59,17 +58,22 @@ public class FriendsProfileCursorAdapter extends CursorAdapter{
 			sMgr = new FacebookServiceManager((Activity) context,data);					
 
 		}
+        if (serviceId == Services.PHONE.id) {
+        	String data = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));
+			sMgr = new PhoneServiceManager((Activity) context,data);	
+        }
         
         final ServiceManager mgr = sMgr;
         
-        // Switch to service activity on user click
-        holder.image.setOnClickListener(new ImageView.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mgr.switchToService();				
-			}
-		});
-		
+        if (mgr != null) {
+	        // Switch to service activity on user click
+	        holder.image.setOnClickListener(new ImageView.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mgr.switchToService();				
+				}
+			});
+        }
         return view;
 	}
 
