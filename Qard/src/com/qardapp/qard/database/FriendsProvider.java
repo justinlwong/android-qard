@@ -133,7 +133,8 @@ public class FriendsProvider extends ContentProvider {
 			if (sortOrder == null)
 				sortOrder = FriendsDatabaseHelper.COLUMN_FIRST_NAME + " ASC, " 
 						+ FriendsDatabaseHelper.COLUMN_LAST_NAME + " ASC ";	
-			queryBuilder.appendWhere(FriendsDatabaseHelper.COLUMN_ID + "!= 0");
+			// NOTE: Putting Me in FRIENDS for now to test
+			queryBuilder.appendWhere(FriendsDatabaseHelper.COLUMN_ID + "!= -1");
 			break;
 			// Returns a specific receipt
 		case FRIEND:

@@ -26,6 +26,7 @@ public class SettingsFragment extends Fragment implements LoginDialogListener{
 
 		Button b1 = (Button)rootView.findViewById(R.id.facebookconnect);
 		Button b2 = (Button)rootView.findViewById(R.id.twitterconnect);
+		Button b3 = (Button)rootView.findViewById(R.id.flickrconnect);
 
 		b1.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -39,6 +40,14 @@ public class SettingsFragment extends Fragment implements LoginDialogListener{
 			@Override
 			public void onClick(View v) {
 				showEditDialog(Services.TWITTER.id);
+				
+			}
+		});
+		
+		b3.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showEditDialog(Services.FLICKR.id);
 				
 			}
 		});

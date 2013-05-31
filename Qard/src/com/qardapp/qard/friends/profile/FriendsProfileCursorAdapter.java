@@ -5,6 +5,7 @@ import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.friends.profile.services.FacebookServiceManager;
 import com.qardapp.qard.friends.profile.services.ServiceManager;
+import com.qardapp.qard.friends.profile.services.TwitterServiceManager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -52,13 +53,13 @@ public class FriendsProfileCursorAdapter extends CursorAdapter{
 		
 		// Set up service managers depending on service type
 		ServiceManager sMgr = null;	
-		
+		String data = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));		
         if (serviceId == Services.FACEBOOK.id)
 		{
-			String data = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));
 			sMgr = new FacebookServiceManager((Activity) context,data);					
-
-		}
+		} else if (serviceId == Services.TWITTER.id) {
+			sMgr = new TwitterServiceManager((Activity) context,data);		
+	    }
         
         final ServiceManager mgr = sMgr;
         

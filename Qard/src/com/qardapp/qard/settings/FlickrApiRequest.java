@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-public class TwitterApiRequest {
+public class FlickrApiRequest {
 
 	public static String retrieveUserInfo(String text)
 	{
@@ -23,7 +23,8 @@ public class TwitterApiRequest {
         
         try {
 
-            String url = "https://api.twitter.com/1/users/show.json?screen_name="+screenName+"&include_entities=true";
+        	String apiKey = "13d1fc4d1d2f7924916217597ed71ce8";
+            String url = "http://api.flickr.com/services/rest/?method=flickr.people.findByUsername&api_key="+apiKey+"&username="+screenName+"&format=json&nojsoncallback=1";
 
             HttpClient httpclient = new DefaultHttpClient();
 
@@ -47,7 +48,8 @@ public class TwitterApiRequest {
                 // now you have the string representation of the HTML request
                 instream.close();
                 JSONObject mainObject = new JSONObject(result);
-                userId = mainObject.getString("id");
+                JSONObject user = mainObject.getJSONObject("user");
+                userId = user.getString("id");
             } else {
             	return null;
             }
@@ -56,7 +58,7 @@ public class TwitterApiRequest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-		return screenName;
+		return userId;
 	
 	}
 	

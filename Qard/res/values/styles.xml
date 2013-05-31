@@ -16,6 +16,18 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    <style name="LoginDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowTitleStyle">@style/LoginDialogTitle</item>
+    </style>
+
+    <style name="LoginDialogTitle" parent="@android:style/TextAppearance.DialogWindowTitle">
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+    <style name="DialogWindowTitle">
+    <item name="android:maxLines">1</item>
+    <item name="android:scrollHorizontally">true</item>
+    <item name="android:textAppearance">@android:style/TextAppearance.DialogWindowTitle</item>
+    </style>
 <bool name="abs__action_bar_embed_tabs">true</bool>
 <bool name="android:action_bar_embed_tabs">true</bool>
 </resources>
