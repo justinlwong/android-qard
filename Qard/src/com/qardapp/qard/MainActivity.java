@@ -29,6 +29,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -116,6 +118,10 @@ public class MainActivity extends SherlockFragmentActivity implements
 			@Override
 			public void onClick(View v) {
 				mViewPager.setCurrentItem(1);
+				// Close search box
+				ListView listView = (ListView) mViewPager
+						.findViewById(R.id.friends_listview);
+				listView.requestFocus();
 			}
 		});
 	}
@@ -135,9 +141,12 @@ public class MainActivity extends SherlockFragmentActivity implements
 			break;
 		case R.id.menu_search:
 			mViewPager.setCurrentItem(1);
+			SearchView v = (SearchView) mViewPager.findViewById(R.id.friends_search);
+			v.requestFocus();
 			break;
 		case R.id.menu_camera:
-			mViewPager.setCurrentItem(0);
+			//mViewPager.setCurrentItem(0);
+			QRCodeManager.scanQRCode(this);
 			break;
 		case R.id.menu_refresh:
 			break;
