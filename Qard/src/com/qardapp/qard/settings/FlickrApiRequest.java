@@ -49,7 +49,7 @@ public class FlickrApiRequest {
                 instream.close();
                 JSONObject mainObject = new JSONObject(result);
                 JSONObject user = mainObject.getJSONObject("user");
-                userId = user.getString("id");
+                userId = user.getString("nsid");
             } else {
             	return null;
             }

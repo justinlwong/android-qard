@@ -4,6 +4,7 @@ import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.friends.profile.services.FacebookServiceManager;
+import com.qardapp.qard.friends.profile.services.FlickrServiceManager;
 import com.qardapp.qard.friends.profile.services.PhoneServiceManager;
 import com.qardapp.qard.friends.profile.services.ServiceManager;
 import com.qardapp.qard.friends.profile.services.TwitterServiceManager;
@@ -58,9 +59,10 @@ public class FriendsProfileCursorAdapter extends CursorAdapter{
 			sMgr = new FacebookServiceManager((Activity) context,data);					
 		} else if (serviceId == Services.TWITTER.id) {
 			sMgr = new TwitterServiceManager((Activity) context,data);		
+		} else if (serviceId == Services.FLICKR.id) {
+			sMgr = new FlickrServiceManager((Activity) context,data);		
 		}
         else if (serviceId == Services.PHONE.id) {
-        	String data = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));
 			sMgr = new PhoneServiceManager((Activity) context,data);	
         }
         

@@ -75,7 +75,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		actionBar.setDisplayShowHomeEnabled(true);
 
 		// !! NOTE: Reset database on app update for testing 
-		this.deleteDatabase("qard.db");
+		//this.deleteDatabase("qard.db");
 		
 		// !! TEST: GET FACEBOOK USER INFO
 		//FacebookConnect fc = new FacebookConnect(this);
