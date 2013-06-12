@@ -9,30 +9,28 @@ import android.util.Log;
 
 // Note: Twitter resolves URL so no need to launch app explicitly
 
-public class FoursquareServiceManager extends ServiceManager {
+public class GmailServiceManager extends ServiceManager {
 
 	//public static String PACKAGE_NAME = "com.facebook.katana";
-	public static String FOURSQUARE_FALLBACK_URL_PREFIX = "http://m.foursquare.com/user?uid=";
-	public static Integer FOURSQUARE_IMAGE = R.drawable.foursquare;
+	public static Integer GMAIL_IMAGE = R.drawable.gmail;
 	
 	// Description of data (include examples)
 	// Twitter uses numeric ids for accessing pages
-	public FoursquareServiceManager(Activity activity, String data) {
-		super(activity, FOURSQUARE_IMAGE, data );
-		//Log.d("twitterdata",data);
+	public GmailServiceManager(Activity activity, String data) {
+		super(activity, GMAIL_IMAGE, data );
 	}
 
 	@Override
 	public void switchToServiceApp() {
-		//String uri = "fb://profile/" + data;
-		Intent intent =  new Intent(Intent.ACTION_VIEW, Uri.parse(FOURSQUARE_FALLBACK_URL_PREFIX + data));
-		activity.startActivity(intent);
+		Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {data});
+		emailIntent.setType("text/plain");
+		activity.startActivity(Intent.createChooser(emailIntent, "Send e-mail"));;
 	}
 
 	@Override
 	public void switchToServiceFallBack() {
-		Intent intent =  new Intent(Intent.ACTION_VIEW, Uri.parse(FOURSQUARE_FALLBACK_URL_PREFIX + data));
-		activity.startActivity(intent);
+		switchToServiceApp();
 	}
 
 

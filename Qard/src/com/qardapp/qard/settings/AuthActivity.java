@@ -3,6 +3,7 @@ package com.qardapp.qard.settings;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.HttpURLConnection;
+import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 import org.scribe.builder.ServiceBuilder;
@@ -15,15 +16,22 @@ import org.scribe.model.Verb;
 import org.scribe.oauth.OAuthService;
 
 import com.qardapp.qard.Services;
+import com.qardapp.qard.database.FriendsDatabaseHelper;
+import com.qardapp.qard.database.FriendsProvider;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
  
 public class AuthActivity extends Activity {
  
@@ -39,13 +47,15 @@ public class AuthActivity extends Activity {
 	 * change this depending on the scope needed for the things you do in
 	 * doCoolAuthenticatedStuff()
 	 */
-	private final String SCOPE = "https://www.googleapis.com/auth/googletalk";
+	private final String SCOPE = "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile";
+	private int serviceID;
  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
  
 		accountManager = AccountManager.get(this);
+		serviceID = Services.GMAIL.id;
  
 		authPreferences = new AuthPreferences(this);
 		if (authPreferences.getUser() != null
@@ -58,7 +68,7 @@ public class AuthActivity extends Activity {
  
 	private void doCoolAuthenticatedStuff() {
 		// TODO: insert cool stuff with authPreferences.getToken()
-		Log.d("here", "authenticated!");
+		/*Log.d("here", "authenticated!");
    	    Thread t1 = new Thread() {
 			public void run() {
 			    OAuthRequest request = new OAuthRequest(Verb.GET,"https://www.googleapis.com/oauth2/v1/userinfo?access_token=");
@@ -77,7 +87,7 @@ public class AuthActivity extends Activity {
 			    }
 			}
 		};
-		t1.start();
+		t1.start();*/
 		
 	}
  
@@ -92,8 +102,19 @@ public class AuthActivity extends Activity {
 	private void requestToken() {
 		userAccount = null;
 		String user = authPreferences.getUser();
+		Pattern emailPattern = Patterns.EMAIL_ADDRESS;
 		for (Account account : accountManager.getAccounts()) {
 			Log.d("here", account.name);
+		    if (emailPattern.matcher(account.name).matches()) {
+		        SharedPreferences sp = getSharedPreferences("tokens", 0);
+        		SharedPreferences.Editor editor = sp.edit();
+        		editor.putString("EmailAddress", account.name);
+        		editor.commit();
+        		
+        		// Update database
+        		updateDatabase(account.name);
+
+		    }			
 			if (account.name.equals(user)) {
 				userAccount = account;
 				break;
@@ -160,4 +181,19 @@ public class AuthActivity extends Activity {
 			}
 		}
 	}
+	
+    public void updateDatabase(String data)
+    {
+		ContentResolver res = getContentResolver();
+		ContentValues values = new ContentValues();
+		values.put(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID, 0);
+		values.put(FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID, serviceID);
+		values.put(FriendsDatabaseHelper.COLUMN_FS_DATA, data);
+		
+		// Delete existing entry and replace
+		String where = FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID + "=? AND " + FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID + "=?";
+		String[] args = new String[] { "0", String.valueOf(serviceID)};
+		res.delete(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+serviceID), where, args);
+		res.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+serviceID), values);
+    }
 }

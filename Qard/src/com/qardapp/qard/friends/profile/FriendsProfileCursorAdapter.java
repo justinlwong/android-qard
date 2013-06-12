@@ -7,6 +7,7 @@ import com.qardapp.qard.friends.profile.services.DefaultServiceManager;
 import com.qardapp.qard.friends.profile.services.FacebookServiceManager;
 import com.qardapp.qard.friends.profile.services.FlickrServiceManager;
 import com.qardapp.qard.friends.profile.services.FoursquareServiceManager;
+import com.qardapp.qard.friends.profile.services.GmailServiceManager;
 import com.qardapp.qard.friends.profile.services.PhoneServiceManager;
 import com.qardapp.qard.friends.profile.services.ServiceManager;
 import com.qardapp.qard.friends.profile.services.TwitterServiceManager;
@@ -71,7 +72,9 @@ public class FriendsProfileCursorAdapter extends CursorAdapter{
 			sMgr = new DefaultServiceManager((Activity) context, Services.LINKEDIN.imageId, Services.LINKEDIN.id, data);	
         } else if (serviceId == Services.FOURSQUARE.id) {
         	sMgr = new FoursquareServiceManager((Activity) context,data);		
-        } 
+        } else if (serviceId == Services.GMAIL.id) {
+			sMgr = new GmailServiceManager((Activity) context, data);	        			
+        }
         
         final ServiceManager mgr = sMgr;
         
