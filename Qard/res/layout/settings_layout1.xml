@@ -18,13 +18,6 @@
     /> 
     
     <Button
-        android:id="@+id/twitterAddUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Twitter User"
-    /> 
-    
-    <Button
         android:id="@+id/flickrconnect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,13 +30,6 @@
         android:layout_height="wrap_content"
         android:text="Connect to LinkedIn"
     />  
-    
-    <Button
-        android:id="@+id/linkedinAddUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Linkedin User"
-    />        
            
     <Button
         android:id="@+id/foursquareconnect"
@@ -53,17 +39,17 @@
     />     
 
     <Button
-        android:id="@+id/foursquareAddUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Foursquare User"
-    />     
-
-    <Button
         android:id="@+id/googleplusconnect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Connect to Google Plus"
+    /> 
+    
+    <Button
+        android:id="@+id/instagramconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connect to Instagram"
     />      
 
 </LinearLayout>

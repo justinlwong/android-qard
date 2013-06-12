@@ -34,23 +34,21 @@ public class SettingsFragment extends Fragment implements LoginDialogListener{
 		View rootView = inflater.inflate(R.layout.settings_layout1,
 				container, false);
 
-//		Button b1 = (Button)rootView.findViewById(R.id.facebookconnect);
+		Button b1 = (Button)rootView.findViewById(R.id.facebookconnect);
 		Button b2 = (Button)rootView.findViewById(R.id.twitterconnect);
 		Button b3 = (Button)rootView.findViewById(R.id.flickrconnect);
 		Button b4 = (Button)rootView.findViewById(R.id.linkedinconnect);
 		Button b5 = (Button)rootView.findViewById(R.id.foursquareconnect);
 		Button b6 = (Button)rootView.findViewById(R.id.googleplusconnect);
-		Button b7 = (Button)rootView.findViewById(R.id.twitterAddUser);
-		Button b8 = (Button)rootView.findViewById(R.id.linkedinAddUser);
-		Button b9 = (Button)rootView.findViewById(R.id.foursquareAddUser);
-//
-//		b1.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				launch(Services.FACEBOOK.id);
-//				
-//			}
-//		});
+		Button b7 = (Button)rootView.findViewById(R.id.instagramconnect);
+
+		b1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				launch(Services.FACEBOOK.id);
+				
+			}
+		});
 //		
 		b2.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -100,42 +98,23 @@ public class SettingsFragment extends Fragment implements LoginDialogListener{
 		b7.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(),AddUserActivity.class);
-				intent.putExtra("serviceID",Services.TWITTER.id);
+				Intent intent = new Intent(getActivity(),OAuthActivity.class);
+				intent.putExtra("serviceID",Services.INSTAGRAM.id);
 				startActivityForResult(intent, 100);			
 			}
 		});
 		
-		b8.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(),AddUserActivity.class);
-				intent.putExtra("serviceID",Services.LINKEDIN.id);
-				startActivityForResult(intent, 100);			
-			}
-		});
-
-		b9.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(),AddUserActivity.class);
-				intent.putExtra("serviceID",Services.FOURSQUARE.id);
-				startActivityForResult(intent, 100);			
-			}
-		});
 		
 		return rootView;
 	}
 	
-//	public void launch( int serviceID) {
-//		Intent intent = null;
-//		if (serviceID == Services.FACEBOOK.id) {
-//		    intent = new Intent(this.getActivity(),FacebookLoginActivity.class);
-//		} else if (serviceID == Services.TWITTER.id) {
-//		    intent = new Intent(this.getActivity(),OAuthLoginActivity.class);
-//		} 
-//		startActivityForResult(intent,0);	
-//	}
+	public void launch( int serviceID) {
+		Intent intent = null;
+		if (serviceID == Services.FACEBOOK.id) {
+		    intent = new Intent(this.getActivity(),FacebookLoginActivity.class);
+		} 
+		startActivityForResult(intent,0);	
+	}
 	
     private void showEditDialog(int serviceId) {
     	

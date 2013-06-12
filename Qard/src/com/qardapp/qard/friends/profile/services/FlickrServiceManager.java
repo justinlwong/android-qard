@@ -1,0 +1,53 @@
+package com.qardapp.qard.friends.profile.services;
+
+import org.scribe.oauth.OAuthService;
+
+import com.qardapp.qard.R;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
+
+
+// Note: Twitter resolves URL so no need to launch app explicitly
+
+public class FlickrServiceManager extends ServiceManager {
+
+	//public static String PACKAGE_NAME = "com.google.android.photostream.FLICKR_STREAM.";
+	public static String FLICKR_FALLBACK_URL_PREFIX = "https://www.flickr.com/photos/";
+	public static Integer FLICKR_IMAGE = R.drawable.flickr;
+	//OAuthService service = new ServiceBuilder();
+	
+	// Description of data (include examples)
+	// Twitter uses numeric ids for accessing pages
+	public FlickrServiceManager(Activity activity, String data) {
+		super(activity, FLICKR_IMAGE, data );
+		Log.d("flickrdata",data);
+	}
+
+	@Override
+	public void switchToServiceApp() {
+		//String uri = "fb://profile/" + data;
+		Intent intent =  new Intent(Intent.ACTION_VIEW, Uri.parse(FLICKR_FALLBACK_URL_PREFIX + data) );
+		activity.startActivity(intent);
+	}
+
+	@Override
+	public void switchToServiceFallBack() {
+		Intent intent =  new Intent(Intent.ACTION_VIEW, Uri.parse(FLICKR_FALLBACK_URL_PREFIX + data));
+		activity.startActivity(intent);
+	}
+
+
+	@Override
+	public boolean isAppInstalled() {
+		try {
+			//activity.getPackageManager().getPackageInfo(PACKAGE_NAME, 0);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+}

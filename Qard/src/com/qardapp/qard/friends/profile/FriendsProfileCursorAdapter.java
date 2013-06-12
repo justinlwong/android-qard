@@ -3,8 +3,10 @@ package com.qardapp.qard.friends.profile;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
+import com.qardapp.qard.friends.profile.services.DefaultServiceManager;
 import com.qardapp.qard.friends.profile.services.FacebookServiceManager;
 import com.qardapp.qard.friends.profile.services.FlickrServiceManager;
+import com.qardapp.qard.friends.profile.services.FoursquareServiceManager;
 import com.qardapp.qard.friends.profile.services.PhoneServiceManager;
 import com.qardapp.qard.friends.profile.services.ServiceManager;
 import com.qardapp.qard.friends.profile.services.TwitterServiceManager;
@@ -60,11 +62,16 @@ public class FriendsProfileCursorAdapter extends CursorAdapter{
 		} else if (serviceId == Services.TWITTER.id) {
 			sMgr = new TwitterServiceManager((Activity) context,data);		
 		} else if (serviceId == Services.FLICKR.id) {
-			sMgr = new FlickrServiceManager((Activity) context,data);		
-		}
-        else if (serviceId == Services.PHONE.id) {
+			sMgr = new DefaultServiceManager((Activity) context, Services.FLICKR.imageId, Services.FLICKR.id, data);		
+		} else if (serviceId == Services.PHONE.id) {
 			sMgr = new PhoneServiceManager((Activity) context,data);	
-        }
+        } else if (serviceId == Services.INSTAGRAM.id) {
+			sMgr = new DefaultServiceManager((Activity) context, Services.INSTAGRAM.imageId, Services.INSTAGRAM.id, data);	
+        } else if (serviceId == Services.LINKEDIN.id) {
+			sMgr = new DefaultServiceManager((Activity) context, Services.LINKEDIN.imageId, Services.LINKEDIN.id, data);	
+        } else if (serviceId == Services.FOURSQUARE.id) {
+        	sMgr = new FoursquareServiceManager((Activity) context,data);		
+        } 
         
         final ServiceManager mgr = sMgr;
         
