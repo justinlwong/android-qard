@@ -24,8 +24,8 @@ public class GmailServiceManager extends ServiceManager {
 	public void switchToServiceApp() {
 		Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {data});
-		emailIntent.setType("text/plain");
-		activity.startActivity(Intent.createChooser(emailIntent, "Send e-mail"));;
+		emailIntent.setType("message/rfc822");
+		activity.startActivity(Intent.createChooser(emailIntent, "Send e-mail:"));;
 	}
 
 	@Override
