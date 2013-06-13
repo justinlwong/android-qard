@@ -5,7 +5,6 @@ import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.friends.profile.services.DefaultServiceManager;
 import com.qardapp.qard.friends.profile.services.FacebookServiceManager;
-import com.qardapp.qard.friends.profile.services.FlickrServiceManager;
 import com.qardapp.qard.friends.profile.services.FoursquareServiceManager;
 import com.qardapp.qard.friends.profile.services.GmailServiceManager;
 import com.qardapp.qard.friends.profile.services.PhoneServiceManager;

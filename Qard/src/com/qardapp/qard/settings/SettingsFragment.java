@@ -6,7 +6,6 @@ import org.scribe.oauth.OAuthService;
 
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
-import com.qardapp.qard.settings.LoginDialog.LoginDialogListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract.Contacts.Photo;
@@ -22,7 +21,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 
-public class SettingsFragment extends Fragment implements LoginDialogListener{
+public class SettingsFragment extends Fragment{
 	
 	// Later will put this in the global application class
 	//OAuthService linkedinService = null;
@@ -115,31 +114,6 @@ public class SettingsFragment extends Fragment implements LoginDialogListener{
 		} 
 		startActivityForResult(intent,0);	
 	}
-	
-    private void showEditDialog(int serviceId) {
-    	
-        FragmentManager fm = getFragmentManager();        
-        LoginDialog loginDialog = (LoginDialog) fm.findFragmentByTag("login_fragment");
-       		
-    	Log.d("logindialog","here");
-        loginDialog = new LoginDialog();
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        Bundle bund = new Bundle();
-        bund.putInt("serviceType",serviceId);
-        loginDialog.setArguments(bund);
-        //loginDialog.show(transaction, "login_fragment");
-        transaction.add(loginDialog,"login_fragment").commit();
-    }
-
-    @Override
-    public void onFinishEditDialog(String inputText, int id) {
-         Log.d("Text",inputText);
-//         if (dialog != null) {
-//             dialog.dismiss();
-//             fm.beginTransaction().detach(dialog);
-//             fm.beginTransaction().remove(dialog).commit();
-//         }
-    }
 	
 }
 
