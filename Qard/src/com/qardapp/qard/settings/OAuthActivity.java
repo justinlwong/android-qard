@@ -24,6 +24,7 @@ import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -69,6 +70,20 @@ public class OAuthActivity extends Activity {
     }
 	
 	private class OAuthTask extends AsyncTask<Void, Void, String> {
+		
+		ProgressDialog progDialog;
+		
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progDialog = new ProgressDialog(OAuthActivity.this);
+            progDialog.setMessage("Connecting...");
+            progDialog.setIndeterminate(true);
+            progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDialog.setCancelable(false);
+            progDialog.show();
+        }
+        
 		protected String doInBackground(Void... arg0) {
 
 			// Temporary URL
@@ -93,23 +108,34 @@ public class OAuthActivity extends Activity {
 		
 		@Override  
 		protected void onPostExecute(String authURL) { 
+			
 			mWebView = (WebView)findViewById(R.id.webview);
-		    mWebView.setWebViewClient(new WebViewClient() {
-		    	
+		    mWebView.setWebViewClient(new WebViewClient() {		    	
+		        
 		        @Override
-		        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-		            Log.d("here", url);
+		        public void onPageFinished(WebView view, String url) {
+	        		if (progDialog != null) {
+			            progDialog.dismiss();
+					}                
 		        }
 		    		    	
 			    @Override
-			    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    Log.d("hereo",url);			    	
+			    public boolean shouldOverrideUrlLoading(WebView view, String url) {	 
+			    	Log.d("urls",url);
+
 					super.shouldOverrideUrlLoading(view, url);
 
-
 					if( url.startsWith("oauth") ) {
-				            mWebView.setVisibility(WebView.GONE);
-		
+				        mWebView.setVisibility(WebView.GONE);	
+				        
+				        // Restart loading animation
+			            progDialog = new ProgressDialog(OAuthActivity.this);
+			            progDialog.setMessage("Authorizing...");
+			            progDialog.setIndeterminate(true);
+			            progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			            progDialog.setCancelable(false);
+			            progDialog.show();		
+			            
 					    final String url1 = url;
 				   	    Thread t1 = new Thread() {
 							public void run() {
@@ -121,9 +147,9 @@ public class OAuthActivity extends Activity {
 							    	verifier = uri.getQueryParameter("code");
 							    	mRequestToken = null;
 							    }
+							    
 							    Verifier v = new Verifier(verifier);
 							    Token accessToken = mService.getAccessToken(mRequestToken, v);		
-							    Log.d("here",accessToken.toString());
 
 							    // Do a quick query to get user information
 							    
@@ -139,7 +165,6 @@ public class OAuthActivity extends Activity {
 
 							    Token t = new Token(accessToken.getToken(),accessToken.getSecret());
 							    mService.signRequest(t, request);
-							    Log.d("here","signed request");
 							    
 							    Response response = null;
 							    try {
@@ -179,8 +204,6 @@ public class OAuthActivity extends Activity {
 							                data = mainObject.getString(service.idFieldName);						                	
 						                }
 						                updateDatabase(data);
-							    		Log.d("data",data);
-							    		Log.d("username",username);
 							    	}
 							    }
 							    catch ( Exception e ) {
@@ -201,15 +224,19 @@ public class OAuthActivity extends Activity {
 					        		editor.putString(service.name+"_firstName", firstname);
 					        		editor.putString(service.name+"_lastName", lastname);
 				        		}
-				        		editor.commit();    		    
-				                Log.d("sharedpref2",mPrefs.getString("LinkedIn_access_token","-1"));
-							    
+				        		editor.commit();    		    					            
+				        		
 					  		    finish();
 
 							}
 					    };
 					    t1.start();
 					
+					} else {
+						
+						// If not oauth link, it is an intermediate page so dismiss loading dialog here				
+			            //if (progDialog != null)
+			            //    progDialog.dismiss();
 					}
 	
 				    return false;

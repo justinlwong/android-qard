@@ -1,12 +1,7 @@
 package com.qardapp.qard.friends.profile.services;
 
-import org.scribe.builder.ServiceBuilder;
-import org.scribe.builder.api.FlickrApi;
-import org.scribe.builder.api.Foursquare2Api;
-import org.scribe.builder.api.LinkedInApi;
-import org.scribe.builder.api.TwitterApi;
-
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -29,7 +24,19 @@ public class ServiceWebDisplayActivity extends Activity {
 	private SharedPreferences mPrefs;
 	
 	private class DisplayWebView extends AsyncTask<Void, Void, String> {
+
+		ProgressDialog progDialog;
 		
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progDialog = new ProgressDialog(ServiceWebDisplayActivity.this);
+            progDialog.setMessage("Loading...");
+            progDialog.setIndeterminate(false);
+            progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDialog.setCancelable(false);
+            progDialog.show();
+        }
 
 		protected String doInBackground(Void... arg0) {
 			return url;
@@ -43,6 +50,12 @@ public class ServiceWebDisplayActivity extends Activity {
 		        @Override
 		        public void onPageStarted(WebView view, String url, Bitmap favicon) {
 		            Log.d("here", url);
+		        }
+		        
+		        @Override
+		        public void onPageFinished(WebView view, String url) {
+		            if (progDialog != null)
+		            	progDialog.dismiss();
 		        }
 		    		    	
 		    });
