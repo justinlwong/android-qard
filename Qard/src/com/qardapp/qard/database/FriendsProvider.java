@@ -96,6 +96,7 @@ public class FriendsProvider extends ContentProvider {
 		long id = 0;
 		switch (uriType) {
 		// Insert receipt
+		case FRIENDS:
 		case FRIEND:
 			id = sqlDB.insert(FriendsDatabaseHelper.TABLE_FRIENDS, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);

@@ -37,7 +37,7 @@ public class FriendsCursorAdapter extends CursorAdapter{
     	
     	// Display Profile Pic
     	String profilePicFile = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_PROFILE_PIC_LOC));
-    	if (profilePicFile.isEmpty())
+    	if (profilePicFile == null || profilePicFile.isEmpty())
     		holder.profilePic.setImageResource(R.drawable.profile_default);
     	else {
     		File filePath = context.getFileStreamPath(profilePicFile);
@@ -58,7 +58,7 @@ public class FriendsCursorAdapter extends CursorAdapter{
 
     	// Display Profile Pic
     	String profilePicFile = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_PROFILE_PIC_LOC));
-    	if (profilePicFile.isEmpty())
+    	if (profilePicFile == null || profilePicFile.isEmpty())
     		holder.profilePic.setImageResource(R.drawable.profile_default);
     	else {
     		File filePath = context.getFileStreamPath(profilePicFile);

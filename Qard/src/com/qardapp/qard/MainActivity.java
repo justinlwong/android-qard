@@ -1,5 +1,6 @@
 package com.qardapp.qard;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -7,12 +8,19 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.qardapp.qard.comm.server.FriendsInfoLoader;
+import com.qardapp.qard.comm.server.NewUserLoader;
+import com.qardapp.qard.comm.server.NewUserTask;
+import com.qardapp.qard.comm.server.ServerHelper;
+import com.qardapp.qard.comm.server.ServerNotifications;
 import com.qardapp.qard.friends.FriendsFragment;
 import com.qardapp.qard.profile.ProfileFragment;
 import com.qardapp.qard.qrcode.QRCodeManager;
 import com.qardapp.qard.settings.SettingsFragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +29,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,7 +45,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends SherlockFragmentActivity implements
-		ActionBar.TabListener {
+		ActionBar.TabListener, LoaderCallbacks<ArrayList<ServerNotifications>> {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -51,6 +61,9 @@ public class MainActivity extends SherlockFragmentActivity implements
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
+	public static int REFRESH_LOADER_ID = 0;
+	public static int NEW_USER_LOADER_ID = 1;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +93,6 @@ public class MainActivity extends SherlockFragmentActivity implements
 		// !! TEST: GET FACEBOOK USER INFO
 		//FacebookConnect fc = new FacebookConnect(this);
 		//fc.getUserInfo();
-		
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(
@@ -124,6 +136,19 @@ public class MainActivity extends SherlockFragmentActivity implements
 				listView.requestFocus();
 			}
 		});
+		//ServerHelper.resetUser(this);
+		SharedPreferences pref = this.getSharedPreferences(getString(R.string.app_package_name), Context.MODE_PRIVATE);
+		String token = pref.getString("access_token", null);
+		if (token != null)
+		Log.e("Hi", token);
+		if (token == null) {
+			NewUserTask task = new NewUserTask(this);
+			task.execute();
+
+		} else {
+			getSupportLoaderManager().initLoader(REFRESH_LOADER_ID, null, this);
+		}
+
 	}
 
 	@Override
@@ -236,6 +261,35 @@ public class MainActivity extends SherlockFragmentActivity implements
 			}
 			return null;
 		}
+	}
+
+	@Override
+	public Loader<ArrayList<ServerNotifications>> onCreateLoader(int id,
+			Bundle arg1) {
+		if (id == REFRESH_LOADER_ID)
+			return new FriendsInfoLoader(this);
+		//if (id == NEW_USER_LOADER_ID)
+			//return new NewUserLoader(this);
+		return null;
+	}
+
+	@Override
+	public void onLoadFinished(Loader<ArrayList<ServerNotifications>> loader,
+			ArrayList<ServerNotifications> result) {
+		if (loader.getId() == NEW_USER_LOADER_ID) {
+			SharedPreferences pref = this.getSharedPreferences(getString(R.string.app_package_name), Context.MODE_PRIVATE);
+			String user_id = pref.getString("user_id", null);
+			View qr_code_image = findViewById(R.id.profile_qr_code);
+			if (qr_code_image != null) {
+				QRCodeManager.genQRCode (user_id, (ImageView)qr_code_image); 
+			}
+		}
+	}
+
+	@Override
+	public void onLoaderReset(Loader<ArrayList<ServerNotifications>> loader) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
