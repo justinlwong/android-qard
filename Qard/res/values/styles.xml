@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!--
@@ -16,6 +17,7 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+
     <style name="LoginDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowTitleStyle">@style/LoginDialogTitle</item>
     </style>
@@ -23,11 +25,20 @@
     <style name="LoginDialogTitle" parent="@android:style/TextAppearance.DialogWindowTitle">
         <item name="android:gravity">center_horizontal</item>
     </style>
+
     <style name="DialogWindowTitle">
-    <item name="android:maxLines">1</item>
-    <item name="android:scrollHorizontally">true</item>
-    <item name="android:textAppearance">@android:style/TextAppearance.DialogWindowTitle</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.DialogWindowTitle</item>
     </style>
-<bool name="abs__action_bar_embed_tabs">true</bool>
-<bool name="android:action_bar_embed_tabs">true</bool>
+
+    <bool name="abs__action_bar_embed_tabs">true</bool>
+    <bool name="android:action_bar_embed_tabs">true</bool>
+
+    <style name="LoginFormContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
 </resources>

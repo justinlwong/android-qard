@@ -19,38 +19,34 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 
-public class AddFriendTask extends AsyncTask<String, Void, String>{
+public class AddServiceTask extends AsyncTask<String, Void, String>{
 
 	private Context context;
-	private static String ADD_FRIEND_URL = ServerHelper.SERVER_URL + "/user/friend";
+	private static String ADD_SERVICE_URL = ServerHelper.SERVER_URL + "/user/user_services";
 	
-	private String friend_id;
-	private String first_name;
-	private String last_name;
-	private String number;
+	private int service_id;
+	private String data;
 	
-	public AddFriendTask(Context context, String friend_id, String first_name, String last_name) {
+	public AddServiceTask(Context context, int service_id, String data) {
 		super();
 		this.context = context;
-		this.friend_id = friend_id;
-		this.first_name = first_name;
-		this.last_name = last_name;
-		this.number = number;
+		this.service_id = service_id;
+		this.data = data;
 	}
 	
 	@Override
 	protected String doInBackground(String... params) {
 		HttpClient httpClient = new DefaultHttpClient();
 		// Creating HTTP Post
-		HttpPost httpPost = new HttpPost(ADD_FRIEND_URL);
+		HttpPost httpPost = new HttpPost(ADD_SERVICE_URL);
         
 		JSONObject holder = new JSONObject();
 		try {
-			holder.put("friend_id", friend_id);
+			holder.put("service_id", service_id);
+			holder.put("data", data);
 			holder.put("access_token", ServerHelper.getAccessToken(context));
 			httpPost.setHeader("Accept", "application/json");
 			httpPost.setHeader("Content-type", "application/json");
@@ -65,27 +61,6 @@ public class AddFriendTask extends AsyncTask<String, Void, String>{
 			}
 			JSONTokener tokener = new JSONTokener(json);
 			JSONObject finalResult = new JSONObject(tokener);
-			
-			ContentResolver resolver = context.getContentResolver();
-			String where = FriendsDatabaseHelper.COLUMN_USER_ID + "=?";
-			String[] args = new String[] {friend_id};
-			Cursor cur = resolver.query(FriendsProvider.CONTENT_URI, null, where, args, null);
-			int local_friend_id = 0;
-			if (cur.getCount() == 0 ) {
-				ContentValues values = new ContentValues();
-				values.put(FriendsDatabaseHelper.COLUMN_FIRST_NAME, first_name);
-				values.put(FriendsDatabaseHelper.COLUMN_LAST_NAME, last_name);
-				values.put(FriendsDatabaseHelper.COLUMN_USER_ID, friend_id);	
-				values.put(FriendsDatabaseHelper.COLUMN_CONFIRMED, true);	
-				Uri uri = resolver.insert(FriendsProvider.CONTENT_URI, values);
-				local_friend_id = Integer.parseInt(uri.getLastPathSegment());
-			} else {
-				cur.moveToFirst();
-				local_friend_id = cur.getInt(cur.getColumnIndex(FriendsDatabaseHelper.COLUMN_ID));
-				ContentValues values = new ContentValues();
-				values.put(FriendsDatabaseHelper.COLUMN_CONFIRMED, true);	
-				resolver.update(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/" + local_friend_id), values, null, null);
-			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "qard.db";
-	private static final int DATABASE_VERSION = 6;
+	private static final int DATABASE_VERSION = 7;
 	
 	// Database table
 	public static final String TABLE_FRIENDS = "friends";
@@ -21,6 +21,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_LAST_NAME = "last_name";
 	public static final String COLUMN_USER_ID = "user_id";
 	public static final String COLUMN_PROFILE_PIC_LOC = "picture_loc";
+	public static final String COLUMN_CONFIRMED = "confirmed";
 	public static final String COLUMN_DATE_ADDED = "date_added";
 
 	// Service Table
@@ -29,6 +30,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_SERVICE_NAME = "service_name";
 	public static final String COLUMN_SERVICE_PRIORITY = "service_priority";
 	public static final String COLUMN_SERVICE_PIC_LOC = "service_pic_loc";
+
 
 	// Friend_Service Join Table
 	public static final String TABLE_FRIEND_SERVICES = "friend_services";
@@ -46,6 +48,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 			+ COLUMN_LAST_NAME + " text , " 
 			+ COLUMN_USER_ID + " integer , " 
 			+ COLUMN_PROFILE_PIC_LOC + " text , " 
+			+ COLUMN_CONFIRMED + " boolean default false, " 
 			+ COLUMN_DATE_ADDED + " long  " 
 			+ ");";
 	
@@ -61,9 +64,9 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 	private static final String FRIEND_SERVICES_TABLE_CREATE = "create table " 
 			+ TABLE_FRIEND_SERVICES
 			+ "(" 
-			+ COLUMN_FS_FRIEND_ID + " integer , " 
-			+ COLUMN_FS_SERVICE_ID + " integer , " 
-			+ COLUMN_FS_DATA + " text " 
+			+ COLUMN_FS_FRIEND_ID + " integer not null, " 
+			+ COLUMN_FS_SERVICE_ID + " integer not null, " 
+			+ COLUMN_FS_DATA + " text default ''" 
 			+ ");";
 		  
 	public FriendsDatabaseHelper(Context context) {
@@ -83,8 +86,10 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 			db.execSQL(insertService(service.id, service.name, service.priority, ""));
 		}
 		
-		//Friends
 		db.execSQL(insertFriend(0, "", "Me", "Me", 0, "", new Date().getTime()));
+
+		/*
+		//Friends
 		db.execSQL(insertFriend(1, "", "John", "Doe", 1, "", new Date().getTime()));
 		db.execSQL(insertFriend(2, "", "Mary", "Jane", 2, "", new Date().getTime()));
 		db.execSQL(insertFriend(3, "", "Bob", "Q", 3, "", new Date().getTime()));
@@ -107,6 +112,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 	//	db.execSQL(insertFriendService(3, Services.PHONE.id, ""));
 	//	db.execSQL(insertFriendService(3, Services.ADDRESS.id, ""));
 		db.execSQL(insertFriendService(3, Services.FACEBOOK.id, "511723429"));
+		*/
 	}
 
 	@Override
