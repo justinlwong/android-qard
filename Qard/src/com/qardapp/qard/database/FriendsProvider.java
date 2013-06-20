@@ -22,6 +22,7 @@ public class FriendsProvider extends ContentProvider {
 	private static final int FRIEND = 20;
 	private static final int FRIEND_SERVICE = 30;
 	private static final int SERVICES = 40;
+	private static final int SERVICE_DATA = 50;
 
 	private static final String AUTHORITY = "com.qardapp.qard.database";
 
@@ -44,6 +45,7 @@ public class FriendsProvider extends ContentProvider {
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", FRIEND);
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#/service/#", FRIEND_SERVICE);
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/services", SERVICES);
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/service_data", SERVICE_DATA);
 
 	}
 
@@ -156,6 +158,17 @@ public class FriendsProvider extends ContentProvider {
 
 			break;
 			// Returns the last receipt
+		case SERVICE_DATA:
+			queryBuilder.setTables(FriendsDatabaseHelper.TABLE_FRIENDS + " LEFT OUTER JOIN " +
+					FriendsDatabaseHelper.TABLE_FRIEND_SERVICES  +
+					" ON (" + FriendsDatabaseHelper.TABLE_FRIENDS +
+					"." + FriendsDatabaseHelper.COLUMN_ID + " = "+ FriendsDatabaseHelper.TABLE_FRIEND_SERVICES +
+					"." + FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID +") LEFT OUTER JOIN " +
+					FriendsDatabaseHelper.TABLE_SERVICES  +
+					" ON (" + FriendsDatabaseHelper.TABLE_FRIEND_SERVICES +
+					"." + FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID + " = "+ FriendsDatabaseHelper.TABLE_SERVICES +
+					"." + FriendsDatabaseHelper.COLUMN_SERVICE_ID +")");
+			break;
 		case SERVICES:
 			queryBuilder.setTables(FriendsDatabaseHelper.TABLE_SERVICES);
 			if (sortOrder == null)

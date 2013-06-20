@@ -6,8 +6,13 @@ import org.scribe.oauth.OAuthService;
 
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
+
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts.Photo;
 import android.provider.ContactsContract.Profile;
 import android.support.v4.app.Fragment;
@@ -40,6 +45,7 @@ public class SettingsFragment extends Fragment{
 		Button b5 = (Button)rootView.findViewById(R.id.foursquareconnect);
 		Button b6 = (Button)rootView.findViewById(R.id.googleplusconnect);
 		Button b7 = (Button)rootView.findViewById(R.id.instagramconnect);
+		Button b8 = (Button)rootView.findViewById(R.id.contactsync);
 
 		b1.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -103,6 +109,17 @@ public class SettingsFragment extends Fragment{
 			}
 		});
 		
+		b8.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+	            //intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+	            //startActivityForResult(intent, 1);
+                Intent intent = new Intent(getActivity(), SyncContactsActivity.class);
+                startActivity(intent);		
+			}
+		});
+		
 		
 		return rootView;
 	}
@@ -114,7 +131,7 @@ public class SettingsFragment extends Fragment{
 		} 
 		startActivityForResult(intent,0);	
 	}
-	
+		
 }
 
 

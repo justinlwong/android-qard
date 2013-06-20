@@ -320,22 +320,5 @@ public class OAuthActivity extends Activity {
         
         new OAuthTask().execute();
     }
-    
-    // !! Note: Not used currently
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	super.onActivityResult(requestCode, resultCode, data);
-        Log.d("rcodes", String.valueOf(requestCode));
-        Log.d("rcodes", String.valueOf(resultCode));
-        	if ( resultCode == RESULT_OK && requestCode == 200 ) {
-//        		String access_token = data.getStringExtra(service.name+"_access_token");
-//        		String access_secret = data.getStringExtra(service.name+"_access_secret");
-
-
-        		// Start activity
-        		//Intent intent = new Intent(this, OAuthActivity.class);
-    	    	//startActivity(intent);   
-        	}
-    }
-    
+        
 }
