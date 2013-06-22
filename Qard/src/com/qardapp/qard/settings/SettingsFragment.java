@@ -6,6 +6,8 @@ import org.scribe.oauth.OAuthService;
 
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
+import com.qardapp.qard.comm.server.QardLoginActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract.Contacts.Photo;
@@ -103,6 +105,25 @@ public class SettingsFragment extends Fragment{
 			}
 		});
 		
+		Button login = (Button) rootView.findViewById(R.id.settings_login_btn);
+		login.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(),QardLoginActivity.class);
+				startActivityForResult(intent, 21);
+			}
+		});
+		
+		Button updateAcc = (Button) rootView.findViewById(R.id.settings_update_acc);
+		updateAcc.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//Intent intent = new Intent(getActivity(),QardLoginActivity.class);
+				//startActivityForResult(intent, 21);
+			}
+		});
 		
 		return rootView;
 	}
