@@ -32,6 +32,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
+import android.widget.Toast;
  
 public class AuthActivity extends Activity {
  
@@ -88,6 +89,7 @@ public class AuthActivity extends Activity {
 			}
 		};
 		t1.start();*/
+		finish();
 		
 	}
  
@@ -110,6 +112,9 @@ public class AuthActivity extends Activity {
         		SharedPreferences.Editor editor = sp.edit();
         		editor.putString("EmailAddress", account.name);
         		editor.commit();
+        		
+        		// Show toast
+                Toast.makeText(this, account.name + " is connected.", Toast.LENGTH_LONG).show();
         		
         		// Update database
         		updateDatabase(account.name);

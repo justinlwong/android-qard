@@ -111,10 +111,10 @@
     />     
 
     <Button
-        android:id="@+id/googleplusconnect"
+        android:id="@+id/emailconnect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Connect to Google Plus"
+        android:text="Connect to Email"
     /> 
     
     <Button
@@ -122,6 +122,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Connect to Instagram"
-    />      
+    /> 
+    
+    <Button
+        android:id="@+id/googleplusconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connect to Google Plus"
+    />       
+    
+    <Button
+        android:id="@+id/contactsync"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sync Contacts with Address Book"
+    />         
 
 </LinearLayout>
