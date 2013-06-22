@@ -18,6 +18,7 @@ import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
 
+import com.google.android.gms.plus.PlusClient;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
@@ -35,6 +36,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 import android.graphics.Bitmap;
 
 public class OAuthActivity extends Activity {
@@ -224,7 +226,9 @@ public class OAuthActivity extends Activity {
 					        		editor.putString(service.name+"_firstName", firstname);
 					        		editor.putString(service.name+"_lastName", lastname);
 				        		}
-				        		editor.commit();    		    					            
+				        		editor.commit();    
+				        		
+				                //Toast.makeText(this, accountName + " is connected.", Toast.LENGTH_LONG).show();
 				        		
 					  		    finish();
 

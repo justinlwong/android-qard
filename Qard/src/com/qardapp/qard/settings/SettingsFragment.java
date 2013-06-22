@@ -43,9 +43,10 @@ public class SettingsFragment extends Fragment{
 		Button b3 = (Button)rootView.findViewById(R.id.flickrconnect);
 		Button b4 = (Button)rootView.findViewById(R.id.linkedinconnect);
 		Button b5 = (Button)rootView.findViewById(R.id.foursquareconnect);
-		Button b6 = (Button)rootView.findViewById(R.id.googleplusconnect);
+		Button b6 = (Button)rootView.findViewById(R.id.emailconnect);
 		Button b7 = (Button)rootView.findViewById(R.id.instagramconnect);
 		Button b8 = (Button)rootView.findViewById(R.id.contactsync);
+		Button b9 = (Button)rootView.findViewById(R.id.googleplusconnect);
 
 		b1.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -116,6 +117,14 @@ public class SettingsFragment extends Fragment{
 	            //intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
 	            //startActivityForResult(intent, 1);
                 Intent intent = new Intent(getActivity(), SyncContactsActivity.class);
+                startActivity(intent);		
+			}
+		});
+		
+		b9.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), GooglePlusAuthActivity.class);
                 startActivity(intent);		
 			}
 		});
