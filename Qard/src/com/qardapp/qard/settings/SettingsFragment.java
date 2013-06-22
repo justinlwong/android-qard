@@ -7,6 +7,8 @@ import org.scribe.oauth.OAuthService;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.comm.server.QardLoginActivity;
+import com.qardapp.qard.comm.server.ServerHelper;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -24,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 public class SettingsFragment extends Fragment{
@@ -148,6 +151,14 @@ public class SettingsFragment extends Fragment{
 				//startActivityForResult(intent, 21);
 			}
 		});
+		
+		TextView current_id_field = (TextView) rootView.findViewById(R.id.settings_current_id);
+		String user_id = ServerHelper.getUserId(getActivity());
+		if (user_id != null) {
+			current_id_field.setText("(DEBUG) Current qard id = " + user_id);
+		} else {
+			current_id_field.setText("(DEBUG) Current qard id not found, restart?");
+		}
 		
 		return rootView;
 	}
