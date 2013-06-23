@@ -42,12 +42,26 @@ public class ServerHelper extends Fragment{
 				Context.MODE_PRIVATE).getString("user_id", null);
 	}
 	
+	public static String getUserName (Context context) {
+		return context.getSharedPreferences(
+				context.getString(R.string.app_package_name),
+				Context.MODE_PRIVATE).getString("username", null);
+	}
+	
 	public static boolean setNewUser (Context context, String user_id, String token) {
 		SharedPreferences.Editor editor = context.getSharedPreferences(
 				context.getString(R.string.app_package_name),
 				Context.MODE_PRIVATE).edit();
 		editor.putString("user_id", user_id);
 		editor.putString("access_token", token);
+		return editor.commit();
+	}
+	
+	public static boolean setUserName (Context context, String username) {
+		SharedPreferences.Editor editor = context.getSharedPreferences(
+				context.getString(R.string.app_package_name),
+				Context.MODE_PRIVATE).edit();
+		editor.putString("username", username);
 		return editor.commit();
 	}
 	

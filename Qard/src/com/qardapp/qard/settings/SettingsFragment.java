@@ -8,6 +8,7 @@ import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.comm.server.QardLoginActivity;
 import com.qardapp.qard.comm.server.ServerHelper;
+import com.qardapp.qard.comm.server.UpdateUserTask;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -147,8 +149,12 @@ public class SettingsFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
-				//Intent intent = new Intent(getActivity(),QardLoginActivity.class);
-				//startActivityForResult(intent, 21);
+				UpdateUserTask task = new UpdateUserTask(getActivity(),
+						((EditText)getActivity().findViewById(R.id.settings_first_name)).getText().toString(),
+						((EditText)getActivity().findViewById(R.id.settings_last_name)).getText().toString(),
+						((EditText)getActivity().findViewById(R.id.settings_username)).getText().toString(),
+						((EditText)getActivity().findViewById(R.id.settings_password)).getText().toString());
+				task.execute();
 			}
 		});
 		
