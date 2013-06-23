@@ -23,8 +23,8 @@ import android.support.v4.app.FragmentTransaction;
 
 public class ServerHelper extends Fragment{
 
-	//public static String SERVER_URL = "https://qard-server.herokuapp.com";
-	public static String SERVER_URL = "http://10.0.1.14:5000";
+	public static String SERVER_URL = "https://qard-server.herokuapp.com";
+	//public static String SERVER_URL = "http://10.0.1.14:5000";
 	private static String NEW_USER_URL = ServerHelper.SERVER_URL + "/new_user";
 	public  static String CLIENT_ID = "Android01Lo9";
 	public static String CLIENT_SEC = "GooAndroid1";

@@ -1,141 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/settings_current_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="" />
-    
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="First Name" />
-
-    <EditText
-        android:id="@+id/settings_first_name"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Me" />
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Last Name" />
+        <TextView
+            android:id="@+id/settings_current_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
 
-    <EditText
-        android:id="@+id/settings_last_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Me" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="First Name" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Username" />
+        <EditText
+            android:id="@+id/settings_first_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Me" />
 
-    <EditText
-        android:id="@+id/settings_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" >
-    </EditText>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last Name" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Password (Stored in Plaintext for now!)" />
+        <EditText
+            android:id="@+id/settings_last_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Me" />
 
-    <EditText
-        android:id="@+id/settings_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword" />
-    
-    <Button
-        android:id="@+id/settings_update_acc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Update Account info"
-    />  
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username" />
 
-    
-    <Button
-        android:id="@+id/settings_login_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log in to Exisiting Account"
-    />  
-    
-    
-    <Button
-        android:id="@+id/facebookconnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connect to Facebook"
-    />    
-    <Button
-        android:id="@+id/twitterconnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connect to Twitter"
-    /> 
-    
-    <Button
-        android:id="@+id/flickrconnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connect to Flickr"
-    />    
-    
-    <Button
-        android:id="@+id/linkedinconnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connect to LinkedIn"
-    />  
-           
-    <Button
-        android:id="@+id/foursquareconnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connect to Foursquare"
-    />     
+        <EditText
+            android:id="@+id/settings_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" >
+        </EditText>
 
-    <Button
-        android:id="@+id/emailconnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connect to Email"
-    /> 
-    
-    <Button
-        android:id="@+id/instagramconnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connect to Instagram"
-    /> 
-    
-    <Button
-        android:id="@+id/googleplusconnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connect to Google Plus"
-    />       
-    
-    <Button
-        android:id="@+id/contactsync"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sync Contacts with Address Book"
-    />         
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password (Stored in Plaintext for now!)" />
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/settings_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/settings_update_acc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Account info" />
+
+        <Button
+            android:id="@+id/settings_login_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log in to Exisiting Account" />
+
+        <Button
+            android:id="@+id/facebookconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connect to Facebook" />
+
+        <Button
+            android:id="@+id/twitterconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connect to Twitter" />
+
+        <Button
+            android:id="@+id/flickrconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connect to Flickr" />
+
+        <Button
+            android:id="@+id/linkedinconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connect to LinkedIn" />
+
+        <Button
+            android:id="@+id/foursquareconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connect to Foursquare" />
+
+        <Button
+            android:id="@+id/emailconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connect to Email" />
+
+        <Button
+            android:id="@+id/instagramconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connect to Instagram" />
+
+        <Button
+            android:id="@+id/googleplusconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connect to Google Plus" />
+
+        <Button
+            android:id="@+id/contactsync"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sync Contacts with Address Book" />
+    </LinearLayout>
+
+</ScrollView>
