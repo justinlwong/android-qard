@@ -61,23 +61,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		// Set up the action bar.
-		final ActionBar actionBar = getSupportActionBar();
-		//actionBar.setCustomView(view)
-		actionBar.setIcon(R.drawable.profile_default);
-		LayoutInflater inflater = getLayoutInflater();
-		View v = inflater.inflate(R.layout.menu_buttons_extra, null);
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-		actionBar.setCustomView(v);
 		
-
-		// Consider using menu items
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-		actionBar.setDisplayHomeAsUpEnabled(false);
-		actionBar.setHomeButtonEnabled(true);
-		actionBar.setDisplayUseLogoEnabled(false);
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setDisplayShowHomeEnabled(true);
 
 		// !! NOTE: Reset database on app update for testing 
 		//this.deleteDatabase("qard.db");
@@ -85,16 +69,68 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		// !! TEST: GET FACEBOOK USER INFO
 		//FacebookConnect fc = new FacebookConnect(this);
 		//fc.getUserInfo();
-	
-		ImageView menu_friends = (ImageView) v.findViewById(R.id.menu_friends);
-		menu_friends.setOnClickListener(new OnClickListener() {
+		
+		// Set up the action bar.
+		final ActionBar actionBar = getSupportActionBar();
+		LayoutInflater inflater = getLayoutInflater();
+		View v = inflater.inflate(R.layout.menu_buttons_extra, null);
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+		actionBar.setCustomView(v);
+		
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		actionBar.setDisplayHomeAsUpEnabled(false);
+		actionBar.setHomeButtonEnabled(false);
+		actionBar.setDisplayUseLogoEnabled(false);
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayShowHomeEnabled(false);
+
+
+		((ImageView) v.findViewById(R.id.menu_back)).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				MainActivity.this.switchFragments(FRAG_FRIENDS);
-
 			}
 		});
+		((ImageView) v.findViewById(R.id.menu_me)).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				MainActivity.this.switchFragments(FRAG_PROFILE);
+			}
+		});
+		((ImageView) v.findViewById(R.id.menu_friends)).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				MainActivity.this.switchFragments(FRAG_FRIENDS);
+			}
+		});
+		((ImageView) v.findViewById(R.id.menu_search)).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				MainActivity.this.switchFragments(FRAG_FRIENDS);
+				// Focus the search view
+				SearchView search = (SearchView) findViewById(R.id.friends_search);
+				search.requestFocus();
+			}
+		});
+		((ImageView) v.findViewById(R.id.menu_camera)).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				QRCodeManager.scanQRCode(MainActivity.this);
+			}
+		});
+		((ImageView) v.findViewById(R.id.menu_refresh)).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			}
+		});
+		
+		// Token Setup
 		//ServerHelper.resetUser(this);
 		SharedPreferences pref = this.getSharedPreferences(getString(R.string.app_package_name), Context.MODE_PRIVATE);
 		String token = pref.getString("access_token", null);
@@ -164,21 +200,8 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		
 		switch (item.getItemId()) {
-		case android.R.id.home:
-			switchFragments(FRAG_PROFILE);
-			break;
-		case R.id.menu_search:
-			switchFragments(FRAG_FRIENDS);
-			SearchView v = (SearchView) findViewById(R.id.friends_search);
-			v.requestFocus();
-			break;
-		case R.id.menu_camera:
-			//mViewPager.setCurrentItem(0);
-			QRCodeManager.scanQRCode(this);
-			break;
-		case R.id.menu_refresh:
-			break;
 		case R.id.action_settings:
 			switchFragments(FRAG_SETTINGS);
 			break;

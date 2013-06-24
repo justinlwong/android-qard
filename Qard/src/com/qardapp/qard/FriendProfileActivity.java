@@ -39,11 +39,11 @@ public class FriendProfileActivity extends SherlockActivity {
 
 		// Consider using menu items
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(false);
+		actionBar.setHomeButtonEnabled(false);
 		actionBar.setDisplayUseLogoEnabled(false);
 		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setDisplayShowHomeEnabled(true);
+		actionBar.setDisplayShowHomeEnabled(false);
 
 		final Button ftomButton = (Button) findViewById(R.id.friend_profile_f_to_m_button);
 		final Button mtofButton = (Button) findViewById(R.id.friend_profile_m_to_f_button);

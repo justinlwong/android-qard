@@ -41,51 +41,39 @@
         android:layout_height="0dp"
         android:layout_centerHorizontal="true" />
 
+
+
     <Button
         android:id="@+id/profile_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="1dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/profile_image"
         android:layout_toLeftOf="@id/profile_vstrut"
+        android:background="#FF222222"
+        android:textColor="#FFDDDDDD"
         android:text="Send" />
 
     <Button
         android:id="@+id/profile_scan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/profile_info_box"
         android:layout_toRightOf="@id/profile_vstrut"
+        android:background="#FF222222"
+        android:textColor="#FFDDDDDD"
         android:text="Scan" />
 
-    <Button
-        android:id="@+id/profile_qr_code_button"
+    <ImageView
+        android:id="@+id/profile_qr_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/profile_vstrut"
-        android:background="#FFFFFFFF"
-        android:text="QR Code" />
-
-    <Button
-        android:id="@+id/profile_me_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/profile_vstrut"
-        android:background="#FFFFFFFF"
-        android:text="Me" />
-
-    <FrameLayout
-        android:id="@+id/profile_main_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/profile_me_button"
+        android:layout_above="@id/profile_scan"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/profile_send" />
+        android:layout_below="@id/profile_info_box" />
 
 </RelativeLayout>

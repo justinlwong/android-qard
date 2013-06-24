@@ -2,15 +2,82 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/menu_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:scaleType="centerInside"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:adjustViewBounds="true"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:src="@drawable/menu_back" />
+
+    <ImageView
+        android:id="@+id/menu_me"
+        android:layout_width="@dimen/abs__action_bar_default_height"
+        android:layout_height="@dimen/abs__action_bar_default_height"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/menu_back"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="5dp"
+        android:src="@drawable/profile_default" />
+
     <ImageView
         android:id="@+id/menu_friends"
         android:layout_width="@dimen/abs__action_bar_default_height"
         android:layout_height="@dimen/abs__action_bar_default_height"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/menu_me"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="5dp"
+        android:src="@drawable/ic_launcher" />
+
+    <ImageView
+        android:id="@+id/menu_refresh"
+        android:layout_width="@dimen/abs__action_bar_default_height"
+        android:layout_height="@dimen/abs__action_bar_default_height"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="5dp"
         android:background="?android:attr/selectableItemBackground"
-		android:clickable="true"
+        android:clickable="true"
         android:padding="5dp"
-        android:src="@drawable/ic_launcher" />
+        android:src="@android:drawable/ic_menu_rotate" />
+
+    <ImageView
+        android:id="@+id/menu_search"
+        android:layout_width="@dimen/abs__action_bar_default_height"
+        android:layout_height="@dimen/abs__action_bar_default_height"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@id/menu_refresh"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="5dp"
+        android:src="@android:drawable/ic_menu_search" />
+
+    <ImageView
+        android:id="@+id/menu_camera"
+        android:layout_width="@dimen/abs__action_bar_default_height"
+        android:layout_height="@dimen/abs__action_bar_default_height"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@id/menu_search"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="5dp"
+        android:src="@android:drawable/ic_menu_camera" />
+
 </RelativeLayout>

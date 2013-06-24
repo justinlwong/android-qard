@@ -2,6 +2,7 @@ package com.qardapp.qard.profile;
 
 import com.qardapp.qard.QRCodeDisplayActivity;
 import com.qardapp.qard.R;
+import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 import com.qardapp.qard.qrcode.QRCodeManager;
@@ -9,8 +10,11 @@ import com.qardapp.qard.qrcode.QRCodeManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.telephony.PhoneNumberUtils;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,19 +22,19 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import android.widget.TextView;
 
 public class ProfileFragment extends Fragment{
 
+	private String lastUserId = "noid";
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.profile_layout,
 				container, false);
-		//GridView gridView = (GridView) rootView.findViewById(R.id.profile_gridview);
-		//gridView.setAdapter(new ProfileServicesAdapter());
-		
 		
 		Button scan = (Button) rootView.findViewById(R.id.profile_scan);
 		scan.setOnClickListener(new OnClickListener() {
@@ -55,42 +59,6 @@ public class ProfileFragment extends Fragment{
 			}
 		});
 		
-		final Button qrButton = (Button) rootView.findViewById(R.id.profile_qr_code_button);
-		final Button meButton = (Button) rootView.findViewById(R.id.profile_me_button);
-		
-		qrButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				qrButton.setBackgroundColor(0xFF66FFFF); 
-				meButton.setBackgroundColor(0xFFFFFFFF); 
-				FragmentManager fragmentManager = getChildFragmentManager();
-				FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-				fragmentTransaction.replace(R.id.profile_main_fragment, new ProfileQRCodeFragment());
-				fragmentTransaction.commit();
-			}
-		});
-		
-
-		meButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				qrButton.setBackgroundColor(0xFFFFFFFF); 
-				meButton.setBackgroundColor(0xFF66FFFF); 
-				FragmentManager fragmentManager = getChildFragmentManager();
-				FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-				fragmentTransaction.replace(R.id.profile_main_fragment, new ProfileGridFragment());
-				fragmentTransaction.commit();
-			}
-		});
-		qrButton.setBackgroundColor(0xFF66FFFF); 
-		meButton.setBackgroundColor(0xFFFFFFFF); 
-		FragmentManager fragmentManager = getChildFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		fragmentTransaction.replace(R.id.profile_main_fragment, new ProfileQRCodeFragment());
-		fragmentTransaction.commit();
-		
 		return rootView;
 	}
 
@@ -107,6 +75,25 @@ public class ProfileFragment extends Fragment{
 		String first_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FIRST_NAME));
 		String last_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_LAST_NAME));
 		nameView.setText(first_name + " " + last_name);
+		
+		do {
+			int val = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_SERVICE_ID));
+			if (val == Services.PHONE.id) {
+				String number = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));
+				if (number != null) {
+					TextView phoneView = (TextView) getView().findViewById(R.id.profile_phone);
+					phoneView.setText(PhoneNumberUtils.formatNumber(number));
+				}
+			}
+		} while (cursor.moveToNext()) ;
+		
+		SharedPreferences pref = getActivity().getSharedPreferences(getString(R.string.app_package_name), Context.MODE_PRIVATE);
+		String user_id = pref.getString("user_id", "noid");
+		// Don't regenerate everytime
+		if (!(lastUserId.equals(user_id))) {
+			ImageView image = (ImageView) getView().findViewById(R.id.profile_qr_code);
+			QRCodeManager.genQRCode (user_id, image); 
+		}
 	}
 
 }
