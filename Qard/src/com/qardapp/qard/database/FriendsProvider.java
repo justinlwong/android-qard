@@ -3,6 +3,8 @@ package com.qardapp.qard.database;
 
 import java.util.List;
 
+import com.qardapp.qard.Services;
+
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -132,7 +134,12 @@ public class FriendsProvider extends ContentProvider {
 		switch (uriType) {
 		// Returns all receipts
 		case FRIENDS:
-			queryBuilder.setTables(FriendsDatabaseHelper.TABLE_FRIENDS);
+			queryBuilder.setTables(FriendsDatabaseHelper.TABLE_FRIENDS + " LEFT OUTER JOIN " +
+					FriendsDatabaseHelper.TABLE_FRIEND_SERVICES  +
+					" ON (" + FriendsDatabaseHelper.TABLE_FRIENDS +
+					"." + FriendsDatabaseHelper.COLUMN_ID + " = "+ FriendsDatabaseHelper.TABLE_FRIEND_SERVICES +
+					"." + FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID +" AND " + FriendsDatabaseHelper.TABLE_FRIEND_SERVICES +
+					"." + FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID +" = " + Services.PHONE.id +")");
 			if (sortOrder == null)
 				sortOrder = FriendsDatabaseHelper.COLUMN_FIRST_NAME + " ASC, " 
 						+ FriendsDatabaseHelper.COLUMN_LAST_NAME + " ASC ";	

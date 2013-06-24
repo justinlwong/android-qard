@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "qard.db";
-	private static final int DATABASE_VERSION = 7;
+	private static final int DATABASE_VERSION = 8;
 	
 	// Database table
 	public static final String TABLE_FRIENDS = "friends";
@@ -88,7 +88,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 		
 		db.execSQL(insertFriend(0, "", "Me", "Me", 0, "", new Date().getTime()));
 
-		/*
+		
 		//Friends
 		db.execSQL(insertFriend(1, "", "John", "Doe", 1, "", new Date().getTime()));
 		db.execSQL(insertFriend(2, "", "Mary", "Jane", 2, "", new Date().getTime()));
@@ -112,7 +112,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 	//	db.execSQL(insertFriendService(3, Services.PHONE.id, ""));
 	//	db.execSQL(insertFriendService(3, Services.ADDRESS.id, ""));
 		db.execSQL(insertFriendService(3, Services.FACEBOOK.id, "511723429"));
-		*/
+		
 	}
 
 	@Override

@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
     <ImageView
         android:id="@+id/friends_profile_pic"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:clickable="false"
         android:focusable="false" />
     <TextView
         android:id="@+id/friends_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/friends_profile_pic"
+        android:paddingLeft="5dp"
+        android:clickable="false"
+        android:focusable="false" />
+	<TextView
+        android:id="@+id/friends_phone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/friends_name"
+        android:layout_toRightOf="@id/friends_profile_pic"
         android:paddingLeft="5dp"
         android:clickable="false"
         android:focusable="false" />
 
-</LinearLayout>
+</RelativeLayout>
