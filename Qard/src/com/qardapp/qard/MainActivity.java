@@ -89,7 +89,8 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			
 			@Override
 			public void onClick(View v) {
-				MainActivity.this.switchFragments(FRAG_FRIENDS);
+				//MainActivity.this.switchFragments(FRAG_FRIENDS);
+				onBackPressed();
 			}
 		});
 		((ImageView) v.findViewById(R.id.menu_me)).setOnClickListener(new OnClickListener() {
@@ -154,6 +155,9 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 				Log.e("Hi", "Created new profile frag");
 				fragment =  new ProfileFragment();
 			}
+			// Don't do anything if already visible
+			if (fragment.isVisible())
+				return fragment;
 			FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
 			trans.replace(R.id.main_container, fragment, "FRAG_PROFILE");
 			trans.addToBackStack(null);
@@ -166,6 +170,9 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 				Log.e("Hi", "Created new friends frag");
 				fragment =  new FriendsFragment();
 			}
+			// Don't do anything if already visible
+			if (fragment.isVisible())
+				return fragment;
 			FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
 			trans.replace(R.id.main_container, fragment, "FRAG_FRIENDS");
 			trans.addToBackStack(null);
@@ -182,6 +189,9 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 				Log.e("Hi", "Created new settings frag");
 				fragment =  new SettingsFragment();
 			}
+			// Don't do anything if already visible
+			if (fragment.isVisible())
+				return fragment;
 			FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
 			trans.replace(R.id.main_container, fragment, "FRAG_SETTINGS");
 			trans.addToBackStack(null);

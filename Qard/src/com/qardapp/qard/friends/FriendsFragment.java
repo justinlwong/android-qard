@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
@@ -50,18 +52,17 @@ public class FriendsFragment extends Fragment implements LoaderCallbacks<ArrayLi
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
-				/*FriendProfileFragment frag = new FriendProfileFragment();
+				FragmentManager manager = FriendsFragment.this.getFragmentManager();
+				FriendProfileFragment fragment = (FriendProfileFragment) manager.findFragmentByTag("FRAG_FRIEND_PROFILE");
+				if (fragment == null)
+					fragment = new FriendProfileFragment();
+				fragment.setId(id);
 				FragmentTransaction transaction = FriendsFragment.this.getFragmentManager().beginTransaction();
-				transaction.replace(R.id.pager, frag);
+				transaction.replace(R.id.main_container, fragment, "FRAG_FRIEND_PROFILE");
 				transaction.addToBackStack(null);
-
 				// Commit the transaction
-				transaction.commit();*/
-				Intent intent = new Intent(getActivity(), FriendProfileActivity.class);
-				Bundle opt = new Bundle();
-		        opt.putString("id",  id + "");
-		        intent.putExtras(opt);
-				startActivity(intent);
+				transaction.commit();
+
 			}
 		});
 		return rootView;
