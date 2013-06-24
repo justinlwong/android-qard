@@ -38,6 +38,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -55,12 +56,16 @@ public class MainActivity extends SherlockFragmentActivity implements
 	 * intensive, it may be best to switch to a
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
-	SectionsPagerAdapter mSectionsPagerAdapter;
+	//SectionsPagerAdapter mSectionsPagerAdapter;
 	public String qrcode = "";
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
-	ViewPager mViewPager;
+	//ViewPager mViewPager;
+	public static int FRAG_PROFILE = 0;
+	public static int FRAG_FRIENDS = 1;
+	public static int FRAG_SETTINGS = 2;
+	
 	public static int REFRESH_LOADER_ID = 0;
 	public static int NEW_USER_LOADER_ID = 1;
 	
@@ -95,12 +100,13 @@ public class MainActivity extends SherlockFragmentActivity implements
 		//fc.getUserInfo();
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
+		/*mSectionsPagerAdapter = new SectionsPagerAdapter(
 				getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
-		mViewPager.setAdapter(mSectionsPagerAdapter);
+		mViewPager.setAdapter(mSectionsPagerAdapter);*/
+		
 
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
@@ -113,6 +119,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 					}
 				});
 */
+		/*
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
 			// Create a tab with text corresponding to the page title defined by
@@ -122,18 +129,15 @@ public class MainActivity extends SherlockFragmentActivity implements
 			actionBar.addTab(actionBar.newTab()
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
-		}
-		
+		}*/
+	
 		ImageView menu_friends = (ImageView) v.findViewById(R.id.menu_friends);
 		menu_friends.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				mViewPager.setCurrentItem(1);
-				// Close search box
-				ListView listView = (ListView) mViewPager
-						.findViewById(R.id.friends_listview);
-				listView.requestFocus();
+				MainActivity.this.switchFragments(FRAG_FRIENDS);
+
 			}
 		});
 		//ServerHelper.resetUser(this);
@@ -148,9 +152,54 @@ public class MainActivity extends SherlockFragmentActivity implements
 		} else {
 			getSupportLoaderManager().initLoader(REFRESH_LOADER_ID, null, this);
 		}
-
+		switchFragments(FRAG_PROFILE);
+		
 	}
 
+	public Fragment switchFragments (int id) {
+		if (id == FRAG_PROFILE) {
+			Fragment fragment = getSupportFragmentManager().findFragmentByTag("FRAG_PROFILE");
+			if (fragment == null) {
+				Log.e("Hi", "Created new profile frag");
+				fragment =  new ProfileFragment();
+			}
+			FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+			trans.replace(R.id.main_container, fragment, "FRAG_PROFILE");
+			trans.addToBackStack(null);
+			trans.commit();
+			return fragment;
+		}
+		else if (id == FRAG_FRIENDS) {
+			Fragment fragment = getSupportFragmentManager().findFragmentByTag("FRAG_FRIENDS");
+			if (fragment == null) {
+				Log.e("Hi", "Created new friends frag");
+				fragment =  new FriendsFragment();
+			}
+			FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+			trans.replace(R.id.main_container, fragment, "FRAG_FRIENDS");
+			trans.addToBackStack(null);
+			trans.commit();
+			// Close search box
+			FrameLayout layout = (FrameLayout) MainActivity.this
+					.findViewById(R.id.main_container);
+			layout.requestFocus();
+			return fragment;
+		}
+		else if (id == FRAG_SETTINGS) {
+			Fragment fragment = getSupportFragmentManager().findFragmentByTag("FRAG_SETTINGS");
+			if (fragment == null) {
+				Log.e("Hi", "Created new settings frag");
+				fragment =  new SettingsFragment();
+			}
+			FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+			trans.replace(R.id.main_container, fragment, "FRAG_SETTINGS");
+			trans.addToBackStack(null);
+			trans.commit();
+			return fragment;
+		}
+		return null;
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -162,11 +211,11 @@ public class MainActivity extends SherlockFragmentActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			mViewPager.setCurrentItem(0);
+			switchFragments(FRAG_PROFILE);
 			break;
 		case R.id.menu_search:
-			mViewPager.setCurrentItem(1);
-			SearchView v = (SearchView) mViewPager.findViewById(R.id.friends_search);
+			switchFragments(FRAG_FRIENDS);
+			SearchView v = (SearchView) findViewById(R.id.friends_search);
 			v.requestFocus();
 			break;
 		case R.id.menu_camera:
@@ -176,7 +225,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		case R.id.menu_refresh:
 			break;
 		case R.id.action_settings:
-			mViewPager.setCurrentItem(2);
+			switchFragments(FRAG_SETTINGS);
 			break;
 		}
 		return true;
@@ -187,7 +236,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 			FragmentTransaction fragmentTransaction) {
 		// When the given tab is selected, switch to the corresponding page in
 		// the ViewPager.
-		mViewPager.setCurrentItem(tab.getPosition());
+		//mViewPager.setCurrentItem(tab.getPosition());
 	}
 
 	@Override

@@ -35,12 +35,13 @@ public class SettingsFragment extends Fragment{
 	
 	// Later will put this in the global application class
 	//OAuthService linkedinService = null;
-		
+	protected View rootView;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		View rootView = inflater.inflate(R.layout.settings_layout1,
+		rootView = inflater.inflate(R.layout.settings_layout1,
 				container, false);
 
 		Button b1 = (Button)rootView.findViewById(R.id.facebookconnect);
@@ -158,13 +159,7 @@ public class SettingsFragment extends Fragment{
 			}
 		});
 		
-		TextView current_id_field = (TextView) rootView.findViewById(R.id.settings_current_id);
-		String user_id = ServerHelper.getUserId(getActivity());
-		if (user_id != null) {
-			current_id_field.setText("(DEBUG) Current qard id = " + user_id);
-		} else {
-			current_id_field.setText("(DEBUG) Current qard id not found, restart?");
-		}
+
 		
 		return rootView;
 	}
@@ -175,6 +170,19 @@ public class SettingsFragment extends Fragment{
 		    intent = new Intent(this.getActivity(),FacebookLoginActivity.class);
 		} 
 		startActivityForResult(intent,0);	
+	}
+
+	@Override
+	public void onViewStateRestored(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onViewStateRestored(savedInstanceState);
+		TextView current_id_field = (TextView) getView().findViewById(R.id.settings_current_id);
+		String user_id = ServerHelper.getUserId(getActivity());
+		if (user_id != null) {
+			current_id_field.setText("(DEBUG) Current qard id = " + user_id);
+		} else {
+			current_id_field.setText("(DEBUG) Current qard id not found, restart?");
+		}
 	}
 		
 }

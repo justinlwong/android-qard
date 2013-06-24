@@ -27,6 +27,7 @@ public class FriendsFragment extends Fragment implements LoaderCallbacks<ArrayLi
 	
 	private static int FRIENDS_INFO_LOADER_ID = 0;
 	private FriendsCursorAdapter adapter;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -38,11 +39,11 @@ public class FriendsFragment extends Fragment implements LoaderCallbacks<ArrayLi
 		SearchView search = (SearchView) rootView.findViewById(R.id.friends_search);
 		search.setIconifiedByDefault(false);
 
-		
+		/*
 		Cursor cursor = null;
 		ContentResolver res = getActivity().getContentResolver();
-		cursor = res.query(FriendsProvider.CONTENT_URI, null, null, null, null);
-		adapter = new FriendsCursorAdapter(rootView.getContext(), cursor, FriendsCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+		cursor = res.query(FriendsProvider.CONTENT_URI, null, null, null, null); */
+		adapter = new FriendsCursorAdapter(rootView.getContext(), null, FriendsCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -66,6 +67,8 @@ public class FriendsFragment extends Fragment implements LoaderCallbacks<ArrayLi
 		return rootView;
 	}
 
+	
+	
 	@Override
 	public Loader<ArrayList<ServerNotifications>> onCreateLoader(int id,
 			Bundle arg1) {
@@ -85,6 +88,16 @@ public class FriendsFragment extends Fragment implements LoaderCallbacks<ArrayLi
 	public void onLoaderReset(Loader<ArrayList<ServerNotifications>> arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void onViewStateRestored(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onViewStateRestored(savedInstanceState);
+		Cursor cursor = null;
+		ContentResolver res = getActivity().getContentResolver();
+		cursor = res.query(FriendsProvider.CONTENT_URI, null, null, null, null);
+		adapter.swapCursor(cursor);
 	}
 	
 }
