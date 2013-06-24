@@ -36,58 +36,14 @@
             android:text="###-####" />
     </LinearLayout>
 
-    <View
-        android:id="@+id/friend_profile_vstrut"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:id="@+id/friend_profile_request"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/friend_profile_image"
-        android:layout_toLeftOf="@id/friend_profile_vstrut"
-        android:text="Request" />
-
-    <Button
-        android:id="@+id/friend_profile_block"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/friend_profile_info_box"
-        android:layout_toRightOf="@id/friend_profile_vstrut"
-        android:text="Block" />
-
-    <Button
-        android:id="@+id/friend_profile_f_to_m_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/friend_profile_vstrut"
-        android:background="#FFFFFFFF"
-        android:text="Friend" />
-
-    <Button
-        android:id="@+id/friend_profile_m_to_f_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/friend_profile_vstrut"
-        android:background="#FFFFFFFF"
-        android:text="Me" />
-
     <GridView
         android:id="@+id/friend_profile_gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/friend_profile_m_to_f_button"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/friend_profile_request"
+        android:layout_below="@id/friend_profile_info_box"
         android:columnWidth="100dp"
         android:gravity="center"
         android:horizontalSpacing="10dp"
