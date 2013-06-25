@@ -72,9 +72,10 @@ public class FriendsInfoLoader extends AsyncTaskLoader<ArrayList<ServerNotificat
 					String[] args = new String[] {user_id};
 					Cursor cur = resolver.query(FriendsProvider.CONTENT_URI, null, where, args, null);
 					int friend_id = 0;
+					String first_name = obj.getString("first_name");
+					String last_name = obj.getString("last_name");
 					if (cur.getCount() == 0 ) {
-						String first_name = obj.getString("first_name");
-						String last_name = obj.getString("last_name");
+
 						ContentValues values = new ContentValues();
 						values.put(FriendsDatabaseHelper.COLUMN_FIRST_NAME, first_name);
 						values.put(FriendsDatabaseHelper.COLUMN_LAST_NAME, last_name);
@@ -84,6 +85,11 @@ public class FriendsInfoLoader extends AsyncTaskLoader<ArrayList<ServerNotificat
 					} else {
 						cur.moveToFirst();
 						friend_id = cur.getInt(cur.getColumnIndex(FriendsDatabaseHelper.COLUMN_ID));
+						// Update names
+						ContentValues values = new ContentValues();
+						values.put(FriendsDatabaseHelper.COLUMN_FIRST_NAME, first_name);
+						values.put(FriendsDatabaseHelper.COLUMN_LAST_NAME, last_name);
+						resolver.update(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/" + friend_id), values, null, null);
 					}
 					cur.close();
 					if (service_id != null && !(service_id.equals("null"))) {

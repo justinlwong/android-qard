@@ -126,6 +126,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			
 			@Override
 			public void onClick(View v) {
+				getSupportLoaderManager().restartLoader(REFRESH_LOADER_ID, null, MainActivity.this);
 			}
 		});
 		

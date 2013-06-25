@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "qard.db";
-	private static final int DATABASE_VERSION = 8;
+	private static final int DATABASE_VERSION = 9;
 	
 	// Database table
 	public static final String TABLE_FRIENDS = "friends";
@@ -22,6 +22,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_USER_ID = "user_id";
 	public static final String COLUMN_PROFILE_PIC_LOC = "picture_loc";
 	public static final String COLUMN_CONFIRMED = "confirmed";
+	public static final String COLUMN_HIDE_CONFIRMED = "hide_confirmed";
 	public static final String COLUMN_DATE_ADDED = "date_added";
 
 	// Service Table
@@ -49,6 +50,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 			+ COLUMN_USER_ID + " integer , " 
 			+ COLUMN_PROFILE_PIC_LOC + " text , " 
 			+ COLUMN_CONFIRMED + " boolean default false, " 
+			+ COLUMN_HIDE_CONFIRMED + " boolean default false, " 
 			+ COLUMN_DATE_ADDED + " long  " 
 			+ ");";
 	

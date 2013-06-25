@@ -43,6 +43,12 @@ public class AddFriendTask extends AsyncTask<String, Void, String>{
 		this.number = number;
 	}
 	
+	public AddFriendTask(Context context, String friend_id) {
+		super();
+		this.context = context;
+		this.friend_id = friend_id;
+
+	}
 	
 	
 	@Override
@@ -68,38 +74,41 @@ public class AddFriendTask extends AsyncTask<String, Void, String>{
 			}
 			JSONTokener tokener = new JSONTokener(json);
 			JSONObject finalResult = new JSONObject(tokener);
-			
-			ContentResolver resolver = context.getContentResolver();
-			String where = FriendsDatabaseHelper.TABLE_FRIENDS + "."+FriendsDatabaseHelper.COLUMN_USER_ID + "=?";
-			String[] args = new String[] {friend_id};
-			Cursor cur = resolver.query(FriendsProvider.CONTENT_URI, null, where, args, null);
-			long local_friend_id = 0;
-			if (cur.getCount() == 0 ) {
-				ContentValues values = new ContentValues();
-				values.put(FriendsDatabaseHelper.COLUMN_FIRST_NAME, first_name);
-				values.put(FriendsDatabaseHelper.COLUMN_LAST_NAME, last_name);
-				values.put(FriendsDatabaseHelper.COLUMN_USER_ID, friend_id);	
-				values.put(FriendsDatabaseHelper.COLUMN_CONFIRMED, true);	
-				Uri uri = resolver.insert(FriendsProvider.CONTENT_URI, values);
-				local_friend_id = Long.parseLong(uri.getLastPathSegment());
-			} else {
-				cur.moveToFirst();
-				local_friend_id = cur.getLong(cur.getColumnIndex(FriendsDatabaseHelper.COLUMN_ID));
-				ContentValues values = new ContentValues();
-				values.put(FriendsDatabaseHelper.COLUMN_CONFIRMED, true);	
-				resolver.update(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/" + local_friend_id), values, null, null);
-			}
-			cur.close();
-			// Add their number
-			if (number != null) {
-				ContentValues values = new ContentValues();
-				values.put(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID, local_friend_id);
-				values.put(FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID, Services.PHONE.id);
-				values.put(FriendsDatabaseHelper.COLUMN_FS_DATA, number);
-				where = FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID + "=? AND " + FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID + "=?";
-				args = new String[] { local_friend_id +"", String.valueOf(Services.PHONE.id)};
-				resolver.delete(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/" + local_friend_id + "/service/"+Services.PHONE.id), where, args);
-				resolver.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/"+ local_friend_id + "/service/"+Services.PHONE.id), values);
+			if (finalResult.getString("id") != null) {
+				ContentResolver resolver = context.getContentResolver();
+				String where = FriendsDatabaseHelper.TABLE_FRIENDS + "."+FriendsDatabaseHelper.COLUMN_USER_ID + "=?";
+				String[] args = new String[] {friend_id};
+				Cursor cur = resolver.query(FriendsProvider.CONTENT_URI, null, where, args, null);
+				long local_friend_id = 0;
+				if (cur.getCount() == 0 ) {
+					ContentValues values = new ContentValues();
+					if (first_name !=null)
+						values.put(FriendsDatabaseHelper.COLUMN_FIRST_NAME, first_name);
+					if (last_name != null)
+						values.put(FriendsDatabaseHelper.COLUMN_LAST_NAME, last_name);
+					values.put(FriendsDatabaseHelper.COLUMN_USER_ID, friend_id);	
+					values.put(FriendsDatabaseHelper.COLUMN_CONFIRMED, true);	
+					Uri uri = resolver.insert(FriendsProvider.CONTENT_URI, values);
+					local_friend_id = Long.parseLong(uri.getLastPathSegment());
+				} else {
+					cur.moveToFirst();
+					local_friend_id = cur.getLong(cur.getColumnIndex(FriendsDatabaseHelper.COLUMN_ID));
+					ContentValues values = new ContentValues();
+					values.put(FriendsDatabaseHelper.COLUMN_CONFIRMED, true);	
+					resolver.update(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/" + local_friend_id), values, null, null);
+				}
+				cur.close();
+				// Add their number
+				if (number != null) {
+					ContentValues values = new ContentValues();
+					values.put(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID, local_friend_id);
+					values.put(FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID, Services.PHONE.id);
+					values.put(FriendsDatabaseHelper.COLUMN_FS_DATA, number);
+					where = FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID + "=? AND " + FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID + "=?";
+					args = new String[] { local_friend_id +"", String.valueOf(Services.PHONE.id)};
+					resolver.delete(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/" + local_friend_id + "/service/"+Services.PHONE.id), where, args);
+					resolver.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/"+ local_friend_id + "/service/"+Services.PHONE.id), values);
+				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
