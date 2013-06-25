@@ -3,6 +3,7 @@ package com.qardapp.qard.profile;
 import com.qardapp.qard.QRCodeDisplayActivity;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
+import com.qardapp.qard.comm.QardMessage;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 import com.qardapp.qard.qrcode.QRCodeManager;
@@ -75,11 +76,11 @@ public class ProfileFragment extends Fragment{
 		String first_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FIRST_NAME));
 		String last_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_LAST_NAME));
 		nameView.setText(first_name + " " + last_name);
-		
+		String number = null;
 		do {
 			int val = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_SERVICE_ID));
 			if (val == Services.PHONE.id) {
-				String number = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));
+				number = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));
 				if (number != null) {
 					TextView phoneView = (TextView) getView().findViewById(R.id.profile_phone);
 					phoneView.setText(PhoneNumberUtils.formatNumber(number));
@@ -87,12 +88,15 @@ public class ProfileFragment extends Fragment{
 			}
 		} while (cursor.moveToNext()) ;
 		
+		if (number == null)
+			number = "";
 		SharedPreferences pref = getActivity().getSharedPreferences(getString(R.string.app_package_name), Context.MODE_PRIVATE);
 		String user_id = pref.getString("user_id", "noid");
 		// Don't regenerate everytime
 		if (!(lastUserId.equals(user_id))) {
 			ImageView image = (ImageView) getView().findViewById(R.id.profile_qr_code);
-			QRCodeManager.genQRCode (user_id, image); 
+			String msg = QardMessage.encodeMessage(user_id, first_name, last_name, number);
+			QRCodeManager.genQRCode (msg, image); 
 		}
 	}
 

@@ -111,10 +111,8 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			
 			@Override
 			public void onClick(View v) {
-				MainActivity.this.switchFragments(FRAG_FRIENDS);
-				// Focus the search view
-				SearchView search = (SearchView) findViewById(R.id.friends_search);
-				search.requestFocus();
+				Fragment fragment = MainActivity.this.switchFragments(FRAG_FRIENDS);
+				((FriendsFragment) fragment).openSearchKeyboard();
 			}
 		});
 		((ImageView) v.findViewById(R.id.menu_camera)).setOnClickListener(new OnClickListener() {
@@ -222,7 +220,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{  
-		qrcode = QRCodeManager.checkScanActivityResult(requestCode, resultCode, data);
+		qrcode = QRCodeManager.checkScanActivityResult(this, requestCode, resultCode, data);
 		if (qrcode != null) {
 			Toast.makeText(this, "Scan Result = " + qrcode, Toast.LENGTH_SHORT).show();
 		}

@@ -28,6 +28,8 @@ import android.widget.ListView;
 public class FriendsFragment extends Fragment implements LoaderCallbacks<ArrayList<ServerNotifications>>{
 	
 	private static int FRIENDS_INFO_LOADER_ID = 0;
+	
+	private boolean searchOpen = false;
 	private FriendsCursorAdapter adapter;
 	
 	@Override
@@ -40,7 +42,6 @@ public class FriendsFragment extends Fragment implements LoaderCallbacks<ArrayLi
 		
 		SearchView search = (SearchView) rootView.findViewById(R.id.friends_search);
 		search.setIconifiedByDefault(false);
-
 		/*
 		Cursor cursor = null;
 		ContentResolver res = getActivity().getContentResolver();
@@ -65,6 +66,7 @@ public class FriendsFragment extends Fragment implements LoaderCallbacks<ArrayLi
 
 			}
 		});
+		rootView.requestFocus();
 		return rootView;
 	}
 
@@ -90,6 +92,16 @@ public class FriendsFragment extends Fragment implements LoaderCallbacks<ArrayLi
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void openSearchKeyboard() {
+		if (getView() != null) {
+			View v = getView().findViewById(R.id.friends_search);
+			v.requestFocus();
+			searchOpen = false;
+		} else {
+			searchOpen = true;
+		}
+	}
 
 	@Override
 	public void onViewStateRestored(Bundle savedInstanceState) {
@@ -99,6 +111,10 @@ public class FriendsFragment extends Fragment implements LoaderCallbacks<ArrayLi
 		ContentResolver res = getActivity().getContentResolver();
 		cursor = res.query(FriendsProvider.CONTENT_URI, null, null, null, null);
 		adapter.swapCursor(cursor);
+		if (searchOpen) {
+			getView().findViewById(R.id.friends_search).requestFocus();
+			searchOpen = false;
+		}
 	}
 	
 }

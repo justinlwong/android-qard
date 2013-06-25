@@ -1,5 +1,6 @@
 package com.qardapp.qard.qrcode;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import net.sourceforge.zbar.Symbol;
@@ -12,6 +13,8 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.qardapp.qard.comm.QardMessage;
+import com.qardapp.qard.comm.server.AddFriendTask;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -35,11 +38,18 @@ public class QRCodeManager {
 		activity.startActivityForResult(intent, SCANNER_REQUEST_CODE);
 	}
 	
-	public static String checkScanActivityResult(int requestCode, int resultCode, Intent data)
+	public static String checkScanActivityResult(Activity activity, int requestCode, int resultCode, Intent data)
 	{    
 		if (requestCode == SCANNER_REQUEST_CODE) {
 		    if (resultCode == Activity.RESULT_OK) 
 		    {
+		    	String msg = data.getStringExtra(ZBarConstants.SCAN_RESULT);
+		    	ArrayList<String> resultValues = QardMessage.decodeMessage(msg);
+		    	if (resultValues != null) {
+		    		AddFriendTask task = new AddFriendTask(activity, resultValues.get(QardMessage.ID),
+		    				resultValues.get(QardMessage.FIRST_NAME), resultValues.get(QardMessage.LAST_NAME));
+		    		task.execute();
+		    	}
 		        // Scan result is available by making a call to data.getStringExtra(ZBarConstants.SCAN_RESULT)
 		        // Type of the scan result is available by making a call to data.getStringExtra(ZBarConstants.SCAN_RESULT_TYPE)
 		        return (data.getStringExtra(ZBarConstants.SCAN_RESULT));
@@ -59,7 +69,7 @@ public class QRCodeManager {
 	
 	public static ImageView genQRCode (String text, ImageView imageView, int scale) {
 		Hashtable<EncodeHintType, Object> hintMap = new Hashtable<EncodeHintType, Object>();
-        hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+        hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
         hintMap.put(EncodeHintType.CHARACTER_SET, "UTF-8");
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         try {
