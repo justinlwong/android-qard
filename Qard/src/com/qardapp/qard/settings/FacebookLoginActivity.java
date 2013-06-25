@@ -18,6 +18,7 @@ import com.facebook.SessionState;
 import com.facebook.Settings;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
+import com.qardapp.qard.comm.server.AddServiceTask;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 import com.facebook.Request;
@@ -131,7 +132,9 @@ public class FacebookLoginActivity extends Activity {
                             	String userId = null;
                                 Log.d("User",user.getId());
                                 userId = user.getId();
-
+                                
+                                AddServiceTask task = new AddServiceTask(FacebookLoginActivity.this, Services.FACEBOOK.id, userId);
+                                task.execute();
 	    						ContentResolver res = getContentResolver();
 	    						ContentValues values = new ContentValues();
 	    						values.put(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID, 0);

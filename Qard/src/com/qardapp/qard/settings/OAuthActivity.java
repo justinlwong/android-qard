@@ -21,6 +21,7 @@ import org.scribe.oauth.OAuthService;
 import com.google.android.gms.plus.PlusClient;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
+import com.qardapp.qard.comm.server.AddServiceTask;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 
@@ -58,6 +59,9 @@ public class OAuthActivity extends Activity {
 	
     public void updateDatabase(String data)
     {
+    	AddServiceTask task = new AddServiceTask(OAuthActivity.this, serviceID, data);
+        task.execute();
+        
 		ContentResolver res = getContentResolver();
 		ContentValues values = new ContentValues();
 		values.put(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID, 0);
