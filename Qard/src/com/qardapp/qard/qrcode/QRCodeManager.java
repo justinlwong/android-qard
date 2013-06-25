@@ -47,7 +47,8 @@ public class QRCodeManager {
 		    	ArrayList<String> resultValues = QardMessage.decodeMessage(msg);
 		    	if (resultValues != null) {
 		    		AddFriendTask task = new AddFriendTask(activity, resultValues.get(QardMessage.ID),
-		    				resultValues.get(QardMessage.FIRST_NAME), resultValues.get(QardMessage.LAST_NAME));
+		    				resultValues.get(QardMessage.FIRST_NAME), resultValues.get(QardMessage.LAST_NAME),
+		    				resultValues.get(QardMessage.PHONE));
 		    		task.execute();
 		    	}
 		        // Scan result is available by making a call to data.getStringExtra(ZBarConstants.SCAN_RESULT)
