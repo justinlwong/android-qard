@@ -90,7 +90,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 		
 		db.execSQL(insertFriend(0, "", "Me", "Me", 0, "", new Date().getTime()));
 
-		
+		/*
 		//Friends
 		db.execSQL(insertFriend(1, "", "John", "Doe", 1, "", new Date().getTime()));
 		db.execSQL(insertFriend(2, "", "Mary", "Jane", 2, "", new Date().getTime()));
@@ -99,8 +99,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(insertFriend(5, "", "Paul", "T", 5, "", new Date().getTime()));
 		
 		// Friend Services
-		db.execSQL(insertFriendService(0, Services.PHONE.id, "4161234567"));
-		db.execSQL(insertFriendService(0, Services.ADDRESS.id, "32 Yonge St."));
+
 		//db.execSQL(insertFriendService(0, Services.FACEBOOK.id, "me123"));
 		
 		db.execSQL(insertFriendService(1, Services.PHONE.id, "4169285304"));
@@ -114,7 +113,10 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 	//	db.execSQL(insertFriendService(3, Services.PHONE.id, ""));
 	//	db.execSQL(insertFriendService(3, Services.ADDRESS.id, ""));
 		db.execSQL(insertFriendService(3, Services.FACEBOOK.id, "511723429"));
+		*/
 		
+		db.execSQL(insertFriendService(0, Services.PHONE.id, "4161234567"));
+		db.execSQL(insertFriendService(0, Services.ADDRESS.id, "32 Yonge St."));
 	}
 
 	@Override
