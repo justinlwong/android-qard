@@ -1,6 +1,7 @@
 package com.qardapp.qard.friends;
 
 import com.qardapp.qard.R;
+import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 import com.qardapp.qard.friends.profile.FriendsProfileCursorAdapter;
@@ -10,6 +11,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +62,16 @@ public class FriendProfileFragment extends Fragment{
 						.getString(cursor
 								.getColumnIndex(FriendsDatabaseHelper.COLUMN_LAST_NAME));
 				view.setText(first_name + " " + last_name);
+				do {
+					int val = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_SERVICE_ID));
+					if (val == Services.PHONE.id) {
+						String number = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));
+						if (number != null) {
+							TextView phoneView = (TextView) getView().findViewById(R.id.friend_profile_phone);
+							phoneView.setText(PhoneNumberUtils.formatNumber(number));
+						}
+					}
+				} while (cursor.moveToNext());
 			}
 			adapter.changeCursor(cursor);
 		}
