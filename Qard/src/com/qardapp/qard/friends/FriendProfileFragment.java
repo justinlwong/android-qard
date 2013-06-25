@@ -20,11 +20,18 @@ import android.widget.TextView;
 public class FriendProfileFragment extends Fragment{
 	
 	private long friend_id;
-	
+	private FriendsProfileCursorAdapter adapter;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.friends_profile,
 				container, false);
+		GridView gridView = (GridView) rootView.findViewById(R.id.friend_profile_gridview);
+		adapter = new FriendsProfileCursorAdapter(
+				this.getActivity(),
+				null,
+				FriendsProfileCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+		gridView.setAdapter(adapter);
+		
 		return rootView;
 	}
 	
@@ -42,9 +49,10 @@ public class FriendProfileFragment extends Fragment{
 			cursor = res.query(
 					Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/"
 							+ friend_id), null, null, null, null);
-			TextView view = (TextView) getView().findViewById(R.id.friend_profile_name);
 			if (cursor.getCount() > 0) {
 				cursor.moveToFirst();
+				TextView view = (TextView) getView().findViewById(R.id.friend_profile_name);
+
 				String first_name = cursor
 						.getString(cursor
 								.getColumnIndex(FriendsDatabaseHelper.COLUMN_FIRST_NAME));
@@ -53,11 +61,7 @@ public class FriendProfileFragment extends Fragment{
 								.getColumnIndex(FriendsDatabaseHelper.COLUMN_LAST_NAME));
 				view.setText(first_name + " " + last_name);
 			}
-			GridView gridView = (GridView) getView().findViewById(R.id.friend_profile_gridview);
-			gridView.setAdapter(new FriendsProfileCursorAdapter(
-					this.getActivity(),
-					cursor,
-					FriendsProfileCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER));
+			adapter.changeCursor(cursor);
 		}
 		
 	}

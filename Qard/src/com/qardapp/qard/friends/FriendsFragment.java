@@ -110,7 +110,7 @@ public class FriendsFragment extends Fragment implements LoaderCallbacks<ArrayLi
 		Cursor cursor = null;
 		ContentResolver res = getActivity().getContentResolver();
 		cursor = res.query(FriendsProvider.CONTENT_URI, null, null, null, null);
-		adapter.swapCursor(cursor);
+		adapter.changeCursor(cursor);
 		if (searchOpen) {
 			getView().findViewById(R.id.friends_search).requestFocus();
 			searchOpen = false;

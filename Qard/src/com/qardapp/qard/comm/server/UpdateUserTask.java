@@ -80,10 +80,6 @@ public class UpdateUserTask extends
 			JSONObject finalResult = new JSONObject(tokener);
 			
 			ServerHelper.setUserName(context, finalResult.getString("username"));
-			Toast t = new Toast(context);
-			t.setText("User updated!");
-			t.setDuration(Toast.LENGTH_SHORT);
-			t.show();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

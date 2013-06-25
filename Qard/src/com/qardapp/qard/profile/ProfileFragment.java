@@ -87,7 +87,7 @@ public class ProfileFragment extends Fragment{
 				}
 			}
 		} while (cursor.moveToNext()) ;
-		
+		cursor.close();
 		if (number == null)
 			number = "";
 		SharedPreferences pref = getActivity().getSharedPreferences(getString(R.string.app_package_name), Context.MODE_PRIVATE);

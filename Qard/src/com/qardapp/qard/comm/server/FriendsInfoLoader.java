@@ -85,14 +85,17 @@ public class FriendsInfoLoader extends AsyncTaskLoader<ArrayList<ServerNotificat
 						cur.moveToFirst();
 						friend_id = cur.getInt(cur.getColumnIndex(FriendsDatabaseHelper.COLUMN_ID));
 					}
-					ContentValues values = new ContentValues();
-					values.put(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID, friend_id);
-					values.put(FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID, service_id);
-					values.put(FriendsDatabaseHelper.COLUMN_FS_DATA, data);	
-					where = FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID + "=? AND " + FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID + "=?";
-					args = new String[] { friend_id +"", service_id};
-					resolver.delete(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/"+ friend_id+"/service/"+service_id), where, args);
-					resolver.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/"+ friend_id+"/service/"+service_id), values);
+					cur.close();
+					if (service_id != null && !(service_id.equals("null"))) {
+						ContentValues values = new ContentValues();
+						values.put(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID, friend_id);
+						values.put(FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID, service_id);
+						values.put(FriendsDatabaseHelper.COLUMN_FS_DATA, data);	
+						where = FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID + "=? AND " + FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID + "=?";
+						args = new String[] { friend_id +"", service_id};
+						resolver.delete(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/"+ friend_id+"/service/"+service_id), where, args);
+						resolver.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/"+ friend_id+"/service/"+service_id), values);
+					}
 				}
 			}
 			Log.e("HI", finalResult.toString());

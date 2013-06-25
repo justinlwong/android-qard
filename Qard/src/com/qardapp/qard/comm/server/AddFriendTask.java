@@ -89,6 +89,7 @@ public class AddFriendTask extends AsyncTask<String, Void, String>{
 				values.put(FriendsDatabaseHelper.COLUMN_CONFIRMED, true);	
 				resolver.update(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/" + local_friend_id), values, null, null);
 			}
+			cur.close();
 			// Add their number
 			if (number != null) {
 				ContentValues values = new ContentValues();
