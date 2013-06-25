@@ -78,8 +78,16 @@ public class UpdateUserTask extends
 			}
 			JSONTokener tokener = new JSONTokener(json);
 			JSONObject finalResult = new JSONObject(tokener);
-			
-			ServerHelper.setUserName(context, finalResult.getString("username"));
+			String id = finalResult.getString("id");
+			if (id != null) {
+				ContentValues values = new ContentValues();
+				values.put(FriendsDatabaseHelper.COLUMN_FIRST_NAME, first_name);
+				values.put(FriendsDatabaseHelper.COLUMN_LAST_NAME, last_name);
+				values.put(FriendsDatabaseHelper.COLUMN_USER_ID, id);
+				ContentResolver resolver = context.getContentResolver();
+				resolver.update(FriendsProvider.MY_URI, values, null, null);
+				ServerHelper.setUserName(context, finalResult.getString("username"));
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
