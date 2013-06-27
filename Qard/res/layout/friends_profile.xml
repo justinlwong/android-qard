@@ -52,10 +52,11 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@id/friend_profile_status_view"
-        android:columnWidth="100dp"
+        android:padding="10dp"
+
         android:gravity="center"
         android:horizontalSpacing="10dp"
-        android:numColumns="auto_fit"
+        android:numColumns="4"
         android:stretchMode="columnWidth"
         android:verticalSpacing="10dp" />
 
