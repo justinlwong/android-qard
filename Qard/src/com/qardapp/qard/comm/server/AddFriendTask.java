@@ -74,7 +74,7 @@ public class AddFriendTask extends AsyncTask<String, Void, String>{
 			}
 			JSONTokener tokener = new JSONTokener(json);
 			JSONObject finalResult = new JSONObject(tokener);
-			if (finalResult.getString("id") != null) {
+			if (finalResult.has("id")) {
 				ContentResolver resolver = context.getContentResolver();
 				String where = FriendsDatabaseHelper.TABLE_FRIENDS + "."+FriendsDatabaseHelper.COLUMN_USER_ID + "=?";
 				String[] args = new String[] {friend_id};
