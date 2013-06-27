@@ -34,10 +34,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
+    <View android:id="@+id/friend_profile_divider"
+        android:layout_width="match_parent"
+        android:layout_height="5dp" 
+        android:background = "#FFFFFF"
+	    android:layout_below="@id/friend_profile_info_box">
+        
+    </View> 
 	<LinearLayout android:id="@+id/friend_profile_status_view"
 	    android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:layout_below="@id/friend_profile_info_box"
+	    android:layout_below="@id/friend_profile_divider"
 	    android:paddingBottom="5dp"
 	    android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
