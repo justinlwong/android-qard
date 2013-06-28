@@ -2,11 +2,8 @@ package com.qardapp.qard.settings;
 
 import org.json.JSONObject;
 import org.scribe.builder.ServiceBuilder;
-import org.scribe.builder.api.Api;
-import org.scribe.builder.api.FacebookApi;
 import org.scribe.builder.api.FlickrApi;
 import org.scribe.builder.api.Foursquare2Api;
-import org.scribe.builder.api.FoursquareApi;
 import org.scribe.builder.api.LinkedInApi;
 import org.scribe.builder.api.TwitterApi;
 import org.scribe.exceptions.OAuthException;
@@ -17,19 +14,10 @@ import org.scribe.model.Verb;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
-
-import com.google.android.gms.plus.PlusClient;
-import com.qardapp.qard.R;
-import com.qardapp.qard.Services;
-import com.qardapp.qard.comm.server.AddServiceTask;
-import com.qardapp.qard.database.FriendsDatabaseHelper;
-import com.qardapp.qard.database.FriendsProvider;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -38,7 +26,12 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
-import android.graphics.Bitmap;
+
+import com.qardapp.qard.R;
+import com.qardapp.qard.Services;
+import com.qardapp.qard.comm.server.AddServiceTask;
+import com.qardapp.qard.database.FriendsDatabaseHelper;
+import com.qardapp.qard.database.FriendsProvider;
 
 public class OAuthActivity extends Activity {
 	
@@ -183,6 +176,7 @@ public class OAuthActivity extends Activity {
 						                {
 						                    JSONObject user = mainObject.getJSONObject("user");
 						                    data = user.getString(service.idFieldName);
+						                    username = user.getString("url").replaceFirst("http://www.flickr.com/people/","");
 						                } else if (serviceID == Services.FOURSQUARE.id)
 						                {
 						                    JSONObject resp = mainObject.getJSONObject("response");
@@ -237,7 +231,12 @@ public class OAuthActivity extends Activity {
 				        		}
 				        		editor.commit();    
 				        		
-				                //Toast.makeText(activity, "Connected to " + String.valueOf(serviceID), Toast.LENGTH_LONG).show();
+				        		runOnUiThread(new Runnable() {
+				        		    public void run() {
+						                Toast.makeText(activity, "Added " + service.name + " information!", Toast.LENGTH_LONG).show();
+				        		    }
+				        		});
+
 				        		
 					  		    finish();
 

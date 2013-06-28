@@ -1,11 +1,11 @@
 package com.qardapp.qard;
 
-import com.qardapp.qard.qrcode.QRCodeManager;
-
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ImageView;
+
+import com.qardapp.qard.qrcode.QRCodeManager;
 
 public class QRCodeDisplayActivity extends Activity {
 

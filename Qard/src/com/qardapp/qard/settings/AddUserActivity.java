@@ -1,45 +1,25 @@
 package com.qardapp.qard.settings;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.scribe.builder.ServiceBuilder;
-import org.scribe.builder.api.FlickrApi;
 import org.scribe.builder.api.Foursquare2Api;
 import org.scribe.builder.api.LinkedInApi;
 import org.scribe.builder.api.TwitterApi;
-import org.scribe.exceptions.OAuthException;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
 import org.scribe.model.Token;
 import org.scribe.model.Verb;
-import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.renderscript.Element;
 import android.util.Log;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
-import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
-import com.qardapp.qard.database.FriendsDatabaseHelper;
-import com.qardapp.qard.database.FriendsProvider;
 
 public class AddUserActivity extends Activity{
 	

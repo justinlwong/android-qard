@@ -1,24 +1,8 @@
 package com.qardapp.qard.settings;
 
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.HttpURLConnection;
 import java.util.regex.Pattern;
 
-import org.json.JSONObject;
-import org.scribe.builder.ServiceBuilder;
-import org.scribe.builder.api.GoogleApi;
-import org.scribe.builder.api.LinkedInApi;
-import org.scribe.model.OAuthRequest;
-import org.scribe.model.Response;
-import org.scribe.model.Token;
-import org.scribe.model.Verb;
 import org.scribe.oauth.OAuthService;
-
-import com.qardapp.qard.Services;
-import com.qardapp.qard.comm.server.AddServiceTask;
-import com.qardapp.qard.database.FriendsDatabaseHelper;
-import com.qardapp.qard.database.FriendsProvider;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -34,6 +18,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.widget.Toast;
+
+import com.qardapp.qard.Services;
+import com.qardapp.qard.comm.server.AddServiceTask;
+import com.qardapp.qard.database.FriendsDatabaseHelper;
+import com.qardapp.qard.database.FriendsProvider;
  
 public class AuthActivity extends Activity {
  
@@ -115,7 +104,7 @@ public class AuthActivity extends Activity {
         		editor.commit();
         		
         		// Show toast
-                Toast.makeText(this, account.name + " is connected.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Added email information!", Toast.LENGTH_LONG).show();
         		
         		// Update database
         		updateDatabase(account.name);

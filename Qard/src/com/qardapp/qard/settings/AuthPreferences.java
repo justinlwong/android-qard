@@ -3,7 +3,6 @@ package com.qardapp.qard.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.util.Log;
  
 public class AuthPreferences {
  

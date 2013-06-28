@@ -1,5 +1,17 @@
 package com.qardapp.qard;
 
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.GridView;
+import android.widget.TextView;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -8,18 +20,6 @@ import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 import com.qardapp.qard.friends.profile.FriendsProfileCursorAdapter;
 import com.qardapp.qard.qrcode.QRCodeManager;
-
-import android.net.Uri;
-import android.os.Bundle;
-import android.content.ContentResolver;
-import android.content.Intent;
-import android.database.Cursor;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.TextView;
 
 public class FriendProfileActivity extends SherlockActivity {
 

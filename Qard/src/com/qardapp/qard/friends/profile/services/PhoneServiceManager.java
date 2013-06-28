@@ -1,10 +1,10 @@
 package com.qardapp.qard.friends.profile.services;
 
-import com.qardapp.qard.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+
+import com.qardapp.qard.R;
 
 public class PhoneServiceManager extends ServiceManager {
 

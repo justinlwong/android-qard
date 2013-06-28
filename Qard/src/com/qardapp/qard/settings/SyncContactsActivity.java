@@ -1,21 +1,16 @@
 package com.qardapp.qard.settings;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.provider.ContactsContract.RawContacts;
-import android.provider.ContactsContract.RawContacts.Entity;
 import android.util.Log;
 
 import com.qardapp.qard.R;

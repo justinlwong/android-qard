@@ -11,18 +11,16 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import com.qardapp.qard.R;
-import com.qardapp.qard.Services;
-import com.qardapp.qard.database.FriendsDatabaseHelper;
-import com.qardapp.qard.database.FriendsProvider;
-
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+
+import com.qardapp.qard.Services;
+import com.qardapp.qard.database.FriendsDatabaseHelper;
+import com.qardapp.qard.database.FriendsProvider;
 
 public class AddFriendTask extends AsyncTask<String, Void, String>{
 

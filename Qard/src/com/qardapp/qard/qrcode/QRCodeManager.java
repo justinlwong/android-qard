@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import net.sourceforge.zbar.Symbol;
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 
 import com.dm.zbar.android.scanner.ZBarConstants;
 import com.dm.zbar.android.scanner.ZBarScannerActivity;
@@ -15,15 +20,6 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.qardapp.qard.comm.QardMessage;
 import com.qardapp.qard.comm.server.AddFriendTask;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.view.Display;
-import android.view.ViewTreeObserver;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 
 public class QRCodeManager {
 

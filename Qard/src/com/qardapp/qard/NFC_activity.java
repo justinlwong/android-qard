@@ -1,13 +1,13 @@
 package com.qardapp.qard;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcAdapter.CreateNdefMessageCallback;
 import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.app.Activity;
-import android.content.Intent;
 import android.view.Menu;
 import android.widget.Toast;
 

@@ -11,15 +11,14 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.qardapp.qard.R;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.qardapp.qard.R;
 
 public class ServerHelper extends Fragment{
 

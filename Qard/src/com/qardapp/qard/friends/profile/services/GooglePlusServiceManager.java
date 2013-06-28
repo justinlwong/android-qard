@@ -1,11 +1,11 @@
 package com.qardapp.qard.friends.profile.services;
 
-import com.qardapp.qard.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+
+import com.qardapp.qard.R;
 
 // Note: Twitter resolves URL so no need to launch app explicitly
 

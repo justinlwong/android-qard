@@ -2,39 +2,29 @@ package com.qardapp.qard.settings;
 
 import java.io.IOException;
 
-import org.json.JSONObject;
-import org.scribe.exceptions.OAuthException;
-import org.scribe.model.OAuthRequest;
-import org.scribe.model.Response;
-import org.scribe.model.Token;
-import org.scribe.model.Verb;
-import org.scribe.model.Verifier;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.IntentSender.SendIntentException;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View.OnClickListener;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.google.android.gms.common.*;
-import com.google.android.gms.common.GooglePlayServicesClient.*;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.plus.PlusClient;
 import com.google.android.gms.plus.model.people.Person;
-import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.comm.server.AddServiceTask;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
@@ -52,6 +42,7 @@ public class GooglePlusAuthActivity extends Activity implements
     static final Object[] SCOPES = new String[] { Scopes.PLUS_PROFILE };
     Activity a;
 	private SharedPreferences mPrefs;
+	private ProgressDialog progDialog;
 	
     public void updateDatabase(String data)
     {
@@ -126,6 +117,13 @@ public class GooglePlusAuthActivity extends Activity implements
         super.onCreate(savedInstanceState);
         a = this;
         
+        progDialog = new ProgressDialog(GooglePlusAuthActivity.this);
+        progDialog.setMessage("Connecting...");
+        progDialog.setIndeterminate(true);
+        progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progDialog.setCancelable(false);
+        progDialog.show();
+        
         // Check shared preferences for token
         mPrefs = getSharedPreferences("tokens", 0);
         
@@ -193,7 +191,7 @@ public class GooglePlusAuthActivity extends Activity implements
 	    updateDatabase(p.getId());
 	    
         String accountName = mPlusClient.getAccountName();
-        Toast.makeText(this, accountName + " is connected.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Added Google Plus information!", Toast.LENGTH_LONG).show();
         new getAccessToken().execute();
     }
 

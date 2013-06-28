@@ -2,14 +2,7 @@ package com.qardapp.qard.friends;
 
 import java.util.ArrayList;
 
-import com.qardapp.qard.FriendProfileActivity;
-import com.qardapp.qard.R;
-import com.qardapp.qard.comm.server.FriendsInfoLoader;
-import com.qardapp.qard.comm.server.ServerNotifications;
-import com.qardapp.qard.database.FriendsProvider;
-
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,9 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.SearchView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.SearchView;
+
+import com.qardapp.qard.R;
+import com.qardapp.qard.comm.server.FriendsInfoLoader;
+import com.qardapp.qard.comm.server.ServerNotifications;
+import com.qardapp.qard.database.FriendsProvider;
 
 public class FriendsFragment extends Fragment implements LoaderCallbacks<ArrayList<ServerNotifications>>{
 	

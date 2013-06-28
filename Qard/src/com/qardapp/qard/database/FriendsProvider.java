@@ -3,8 +3,6 @@ package com.qardapp.qard.database;
 
 import java.util.List;
 
-import com.qardapp.qard.Services;
-
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -14,6 +12,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
+
+import com.qardapp.qard.Services;
 
 public class FriendsProvider extends ContentProvider {
 

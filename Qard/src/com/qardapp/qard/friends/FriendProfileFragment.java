@@ -1,12 +1,5 @@
 package com.qardapp.qard.friends;
 
-import com.qardapp.qard.R;
-import com.qardapp.qard.Services;
-import com.qardapp.qard.comm.server.AddFriendTask;
-import com.qardapp.qard.database.FriendsDatabaseHelper;
-import com.qardapp.qard.database.FriendsProvider;
-import com.qardapp.qard.friends.profile.FriendsProfileCursorAdapter;
-
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,8 +17,14 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.qardapp.qard.R;
+import com.qardapp.qard.Services;
+import com.qardapp.qard.comm.server.AddFriendTask;
+import com.qardapp.qard.database.FriendsDatabaseHelper;
+import com.qardapp.qard.database.FriendsProvider;
+import com.qardapp.qard.friends.profile.FriendsProfileCursorAdapter;
 
 
 public class FriendProfileFragment extends Fragment{

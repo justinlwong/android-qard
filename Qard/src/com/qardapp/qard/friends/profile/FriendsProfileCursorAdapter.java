@@ -1,5 +1,14 @@
 package com.qardapp.qard.friends.profile;
 
+import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
+import android.support.v4.widget.CursorAdapter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
@@ -11,15 +20,6 @@ import com.qardapp.qard.friends.profile.services.GooglePlusServiceManager;
 import com.qardapp.qard.friends.profile.services.PhoneServiceManager;
 import com.qardapp.qard.friends.profile.services.ServiceManager;
 import com.qardapp.qard.friends.profile.services.TwitterServiceManager;
-
-import android.app.Activity;
-import android.content.Context;
-import android.database.Cursor;
-import android.support.v4.widget.CursorAdapter;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 public class FriendsProfileCursorAdapter extends CursorAdapter{
 

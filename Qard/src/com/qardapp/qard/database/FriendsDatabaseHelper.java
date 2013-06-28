@@ -2,11 +2,11 @@ package com.qardapp.qard.database;
 
 import java.util.Date;
 
-import com.qardapp.qard.Services;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.qardapp.qard.Services;
 
 public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 

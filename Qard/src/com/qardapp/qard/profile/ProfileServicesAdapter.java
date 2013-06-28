@@ -1,15 +1,15 @@
 package com.qardapp.qard.profile;
 
 
-import com.qardapp.qard.R;
-import com.qardapp.qard.Services;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
+import com.qardapp.qard.R;
+import com.qardapp.qard.Services;
  
 public class ProfileServicesAdapter extends BaseAdapter {
 

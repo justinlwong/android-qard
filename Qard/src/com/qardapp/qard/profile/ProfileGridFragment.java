@@ -1,15 +1,13 @@
 package com.qardapp.qard.profile;
 
-import com.qardapp.qard.R;
-import com.qardapp.qard.qrcode.QRCodeManager;
-
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-import android.widget.ImageView;
+
+import com.qardapp.qard.R;
 
 public class ProfileGridFragment extends Fragment {
 	
