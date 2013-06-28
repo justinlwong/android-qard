@@ -75,6 +75,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Log in to Exisiting Account" />
+            
+        <Button
+            android:id="@+id/phoneconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Phone Number" />            
 
         <Button
             android:id="@+id/facebookconnect"

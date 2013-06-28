@@ -107,7 +107,7 @@ public class AuthActivity extends Activity {
                 Toast.makeText(this, "Added email information!", Toast.LENGTH_LONG).show();
         		
         		// Update database
-        		updateDatabase(account.name);
+        		UpdateDatabase.updateDatabase(account.name, serviceID,this);
 
 		    }			
 			if (account.name.equals(user)) {
@@ -177,20 +177,5 @@ public class AuthActivity extends Activity {
 		}
 	}
 	
-    public void updateDatabase(String data)
-    {
-    	AddServiceTask task = new AddServiceTask(AuthActivity.this, serviceID, data);
-        task.execute();
-		ContentResolver res = getContentResolver();
-		ContentValues values = new ContentValues();
-		values.put(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID, 0);
-		values.put(FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID, serviceID);
-		values.put(FriendsDatabaseHelper.COLUMN_FS_DATA, data);
-		
-		// Delete existing entry and replace
-		String where = FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID + "=? AND " + FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID + "=?";
-		String[] args = new String[] { "0", String.valueOf(serviceID)};
-		res.delete(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+serviceID), where, args);
-		res.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+serviceID), values);
-    }
+
 }

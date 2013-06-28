@@ -43,25 +43,7 @@ public class GooglePlusAuthActivity extends Activity implements
     Activity a;
 	private SharedPreferences mPrefs;
 	private ProgressDialog progDialog;
-	
-    public void updateDatabase(String data)
-    {
-    	AddServiceTask task = new AddServiceTask(GooglePlusAuthActivity.this, Services.GOOGLEPLUS.id, data);
-        task.execute();
-        
-		ContentResolver res = getContentResolver();
-		ContentValues values = new ContentValues();
-		values.put(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID, 0);
-		values.put(FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID, Services.GOOGLEPLUS.id);
-		values.put(FriendsDatabaseHelper.COLUMN_FS_DATA, data);
-		
-		// Delete existing entry and replace
-		String where = FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID + "=? AND " + FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID + "=?";
-		String[] args = new String[] { "0", String.valueOf(Services.GOOGLEPLUS.id)};
-		res.delete(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+Services.GOOGLEPLUS.id), where, args);
-		res.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+Services.GOOGLEPLUS.id), values);
-    }
-    
+	    
     private Void getToken() {
     	    	
     	String accessToken = null;
@@ -144,7 +126,7 @@ public class GooglePlusAuthActivity extends Activity implements
 		    // Do API call to get user info
 		    Person p = mPlusClient.getCurrentPerson();
 		    Log.d("here",p.getId());
-		    updateDatabase(p.getId());
+		    UpdateDatabase.updateDatabase(p.getId(),Services.GOOGLEPLUS.id,this);
         	new getAccessToken().execute();
         }
         //finish();
@@ -188,7 +170,7 @@ public class GooglePlusAuthActivity extends Activity implements
 	    // Do API call to get user info
 	    Person p = mPlusClient.getCurrentPerson();
 	    Log.d("here",p.getId());
-	    updateDatabase(p.getId());
+	    UpdateDatabase.updateDatabase(p.getId(),Services.GOOGLEPLUS.id, this);
 	    
         String accountName = mPlusClient.getAccountName();
         Toast.makeText(this, "Added Google Plus information!", Toast.LENGTH_LONG).show();

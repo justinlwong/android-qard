@@ -24,6 +24,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.qardapp.qard.comm.server.FriendsInfoLoader;
 import com.qardapp.qard.comm.server.NewUserTask;
+import com.qardapp.qard.comm.server.ServerHelper;
 import com.qardapp.qard.comm.server.ServerNotifications;
 import com.qardapp.qard.friends.FriendsFragment;
 import com.qardapp.qard.profile.ProfileFragment;
@@ -116,7 +117,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		});
 		
 		// Token Setup
-		//ServerHelper.resetUser(this);
+		ServerHelper.resetUser(this);
 		SharedPreferences pref = this.getSharedPreferences(getString(R.string.app_package_name), Context.MODE_PRIVATE);
 		String token = pref.getString("access_token", null);
 		if (token != null)

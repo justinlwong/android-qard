@@ -50,24 +50,6 @@ public class OAuthActivity extends Activity {
 	String profileURL;
 	String userID;
 	
-    public void updateDatabase(String data)
-    {
-    	AddServiceTask task = new AddServiceTask(OAuthActivity.this, serviceID, data);
-        task.execute();
-        
-		ContentResolver res = getContentResolver();
-		ContentValues values = new ContentValues();
-		values.put(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID, 0);
-		values.put(FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID, serviceID);
-		values.put(FriendsDatabaseHelper.COLUMN_FS_DATA, data);
-		
-		// Delete existing entry and replace
-		String where = FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID + "=? AND " + FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID + "=?";
-		String[] args = new String[] { "0", String.valueOf(serviceID)};
-		res.delete(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+serviceID), where, args);
-		res.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+serviceID), values);
-    }
-	
 	private class OAuthTask extends AsyncTask<Void, Void, String> {
 		
 		ProgressDialog progDialog;
@@ -208,7 +190,7 @@ public class OAuthActivity extends Activity {
 						                else {
 							                data = mainObject.getString(service.idFieldName);						                	
 						                }
-						                updateDatabase(data);
+						                UpdateDatabase.updateDatabase(data, serviceID, activity);
 							    	}
 							    }
 							    catch ( Exception e ) {

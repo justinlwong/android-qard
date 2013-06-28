@@ -1,8 +1,10 @@
 package com.qardapp.qard.settings;
 
+import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +41,7 @@ public class SettingsFragment extends Fragment{
 		Button b7 = (Button)rootView.findViewById(R.id.instagramconnect);
 		Button b8 = (Button)rootView.findViewById(R.id.contactsync);
 		Button b9 = (Button)rootView.findViewById(R.id.googleplusconnect);
+		Button b10 = (Button)rootView.findViewById(R.id.phoneconnect);
 
 		b1.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -121,6 +124,13 @@ public class SettingsFragment extends Fragment{
 			}
 		});
 		
+		b10.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+                showEditDialog(Services.PHONE.id);		
+			}
+		});
+		
 		Button login = (Button) rootView.findViewById(R.id.settings_login_btn);
 		login.setOnClickListener(new View.OnClickListener() {
 			
@@ -170,6 +180,20 @@ public class SettingsFragment extends Fragment{
 			current_id_field.setText("(DEBUG) Current qard id not found, restart?");
 		}
 	}
+	
+    private void showEditDialog(int serviceId) {
+    	
+        FragmentManager fm = getFragmentManager();        
+        PopupDialog popupDialog = (PopupDialog) fm.findFragmentByTag("login_fragment");
+       		
+        popupDialog = new PopupDialog();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        Bundle bund = new Bundle();
+        bund.putInt("serviceType",serviceId);
+        popupDialog.setArguments(bund);
+        //loginDialog.show(transaction, "login_fragment");
+        transaction.add(popupDialog,"login_fragment").commit();
+    }
 		
 }
 
