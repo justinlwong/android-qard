@@ -16,6 +16,7 @@ import org.scribe.model.Verb;
 import org.scribe.oauth.OAuthService;
 
 import com.qardapp.qard.Services;
+import com.qardapp.qard.comm.server.AddServiceTask;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 
@@ -189,6 +190,8 @@ public class AuthActivity extends Activity {
 	
     public void updateDatabase(String data)
     {
+    	AddServiceTask task = new AddServiceTask(AuthActivity.this, serviceID, data);
+        task.execute();
 		ContentResolver res = getContentResolver();
 		ContentValues values = new ContentValues();
 		values.put(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID, 0);

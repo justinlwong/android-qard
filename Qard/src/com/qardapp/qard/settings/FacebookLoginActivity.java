@@ -1,6 +1,7 @@
 package com.qardapp.qard.settings;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -32,12 +33,19 @@ public class FacebookLoginActivity extends Activity {
     private Button buttonLoginLogout;
     private Session.StatusCallback statusCallback = new SessionStatusCallback();
     private Activity activity = this;
+	private ProgressDialog progDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-		setContentView(R.layout.settings_layout2);
-        buttonLoginLogout = (Button)findViewById(R.id.authButton);
+		setContentView(R.layout.oauth_layout);
+		
+        progDialog = new ProgressDialog(FacebookLoginActivity.this);
+        progDialog.setMessage("Connecting...");
+        progDialog.setIndeterminate(true);
+        progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progDialog.setCancelable(false);
+        progDialog.show();
 
         Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
 
@@ -54,8 +62,6 @@ public class FacebookLoginActivity extends Activity {
                 session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
             }
         }
-
-        updateView();
     }
 
     @Override
@@ -81,41 +87,6 @@ public class FacebookLoginActivity extends Activity {
         super.onSaveInstanceState(outState);
         Session session = Session.getActiveSession();
         Session.saveSession(session, outState);
-    }
-
-    private void updateView() {
-        Session session = Session.getActiveSession();
-        if (session.isOpened()) {
-            buttonLoginLogout.setText("Facebook Profile Info added");
-            buttonLoginLogout.setOnClickListener(new OnClickListener() {
-                public void onClick(View view) { onClickLogin(); }
-            });
-
-        } else {    	
-            buttonLoginLogout.setText("Add Facebook Info");
-            buttonLoginLogout.setOnClickListener(new OnClickListener() {
-                public void onClick(View view) { 
-                	onClickLogin(); 
-
-                }
-            });
-        }
-    }
-
-    private void onClickLogin() {
-        Session session = Session.getActiveSession();
-        if (!session.isOpened() && !session.isClosed()) {
-            session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
-        } else {
-            Session.openActiveSession(this, true, statusCallback);
-        }
-    }
-
-    private void onClickLogout() {
-        Session session = Session.getActiveSession();
-        if (!session.isClosed()) {
-            session.closeAndClearTokenInformation();
-        }
     }
 
     private class SessionStatusCallback implements Session.StatusCallback {
@@ -146,13 +117,13 @@ public class FacebookLoginActivity extends Activity {
 	    						String[] args = new String[] { "0", String.valueOf(Services.FACEBOOK.id)};
 	    						res.delete(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+Services.FACEBOOK.id), where, args);
 	    						res.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+Services.FACEBOOK.id), values);
+	    						activity.finish();
                             }
                         }
 	            });
 
             }
-        	
-            updateView();
+
         }
     }
 }

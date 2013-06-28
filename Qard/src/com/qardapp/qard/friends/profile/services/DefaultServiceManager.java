@@ -29,23 +29,23 @@ public class DefaultServiceManager extends ServiceManager {
 
 	@Override
 	public void switchToServiceApp() {
-        mPrefs = a.getSharedPreferences("tokens", 0);
+        //mPrefs = a.getSharedPreferences("tokens", 0);
         if (serviceID == Services.TWITTER.id)
         {
         } else if (serviceID == Services.LINKEDIN.id) {
         	service = Services.LINKEDIN;
-            url = mPrefs.getString(service.name+"_profileurl","-1");
+            url = data;
         
         } else if (serviceID == Services.FLICKR.id)
         {
         	service = Services.FLICKR;
-            url = "http://m.flickr.com/#/photos/"+mPrefs.getString(service.name+"_data","-1");        	
+            url = "http://m.flickr.com/#/photos/"+data;        	
         } else if (serviceID == Services.FOURSQUARE.id)
         {
         } else if (serviceID == Services.INSTAGRAM.id)
         {
         	service = Services.INSTAGRAM;
-            url = "https://instagram.com/"+mPrefs.getString(service.name+"_username","-1");
+            url = "https://instagram.com/"+data;
         }
         
 		//String uri = "fb://profile/" + data;

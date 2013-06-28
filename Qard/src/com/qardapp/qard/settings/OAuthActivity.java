@@ -188,19 +188,24 @@ public class OAuthActivity extends Activity {
 						                    JSONObject resp = mainObject.getJSONObject("response");
 						                    JSONObject user = resp.getJSONObject("user");
 						                    data = user.getString(service.idFieldName);
+						                    username = user.getString("firstName") + " " + user.getString("lastName");
 						                }else if (serviceID == Services.INSTAGRAM.id)
 						                {
 						                    JSONObject resp = mainObject.getJSONObject("data");
-						                    data = resp.getString(service.idFieldName);
+						                    //data = resp.getString(service.idFieldName);
 						                    username = resp.getString("username");
+						                    data = username;
 						                }else if (serviceID == Services.LINKEDIN.id)
 						                {
-						                    data = mainObject.getString(service.idFieldName);
+
+						                    //data = mainObject.getString(service.idFieldName);
 						                    firstname = mainObject.getString("firstName");
 						                    lastname = mainObject.getString("lastName");
 						                    email = mainObject.getString("emailAddress");
 						                    JSONObject req = mainObject.getJSONObject("siteStandardProfileRequest");
 						                    profileURL = req.getString("url");
+						                	data = profileURL;
+						                	username = email;
 						                } else if (serviceID == Services.TWITTER.id) {
 							                data = mainObject.getString("screen_name");	
 							                username = mainObject.getString("screen_name");
@@ -232,7 +237,7 @@ public class OAuthActivity extends Activity {
 				        		}
 				        		editor.commit();    
 				        		
-				                //Toast.makeText(this, accountName + " is connected.", Toast.LENGTH_LONG).show();
+				                //Toast.makeText(activity, "Connected to " + String.valueOf(serviceID), Toast.LENGTH_LONG).show();
 				        		
 					  		    finish();
 

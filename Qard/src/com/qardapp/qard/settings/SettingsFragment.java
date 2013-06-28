@@ -67,7 +67,7 @@ public class SettingsFragment extends Fragment{
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(),OAuthActivity.class);
 				intent.putExtra("serviceID", Services.TWITTER.id);
-				startActivityForResult(intent, 100);	
+				startActivity(intent);	
 			}
 		});
 //		
@@ -76,7 +76,7 @@ public class SettingsFragment extends Fragment{
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(),OAuthActivity.class);
 				intent.putExtra("serviceID", Services.FLICKR.id);
-				startActivityForResult(intent, 100);
+				startActivity(intent);
 			}
 		});
 //		
@@ -86,7 +86,7 @@ public class SettingsFragment extends Fragment{
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(),OAuthActivity.class);
 				intent.putExtra("serviceID", Services.LINKEDIN.id);
-				startActivityForResult(intent, 100);			
+				startActivity(intent);			
 			}
 		});
 		
@@ -95,7 +95,7 @@ public class SettingsFragment extends Fragment{
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(),OAuthActivity.class);
 				intent.putExtra("serviceID", Services.FOURSQUARE.id);
-				startActivityForResult(intent, 100);			
+				startActivity(intent);			
 			}
 		});
 		
@@ -103,7 +103,7 @@ public class SettingsFragment extends Fragment{
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(),AuthActivity.class);
-				startActivityForResult(intent, 100);			
+				startActivity(intent);			
 			}
 		});
 		
@@ -112,7 +112,7 @@ public class SettingsFragment extends Fragment{
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(),OAuthActivity.class);
 				intent.putExtra("serviceID",Services.INSTAGRAM.id);
-				startActivityForResult(intent, 100);			
+				startActivity(intent);			
 			}
 		});
 		

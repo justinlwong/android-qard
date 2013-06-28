@@ -255,7 +255,7 @@ public class SyncContactsActivity extends Activity {
                     	   }while(d.moveToNext());
                     	}
                     	d.close();
-                      
+git                       
                       Uri rawContactUri = ContentUris.withAppendedId(RawContacts.CONTENT_URI, rawid);
                       Uri entityUri = Uri.withAppendedPath(rawContactUri, Entity.CONTENT_DIRECTORY);
                       Cursor r = getContentResolver().query(entityUri,
