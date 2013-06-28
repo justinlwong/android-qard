@@ -204,12 +204,25 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		return true;
 	}
 
+	public void refreshFragments() {
+		Fragment frag = getSupportFragmentManager().findFragmentByTag("FRAG_PROFILE");
+		if (frag != null && frag.isVisible())
+			((BaseFragment) frag).updateViews();
+		frag = getSupportFragmentManager().findFragmentByTag("FRAG_FRIENDS");
+		if (frag != null && frag.isVisible())
+			((BaseFragment) frag).updateViews();
+		frag = getSupportFragmentManager().findFragmentByTag("FRAG_FRIEND_PROFILE");
+		if (frag != null && frag.isVisible())
+			((BaseFragment) frag).updateViews();
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{  
 		qrcode = QRCodeManager.checkScanActivityResult(this, requestCode, resultCode, data);
 		if (qrcode != null) {
 			Toast.makeText(this, "Scan Result = " + qrcode, Toast.LENGTH_SHORT).show();
+			refreshFragments();
 		}
 	}
 
@@ -234,6 +247,9 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			if (qr_code_image != null) {
 				QRCodeManager.genQRCode (user_id, (ImageView)qr_code_image); 
 			}
+		}
+		if (loader.getId() == REFRESH_LOADER_ID) {
+			refreshFragments();
 		}
 	}
 

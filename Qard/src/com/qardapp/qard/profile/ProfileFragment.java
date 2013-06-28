@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.qardapp.qard.BaseFragment;
 import com.qardapp.qard.QRCodeDisplayActivity;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
@@ -24,7 +25,7 @@ import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 import com.qardapp.qard.qrcode.QRCodeManager;
 
-public class ProfileFragment extends Fragment{
+public class ProfileFragment extends BaseFragment{
 
 	private String lastUserId = "noid";
 	
@@ -61,9 +62,7 @@ public class ProfileFragment extends Fragment{
 	}
 
 	@Override
-	public void onViewStateRestored(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onViewStateRestored(savedInstanceState);
+	public void updateViews() {
 		ContentResolver res = getActivity().getContentResolver();
 		Cursor cursor = res.query(FriendsProvider.MY_URI, null, null, null, null);
 		
@@ -96,5 +95,6 @@ public class ProfileFragment extends Fragment{
 			QRCodeManager.genQRCode (msg, image); 
 		}
 	}
+
 
 }

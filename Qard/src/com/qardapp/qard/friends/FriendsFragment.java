@@ -18,12 +18,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.qardapp.qard.BaseFragment;
 import com.qardapp.qard.R;
 import com.qardapp.qard.comm.server.FriendsInfoLoader;
 import com.qardapp.qard.comm.server.ServerNotifications;
 import com.qardapp.qard.database.FriendsProvider;
+import com.qardapp.qard.friends.profile.FriendProfileFragment;
 
-public class FriendsFragment extends Fragment implements LoaderCallbacks<ArrayList<ServerNotifications>>{
+public class FriendsFragment extends BaseFragment implements LoaderCallbacks<ArrayList<ServerNotifications>>{
 	
 	private static int FRIENDS_INFO_LOADER_ID = 0;
 	
@@ -102,9 +104,7 @@ public class FriendsFragment extends Fragment implements LoaderCallbacks<ArrayLi
 	}
 
 	@Override
-	public void onViewStateRestored(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onViewStateRestored(savedInstanceState);
+	public void updateViews() {
 		Cursor cursor = null;
 		ContentResolver res = getActivity().getContentResolver();
 		cursor = res.query(FriendsProvider.CONTENT_URI, null, null, null, null);

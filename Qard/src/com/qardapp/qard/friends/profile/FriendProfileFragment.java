@@ -1,4 +1,4 @@
-package com.qardapp.qard.friends;
+package com.qardapp.qard.friends.profile;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -19,15 +19,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.qardapp.qard.BaseFragment;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.comm.server.AddFriendTask;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
-import com.qardapp.qard.friends.profile.FriendsProfileCursorAdapter;
 
 
-public class FriendProfileFragment extends Fragment{
+public class FriendProfileFragment extends BaseFragment{
 	
 	private long friend_id;
 	private long friend_qard_id;
@@ -51,9 +51,7 @@ public class FriendProfileFragment extends Fragment{
 	}
 	
 	@Override
-	public void onViewStateRestored(Bundle savedInstanceState) {
-		super.onViewStateRestored(savedInstanceState);
-
+	public void updateViews() {
 		if (friend_id != -1) {
 			Cursor cursor = null;
 			ContentResolver res = getActivity().getContentResolver();
@@ -73,9 +71,9 @@ public class FriendProfileFragment extends Fragment{
 						.getString(cursor
 								.getColumnIndex(FriendsDatabaseHelper.COLUMN_LAST_NAME));
 				view.setText(first_name + " " + last_name);
-				
+	    		LinearLayout statusView = (LinearLayout) getView().findViewById(R.id.friend_profile_status_view);
+	    		statusView.removeAllViews();
 		    	if (cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_CONFIRMED)) == 0) {
-		    		LinearLayout statusView = (LinearLayout) getView().findViewById(R.id.friend_profile_status_view);
 		    		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		    		LinearLayout v = (LinearLayout)inflater.inflate(R.layout.friends_profile_status, statusView);
 

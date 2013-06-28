@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.qardapp.qard.BaseFragment;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.comm.server.QardLoginActivity;
@@ -19,7 +20,7 @@ import com.qardapp.qard.comm.server.ServerHelper;
 import com.qardapp.qard.comm.server.UpdateUserTask;
 
 
-public class SettingsFragment extends Fragment{
+public class SettingsFragment extends BaseFragment{
 	
 	// Later will put this in the global application class
 	//OAuthService linkedinService = null;
@@ -169,9 +170,7 @@ public class SettingsFragment extends Fragment{
 	}
 
 	@Override
-	public void onViewStateRestored(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onViewStateRestored(savedInstanceState);
+	public void updateViews() {
 		TextView current_id_field = (TextView) getView().findViewById(R.id.settings_current_id);
 		String user_id = ServerHelper.getUserId(getActivity());
 		if (user_id != null) {
