@@ -11,7 +11,8 @@
         android:layout_height="80dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:padding="1dp"
+        
+        android:paddingLeft="10dp"
         android:src="@drawable/profile_default" />
 
     <LinearLayout
@@ -30,19 +31,18 @@
             android:layout_height="wrap_content"
             android:text="Bob" 
             android:textSize="25sp"
-            android:textStyle="bold"
             android:layout_gravity="left"
             android:textColor="#000000"
-            android:paddingLeft="10dp"/>
+            android:paddingLeft="25dp"/>
 
         <TextView
             android:id="@+id/friend_profile_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" 
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:layout_gravity="left"
             android:textColor="#000000"
-            android:paddingLeft="10dp"
+            android:paddingLeft="25dp"
             />
     </LinearLayout>
     <View android:id="@+id/friend_profile_divider"
