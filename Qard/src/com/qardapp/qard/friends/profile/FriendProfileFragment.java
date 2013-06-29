@@ -31,16 +31,15 @@ public class FriendProfileFragment extends BaseFragment{
 	
 	private long friend_id;
 	private long friend_qard_id;
-	private FriendsProfileCursorAdapter adapter;
+	private FriendsProfileAdapter adapter;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.friends_profile,
 				container, false);
 		GridView gridView = (GridView) rootView.findViewById(R.id.friend_profile_gridview);
-		adapter = new FriendsProfileCursorAdapter(
+		adapter = new FriendsProfileAdapter(
 				this.getActivity(),
-				null,
-				FriendsProfileCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+				null);
 		gridView.setAdapter(adapter);
 		
 		return rootView;
