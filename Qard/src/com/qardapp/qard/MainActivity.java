@@ -117,7 +117,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		});
 		
 		// Token Setup
-		ServerHelper.resetUser(this);
+		//ServerHelper.resetUser(this);
 		SharedPreferences pref = this.getSharedPreferences(getString(R.string.app_package_name), Context.MODE_PRIVATE);
 		String token = pref.getString("access_token", null);
 		if (token != null)
