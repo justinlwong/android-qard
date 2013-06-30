@@ -117,11 +117,11 @@ public class SyncContactsActivity extends Activity {
                     	  String whereName = ContactsContract.Data.MIMETYPE + " = ? AND " + ContactsContract.CommonDataKinds.StructuredName.CONTACT_ID + " = " + id; 
                     	  String[] whereNameParams = new String[] { ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE };
                     	 
-                          Cursor phones = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null, 
+                          Cursor phones = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,new String[] {ContactsContract.CommonDataKinds.Phone.NUMBER}, 
                                  ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ id,null, null);
-                          Cursor emails = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,null, 
+                          Cursor emails = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,new String[] {ContactsContract.CommonDataKinds.Email.DATA}, 
                                   ContactsContract.CommonDataKinds.Email.CONTACT_ID +" = "+ id,null, null);
-                          Cursor nameCur = cr.query(ContactsContract.Data.CONTENT_URI, null, whereName, whereNameParams, ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME);
+                          Cursor nameCur = cr.query(ContactsContract.Data.CONTENT_URI, new String[] {ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME,ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME}, whereName, whereNameParams, ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME);
 
                           
                           if (phones.moveToFirst())
@@ -149,37 +149,7 @@ public class SyncContactsActivity extends Activity {
                           phones.close();
                           emails.close();
                           nameCur.close();
-/*
-		                 long rawid = 0;
-		                 d = cr.query(RawContacts.CONTENT_URI,
-		                         new String[]{RawContacts._ID},
-		                         RawContacts.CONTACT_ID + "=?",
-		                         new String[]{String.valueOf(id)}, null);
-		                 
-		                 if (d.moveToFirst()){
-		               	   do{
-		               	      rawid = d.getInt(d.getColumnIndex(RawContacts._ID));
-		               	   }while(d.moveToNext());
-		               	}
-		               	d.close();
-		               	Log.d("here",String.valueOf(rawid));
-		                 
-		                 Uri rawContactUri = ContentUris.withAppendedId(RawContacts.CONTENT_URI, rawid);
-		                 Uri entityUri = Uri.withAppendedPath(rawContactUri, Entity.CONTENT_DIRECTORY);
-		                 r = cr.query(entityUri,
-		                          new String[]{RawContacts.SOURCE_ID, Entity.DATA_ID, Entity.MIMETYPE, Entity.DATA1},
-		                          null, null, null);
-		                 //Log.d("here",r.toString());
-		                 while (r.moveToNext()) {
-		                     String sourceId = r.getString(0);
-		                     //Log.d("here",sourceId);
-		                     if (!r.isNull(1)) {
-		                         String mimeType = r.getString(2);
-		                         String rdata = r.getString(3);
-		                         Log.d("here",mimeType + " " + rdata);
-		                     }
-		                 }   
-		                 r.close();*/
+
 		             }
 	             }
 	         }
@@ -218,75 +188,5 @@ public class SyncContactsActivity extends Activity {
         //finish();
        
     }
-    
-    /*@Override 
-    public void onActivityResult(int reqCode, int resultCode, Intent data){ 
-        super.onActivityResult(reqCode, resultCode, data);
-
-        switch(reqCode)
-        {
-           case (1):
-             if (resultCode == Activity.RESULT_OK)
-             {
-                 Uri contactData = data.getData();
-                 Cursor c = getContentResolver().query(contactData, null, null, null, null);
-                  if (c.moveToFirst())
-                  {
-                      String id = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
-                      long rawid = 0;
-                      String hasPhone = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-                      
-                      Cursor d = getContentResolver().query(RawContacts.CONTENT_URI,
-                              new String[]{RawContacts._ID},
-                              RawContacts.CONTACT_ID + "=?",
-                              new String[]{String.valueOf(id)}, null);
-                      //Log.d("here",d.getString(0));
-                      
-                      if (d.moveToFirst()){
-                    	   do{
-                    	      rawid= d.getInt(d.getColumnIndex(RawContacts._ID));
-                    	      //Log.d("here",rawid);
-                    	      // do what ever you want here
-                    	   }while(d.moveToNext());
-                    	}
-                    	d.close();
-git                       
-                      Uri rawContactUri = ContentUris.withAppendedId(RawContacts.CONTENT_URI, rawid);
-                      Uri entityUri = Uri.withAppendedPath(rawContactUri, Entity.CONTENT_DIRECTORY);
-                      Cursor r = getContentResolver().query(entityUri,
-                               new String[]{RawContacts.SOURCE_ID, Entity.DATA_ID, Entity.MIMETYPE, Entity.DATA1},
-                               null, null, null);
-                      Log.d("here",r.toString());
-                      try {
-                          while (r.moveToNext()) {
-                              String sourceId = r.getString(0);
-                              Log.d("here",sourceId);
-                              if (!r.isNull(1)) {
-                                  String mimeType = r.getString(2);
-                                  String rdata = r.getString(3);
-                                  Log.d("here",mimeType + " " + rdata);
-                              }
-                          }
-                      } finally {
-                          r.close();
-                      }
-
-                      if (hasPhone.equalsIgnoreCase("1")) 
-                      {
-                          Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null, 
-                                 ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ id,null, null);
-                          phones.moveToFirst();
-                          String cNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                           Toast.makeText(getApplicationContext(), cNumber, Toast.LENGTH_SHORT).show();
-
-                          String nameContact = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
-
-                          Log.d("here",nameContact+ " "+ cNumber);
-                      }
-                 }
-           }
-        }
-    }*/
-
 
 }
