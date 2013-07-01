@@ -33,8 +33,14 @@ public class WhatsAppServiceManager extends ServiceManager {
 			        new String[] { data + "@s.whatsapp.net" }, null);
 			c.moveToFirst();
 			//Log.d("here",c.getString(0));
-			Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("content://com.android.contacts/data/" + c.getString(0)));
-		    activity.startActivity(i);
+			if (c.getString(0) != null)
+			{
+				Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("content://com.android.contacts/data/" + c.getString(0)));
+			    activity.startActivity(i);				
+			} else {
+				Toast.makeText(activity, "Invalid Contact", Toast.LENGTH_SHORT).show();	
+			}
+
 		} else {
 			Toast.makeText(activity, "Cannot start WhatsApp conversation with yourself", Toast.LENGTH_SHORT).show();			
 		}
@@ -48,6 +54,7 @@ public class WhatsAppServiceManager extends ServiceManager {
 
 	@Override
 	public boolean isAppInstalled() {
+		Log.d("here","is app installed");
 		try {
 			activity.getPackageManager().getPackageInfo(PACKAGE_NAME, 0);
 			return true;
