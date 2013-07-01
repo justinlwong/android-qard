@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.qrcode.QRCodeManager;
-import com.qardapp.qard.settings.UpdateDatabase;
+import com.qardapp.qard.settings.services.UpdateDatabase;
 
 public class NewUserTask extends
 		AsyncTask<String, Void, String> {

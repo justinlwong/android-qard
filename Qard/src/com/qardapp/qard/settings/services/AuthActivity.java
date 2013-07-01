@@ -1,4 +1,4 @@
-package com.qardapp.qard.settings;
+package com.qardapp.qard.settings.services;
 
 import java.util.regex.Pattern;
 

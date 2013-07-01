@@ -72,18 +72,18 @@
             android:screenOrientation="portrait" >
         </activity>
 
-        <activity android:name="com.qardapp.qard.settings.FacebookLoginActivity"
+        <activity android:name="com.qardapp.qard.settings.services.FacebookLoginActivity"
                   android:label="@string/app_name" />               
-        <activity android:name="com.qardapp.qard.settings.TwitterLoginActivity"
+        <activity android:name="com.qardapp.qard.settings.services.TwitterLoginActivity"
                   android:label="@string/app_name" />      
-        <activity android:name="com.qardapp.qard.settings.OAuthActivity"
+        <activity android:name="com.qardapp.qard.settings.services.OAuthActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleInstance">
         </activity>              
-        <activity android:name="com.qardapp.qard.settings.AuthActivity"
+        <activity android:name="com.qardapp.qard.settings.services.AuthActivity"
                   android:label="@string/app_name">
         </activity>     
-        <activity android:name="com.qardapp.qard.settings.AccountManagerInfoActivity"
+        <activity android:name="com.qardapp.qard.settings.services.AccountManagerInfoActivity"
                   android:label="@string/app_name">
         </activity>         
         <activity android:name="com.qardapp.qard.settings.AddUserActivity"
@@ -92,10 +92,10 @@
         <activity android:name="com.qardapp.qard.friends.profile.services.ServiceWebDisplayActivity"
                   android:label="@string/app_name">
         </activity>     
-        <activity android:name="com.qardapp.qard.settings.SyncContactsActivity"
+        <activity android:name="com.qardapp.qard.settings.services.SyncContactsActivity"
                   android:label="@string/app_name">
         </activity>      
-        <activity android:name="com.qardapp.qard.settings.GooglePlusAuthActivity"
+        <activity android:name="com.qardapp.qard.settings.services.GooglePlusAuthActivity"
                   android:label="@string/app_name">
         </activity>                                
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>

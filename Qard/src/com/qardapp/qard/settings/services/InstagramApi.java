@@ -1,4 +1,4 @@
-package com.qardapp.qard.settings;
+package com.qardapp.qard.settings.services;
 
 import org.scribe.builder.api.DefaultApi20;
 import org.scribe.extractors.AccessTokenExtractor;
