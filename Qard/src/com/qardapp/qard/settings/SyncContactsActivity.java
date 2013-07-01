@@ -122,7 +122,7 @@ public class SyncContactsActivity extends Activity {
                           Cursor emails = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,new String[] {ContactsContract.CommonDataKinds.Email.DATA}, 
                                   ContactsContract.CommonDataKinds.Email.CONTACT_ID +" = "+ id,null, null);
                           Cursor nameCur = cr.query(ContactsContract.Data.CONTENT_URI, new String[] {ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME,ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME}, whereName, whereNameParams, ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME);
-//                          Cursor wCur = cr.query(ContactsContract.Data.CONTENT_URI, new String[] {ContactsContract.Data.DATA1},ContactsContract.Contacts.Data._ID + " = " + id, null, null);
+                          //Cursor wCur = cr.query(ContactsContract.Data.CONTENT_URI, new String[] {ContactsContract.Data.DATA1, ContactsContract.Data.MIMETYPE},ContactsContract.Contacts.Data._ID + " = " + id, null, null);
                           
                           if (phones.moveToFirst())
                           {
@@ -140,9 +140,10 @@ public class SyncContactsActivity extends Activity {
                           
 //                          while (wCur.moveToNext()) { 
 //                      	    String wid = wCur.getString(wCur.getColumnIndex(ContactsContract.Data.DATA1));
+//                      	    String mtype = wCur.getString(wCur.getColumnIndex(ContactsContract.Data.MIMETYPE));
 //                      	    if (wid != null)
 //                      	    {
-//                      	    	Log.d("wid",wid);
+//                      	    	Log.d("wid",wid + " " + mtype );
 //                      	    }
 //                        }
                                                   
@@ -161,15 +162,16 @@ public class SyncContactsActivity extends Activity {
 
 		             }
 	             }
-//	             Cursor wCur = cr.query(ContactsContract.Data.CONTENT_URI, new String [] {ContactsContract.Data._ID, ContactsContract.Data.DATA1}, null, null, null);
-//	             while (wCur.moveToNext()) { 
-//	            	String id = wCur.getString(wCur.getColumnIndex(ContactsContract.Data._ID));
-//	           	    String wid = wCur.getString(wCur.getColumnIndex(ContactsContract.Data.DATA1));
-//	           	    if (wid != null)
-//	           	    {
-//	           	    	Log.d("wid",wid + " " + id);
-//	           	    }
-//	             }
+	             Cursor wCur = cr.query(ContactsContract.Data.CONTENT_URI, new String [] {ContactsContract.Data._ID, ContactsContract.Data.DATA1, ContactsContract.Data.MIMETYPE}, null, null, null);
+                 
+                 while (wCur.moveToNext()) { 
+             	    String wid = wCur.getString(wCur.getColumnIndex(ContactsContract.Data.DATA1));
+             	    String mtype = wCur.getString(wCur.getColumnIndex(ContactsContract.Data.MIMETYPE));
+             	    if (wid != null)
+             	    {
+             	    	Log.d("wid",wid + " " + mtype );
+             	    }
+                 }
              
 	         }
 	         
