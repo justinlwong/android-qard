@@ -20,6 +20,7 @@ import com.qardapp.qard.friends.profile.services.GooglePlusServiceManager;
 import com.qardapp.qard.friends.profile.services.PhoneServiceManager;
 import com.qardapp.qard.friends.profile.services.ServiceManager;
 import com.qardapp.qard.friends.profile.services.TwitterServiceManager;
+import com.qardapp.qard.friends.profile.services.WhatsAppServiceManager;
 
 public class FriendsProfileCursorAdapter extends CursorAdapter{
 
@@ -76,6 +77,8 @@ public class FriendsProfileCursorAdapter extends CursorAdapter{
 			sMgr = new GmailServiceManager((Activity) context, data);	        			
         } else if (serviceId == Services.GOOGLEPLUS.id) {
 			sMgr = new GooglePlusServiceManager((Activity) context, data);	        			
+        } else if (serviceId == Services.WHATSAPP.id) {
+			sMgr = new WhatsAppServiceManager((Activity) context, data);	        			
         }
         
         final ServiceManager mgr = sMgr;

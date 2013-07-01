@@ -62,7 +62,6 @@ public class SyncContactsActivity extends Activity {
 		
 		Uri uri = cr.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0"), values);
 		int user_id = Integer.parseInt(uri.getLastPathSegment());
-		//Log.d("here",String.valueOf(user_id));
 		
 		// Use ID to add services
 		ContentValues pvalues = new ContentValues();
@@ -99,13 +98,14 @@ public class SyncContactsActivity extends Activity {
 		
 	     protected Void doInBackground(Void... v) {
 	         ContentResolver cr = getContentResolver();
-	         //Cursor r, d = null;
-	         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null,
+	         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, new String [] {ContactsContract.Contacts._ID,ContactsContract.Contacts.HAS_PHONE_NUMBER},
 	                 null, null, null);
 	         
 	         if (cur.getCount() > 0) {
 	             while (cur.moveToNext()) {
+	            	 
 	                 String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+	                 Log.d("here",id);
                      String hasPhone = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
                      if (hasPhone.equalsIgnoreCase("1")) 
                      {
@@ -122,7 +122,7 @@ public class SyncContactsActivity extends Activity {
                           Cursor emails = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,new String[] {ContactsContract.CommonDataKinds.Email.DATA}, 
                                   ContactsContract.CommonDataKinds.Email.CONTACT_ID +" = "+ id,null, null);
                           Cursor nameCur = cr.query(ContactsContract.Data.CONTENT_URI, new String[] {ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME,ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME}, whereName, whereNameParams, ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME);
-
+//                          Cursor wCur = cr.query(ContactsContract.Data.CONTENT_URI, new String[] {ContactsContract.Data.DATA1},ContactsContract.Contacts.Data._ID + " = " + id, null, null);
                           
                           if (phones.moveToFirst())
                           {
@@ -133,10 +133,19 @@ public class SyncContactsActivity extends Activity {
                               cEmail = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));                        	  
                           }
                           
-                          while (nameCur.moveToNext()) {                       
+                          while (nameCur.moveToNext()) { 
                         	    first = nameCur.getString(nameCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME));
                         	    last = nameCur.getString(nameCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME));
                           }
+                          
+//                          while (wCur.moveToNext()) { 
+//                      	    String wid = wCur.getString(wCur.getColumnIndex(ContactsContract.Data.DATA1));
+//                      	    if (wid != null)
+//                      	    {
+//                      	    	Log.d("wid",wid);
+//                      	    }
+//                        }
+                                                  
                           
                           if (cEmail != null)
                           {
@@ -152,9 +161,20 @@ public class SyncContactsActivity extends Activity {
 
 		             }
 	             }
+//	             Cursor wCur = cr.query(ContactsContract.Data.CONTENT_URI, new String [] {ContactsContract.Data._ID, ContactsContract.Data.DATA1}, null, null, null);
+//	             while (wCur.moveToNext()) { 
+//	            	String id = wCur.getString(wCur.getColumnIndex(ContactsContract.Data._ID));
+//	           	    String wid = wCur.getString(wCur.getColumnIndex(ContactsContract.Data.DATA1));
+//	           	    if (wid != null)
+//	           	    {
+//	           	    	Log.d("wid",wid + " " + id);
+//	           	    }
+//	             }
+             
 	         }
 	         
 	         cur.close();
+
 			return null;
 
 	     }

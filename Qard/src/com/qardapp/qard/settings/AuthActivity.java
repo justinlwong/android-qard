@@ -90,17 +90,16 @@ public class AuthActivity extends Activity {
 				new String[] { "com.google" }, false, null, null, null, null);
 		startActivityForResult(intent, ACCOUNT_CODE);
 	}
- 
+ //new String[] { "com.google" }
 	private void requestToken() {
 		userAccount = null;
 		String user = authPreferences.getUser();
 		Pattern emailPattern = Patterns.EMAIL_ADDRESS;
 		for (Account account : accountManager.getAccounts()) {
-			Log.d("here", account.name);
 		    if (emailPattern.matcher(account.name).matches()) {
 		        SharedPreferences sp = getSharedPreferences("tokens", 0);
         		SharedPreferences.Editor editor = sp.edit();
-        		editor.putString("EmailAddress", account.name);
+        		editor.putString("Gmail_data", account.name);
         		editor.commit();
         		
         		// Show toast
@@ -114,6 +113,20 @@ public class AuthActivity extends Activity {
 				userAccount = account;
 				break;
 			}
+		}
+		
+		AccountManager am = AccountManager.get(this);
+		Account[] accounts = am.getAccounts();
+
+		for (Account ac : accounts) {
+		    String acname = ac.name;
+		    String actype = ac.type;
+		    // Take your time to look at all available accounts
+		    Log.d("here","Accounts : " + acname + ", " + actype);
+		    if(actype.equals("com.whatsapp")){
+		        String phoneNumber = ac.name;
+		        Log.d("here",phoneNumber);
+		    }
 		}
  
 		accountManager.getAuthToken(userAccount, "oauth2:" + SCOPE, null, this,

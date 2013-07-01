@@ -43,6 +43,7 @@ public class SettingsFragment extends BaseFragment{
 		Button b8 = (Button)rootView.findViewById(R.id.contactsync);
 		Button b9 = (Button)rootView.findViewById(R.id.googleplusconnect);
 		Button b10 = (Button)rootView.findViewById(R.id.phoneconnect);
+		Button b11 = (Button)rootView.findViewById(R.id.whatsappconnect);
 
 		b1.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -92,10 +93,20 @@ public class SettingsFragment extends BaseFragment{
 		b6.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(),AuthActivity.class);
+				Intent intent = new Intent(getActivity(),AccountManagerInfoActivity.class);
+				intent.putExtra("serviceID", Services.GMAIL.id);
 				startActivity(intent);			
 			}
 		});
+		
+		b11.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(),AccountManagerInfoActivity.class);
+				intent.putExtra("serviceID", Services.WHATSAPP.id);
+				startActivity(intent);			
+			}
+		});		
 		
 		b7.setOnClickListener(new View.OnClickListener() {
 			@Override

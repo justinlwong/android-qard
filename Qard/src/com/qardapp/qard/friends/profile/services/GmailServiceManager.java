@@ -2,6 +2,11 @@ package com.qardapp.qard.friends.profile.services;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.ContactsContract;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.qardapp.qard.R;
 
@@ -23,7 +28,8 @@ public class GmailServiceManager extends ServiceManager {
 		Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {data});
 		emailIntent.setType("message/rfc822");
-		activity.startActivity(Intent.createChooser(emailIntent, "Send e-mail:"));;
+		activity.startActivity(Intent.createChooser(emailIntent, "Send e-mail:"));
+
 	}
 
 	@Override
