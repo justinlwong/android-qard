@@ -1,7 +1,8 @@
-package com.qardapp.qard.settings;
+package com.qardapp.qard.settings.services;
 
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
+
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;

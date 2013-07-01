@@ -1,4 +1,4 @@
-package com.qardapp.qard.settings;
+package com.qardapp.qard.settings.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;

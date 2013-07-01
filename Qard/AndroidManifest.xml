@@ -72,11 +72,11 @@
             android:screenOrientation="portrait" >
         </activity>
 
-        <activity android:name="com.qardapp.qard.settings.FacebookLoginActivity"
+        <activity android:name="com.qardapp.qard.settings.services.FacebookLoginActivity"
                   android:label="@string/app_name" />               
-        <activity android:name="com.qardapp.qard.settings.TwitterLoginActivity"
+        <activity android:name="com.qardapp.qard.settings.services.TwitterLoginActivity"
                   android:label="@string/app_name" />      
-        <activity android:name="com.qardapp.qard.settings.OAuthActivity"
+        <activity android:name="com.qardapp.qard.settings.services.OAuthActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleInstance">
         </activity>              

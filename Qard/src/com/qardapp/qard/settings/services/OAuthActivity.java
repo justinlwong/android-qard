@@ -1,4 +1,4 @@
-package com.qardapp.qard.settings;
+package com.qardapp.qard.settings.services;
 
 import org.json.JSONObject;
 import org.scribe.builder.ServiceBuilder;

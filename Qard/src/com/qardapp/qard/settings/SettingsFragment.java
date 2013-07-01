@@ -18,6 +18,12 @@ import com.qardapp.qard.Services;
 import com.qardapp.qard.comm.server.QardLoginActivity;
 import com.qardapp.qard.comm.server.ServerHelper;
 import com.qardapp.qard.comm.server.UpdateUserTask;
+import com.qardapp.qard.settings.services.AccountManagerInfoActivity;
+import com.qardapp.qard.settings.services.FacebookLoginActivity;
+import com.qardapp.qard.settings.services.GooglePlusAuthActivity;
+import com.qardapp.qard.settings.services.OAuthActivity;
+import com.qardapp.qard.settings.services.PopupDialog;
+import com.qardapp.qard.settings.services.SyncContactsActivity;
 
 
 public class SettingsFragment extends BaseFragment{
