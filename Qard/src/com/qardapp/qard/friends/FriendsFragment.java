@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.qardapp.qard.BaseFragment;
+import com.qardapp.qard.MainActivity;
 import com.qardapp.qard.R;
 import com.qardapp.qard.comm.server.FriendsInfoLoader;
 import com.qardapp.qard.comm.server.ServerNotifications;
@@ -54,12 +55,12 @@ public class FriendsFragment extends BaseFragment implements LoaderCallbacks<Arr
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
 				FragmentManager manager = FriendsFragment.this.getFragmentManager();
-				FriendProfileFragment fragment = (FriendProfileFragment) manager.findFragmentByTag("FRAG_FRIEND_PROFILE");
+				FriendProfileFragment fragment = (FriendProfileFragment) manager.findFragmentByTag(MainActivity.FRAGNAME_FRIENDS_PROFILE);
 				if (fragment == null)
 					fragment = new FriendProfileFragment();
 				fragment.setId(id);
 				FragmentTransaction transaction = FriendsFragment.this.getFragmentManager().beginTransaction();
-				transaction.replace(R.id.main_container, fragment, "FRAG_FRIEND_PROFILE");
+				transaction.replace(R.id.main_container, fragment, MainActivity.FRAGNAME_FRIENDS_PROFILE);
 				transaction.addToBackStack(null);
 				// Commit the transaction
 				transaction.commit();

@@ -39,6 +39,13 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	public static int FRAG_FRIENDS = 1;
 	public static int FRAG_SETTINGS = 2;
 	
+	public static String FRAGNAME_PROFILE = "FRAGNAME_PROFILE";
+	public static String FRAGNAME_FRIENDS = "FRAGNAME_FRIENDS";
+	public static String FRAGNAME_SETTINGS = "FRAGNAME_SETTINGS";
+	public static String FRAGNAME_FRIENDS_PROFILE = "FRAGNAME_FRIENDS_PROFILE";
+	public static String FRAGNAME_SETTINGS_PROFILE = "FRAGNAME_SETTINGS_PROFILE";
+	public static String FRAGNAME_SETTINGS_ACCOUNT = "FRAGNAME_SETTINGS_ACCOUNT";
+	
 	public static int REFRESH_LOADER_ID = 0;
 	public static int NEW_USER_LOADER_ID = 1;
 	
@@ -135,7 +142,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 
 	public Fragment switchFragments (int id) {
 		if (id == FRAG_PROFILE) {
-			Fragment fragment = getSupportFragmentManager().findFragmentByTag("FRAG_PROFILE");
+			Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGNAME_PROFILE);
 			if (fragment == null) {
 				Log.e("Hi", "Created new profile frag");
 				fragment =  new ProfileFragment();
@@ -144,13 +151,13 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			if (fragment.isVisible())
 				return fragment;
 			FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-			trans.replace(R.id.main_container, fragment, "FRAG_PROFILE");
+			trans.replace(R.id.main_container, fragment, FRAGNAME_PROFILE);
 			trans.addToBackStack(null);
 			trans.commit();
 			return fragment;
 		}
 		else if (id == FRAG_FRIENDS) {
-			Fragment fragment = getSupportFragmentManager().findFragmentByTag("FRAG_FRIENDS");
+			Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGNAME_FRIENDS);
 			if (fragment == null) {
 				Log.e("Hi", "Created new friends frag");
 				fragment =  new FriendsFragment();
@@ -159,7 +166,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			if (fragment.isVisible())
 				return fragment;
 			FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-			trans.replace(R.id.main_container, fragment, "FRAG_FRIENDS");
+			trans.replace(R.id.main_container, fragment, FRAGNAME_FRIENDS);
 			trans.addToBackStack(null);
 			trans.commit();
 			// Close keyboard
@@ -169,7 +176,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			return fragment;
 		}
 		else if (id == FRAG_SETTINGS) {
-			Fragment fragment = getSupportFragmentManager().findFragmentByTag("FRAG_SETTINGS");
+			Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGNAME_SETTINGS);
 			if (fragment == null) {
 				Log.e("Hi", "Created new settings frag");
 				fragment =  new SettingsFragment();
@@ -178,7 +185,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			if (fragment.isVisible())
 				return fragment;
 			FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-			trans.replace(R.id.main_container, fragment, "FRAG_SETTINGS");
+			trans.replace(R.id.main_container, fragment, FRAGNAME_SETTINGS);
 			trans.addToBackStack(null);
 			trans.commit();
 			return fragment;
@@ -205,13 +212,13 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	}
 
 	public void refreshFragments() {
-		Fragment frag = getSupportFragmentManager().findFragmentByTag("FRAG_PROFILE");
+		Fragment frag = getSupportFragmentManager().findFragmentByTag(FRAGNAME_PROFILE);
 		if (frag != null && frag.isVisible())
 			((BaseFragment) frag).updateViews();
-		frag = getSupportFragmentManager().findFragmentByTag("FRAG_FRIENDS");
+		frag = getSupportFragmentManager().findFragmentByTag(FRAGNAME_FRIENDS);
 		if (frag != null && frag.isVisible())
 			((BaseFragment) frag).updateViews();
-		frag = getSupportFragmentManager().findFragmentByTag("FRAG_FRIEND_PROFILE");
+		frag = getSupportFragmentManager().findFragmentByTag(FRAGNAME_FRIENDS_PROFILE);
 		if (frag != null && frag.isVisible())
 			((BaseFragment) frag).updateViews();
 	}
