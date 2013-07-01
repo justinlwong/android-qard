@@ -8,15 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.qardapp.qard.BaseFragment;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
-import com.qardapp.qard.comm.server.QardLoginActivity;
-import com.qardapp.qard.comm.server.ServerHelper;
-import com.qardapp.qard.comm.server.UpdateUserTask;
 import com.qardapp.qard.settings.services.AccountManagerInfoActivity;
 import com.qardapp.qard.settings.services.FacebookLoginActivity;
 import com.qardapp.qard.settings.services.GooglePlusAuthActivity;
