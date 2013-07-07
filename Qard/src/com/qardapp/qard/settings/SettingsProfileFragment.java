@@ -8,11 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.qardapp.qard.BaseFragment;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
-import com.qardapp.qard.settings.services.AccountManagerInfoActivity;
+import com.qardapp.qard.settings.services.AccountChecker;
 import com.qardapp.qard.settings.services.FacebookLoginActivity;
 import com.qardapp.qard.settings.services.GooglePlusAuthActivity;
 import com.qardapp.qard.settings.services.OAuthActivity;
@@ -24,10 +25,13 @@ public class SettingsProfileFragment extends BaseFragment {
 	// Later will put this in the global application class
 	//OAuthService linkedinService = null;
 	protected View rootView;
+	private AccountChecker a;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
+		a = new AccountChecker(getActivity());
 		
 		rootView = inflater.inflate(R.layout.settings_profile_layout,
 				container, false);
@@ -55,9 +59,14 @@ public class SettingsProfileFragment extends BaseFragment {
 		b2.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(),OAuthActivity.class);
-				intent.putExtra("serviceID", Services.TWITTER.id);
-				startActivity(intent);	
+				// try account check first
+				boolean check = a.getAccountInfo(Services.TWITTER.id);
+				if (check == false)
+				{
+				    Intent intent = new Intent(getActivity(),OAuthActivity.class);
+				    intent.putExtra("serviceID", Services.TWITTER.id);
+				    startActivity(intent);
+				}
 			}
 		});
 //		
@@ -92,18 +101,25 @@ public class SettingsProfileFragment extends BaseFragment {
 		b6.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(),AccountManagerInfoActivity.class);
-				intent.putExtra("serviceID", Services.GMAIL.id);
-				startActivity(intent);			
+				// try account check first
+				boolean check = a.getAccountInfo(Services.GMAIL.id);		
+				if (check == false)
+				{
+					// Backup option would be to popup dialog to ask user to add it in
+	                Toast.makeText(getActivity(), "No email account was detected on this device!", Toast.LENGTH_LONG).show();					
+				}		
 			}
 		});
 		
 		b11.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(),AccountManagerInfoActivity.class);
-				intent.putExtra("serviceID", Services.WHATSAPP.id);
-				startActivity(intent);			
+				// try account check first
+				boolean check = a.getAccountInfo(Services.WHATSAPP.id);		
+				if (check == false)
+				{
+	                Toast.makeText(getActivity(), "WhatsApp was not detected on this device!", Toast.LENGTH_LONG).show();					
+				}
 			}
 		});		
 		

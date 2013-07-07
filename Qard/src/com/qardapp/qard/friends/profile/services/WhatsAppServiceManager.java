@@ -41,7 +41,6 @@ public class WhatsAppServiceManager extends ServiceManager {
 	@Override
 	public void switchToServiceApp() {
 		Log.d("here","switching");
-		//data = "14162624142";
         mPrefs = activity.getSharedPreferences("tokens", 0);
 		if (!mPrefs.getString("WhatsApp_data","-1").equals(data))
 		{
@@ -68,22 +67,19 @@ public class WhatsAppServiceManager extends ServiceManager {
 		        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
 		                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID,rawContactInsertIndex)
 		                .withValue(ContactsContract.Data.MIMETYPE, "vnd.android.cursor.item/vnd.com.whatsapp.profile")
-		                .withValue(ContactsContract.Data.DATA1, data + "@s.whatsapp.net") // Name of the person
+		                .withValue(ContactsContract.Data.DATA1, data + "@s.whatsapp.net") 
 		                .build());
 		        
 		        ContentProviderResult[] res = null;
 				try {
 					res = activity.getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
 				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (OperationApplicationException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 	            if (res!=null && res[0]!=null) {
 	            	Uri newContactUri = res[0].uri;	
-	            	//02-20 22:21:09 URI added contact:content://com.android.contacts/raw_contacts/612
 	            	Log.d("here", "URI added contact:"+ newContactUri);
 	    			Cursor a = checkContact();
 	    			if (!a.isNull(0))
