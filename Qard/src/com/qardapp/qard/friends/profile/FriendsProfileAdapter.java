@@ -176,7 +176,7 @@ public class FriendsProfileAdapter extends BaseAdapter{
 		        	holder.manager = new DefaultServiceManager((Activity) context, Services.LINKEDIN.imageId, Services.LINKEDIN.id, data);	
 		        } else if (serviceId == Services.FOURSQUARE.id) {
 		        	holder.manager = new FoursquareServiceManager((Activity) context,data);		
-		        } else if (serviceId == Services.GMAIL.id) {
+		        } else if (serviceId == Services.EMAIL.id) {
 		        	holder.manager = new GmailServiceManager((Activity) context, data);	        			
 		        } else if (serviceId == Services.GOOGLEPLUS.id) {
 		        	holder.manager = new GooglePlusServiceManager((Activity) context, data);	        			

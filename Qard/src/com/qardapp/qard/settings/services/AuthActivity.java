@@ -46,7 +46,7 @@ public class AuthActivity extends Activity {
 		super.onCreate(savedInstanceState);
  
 		accountManager = AccountManager.get(this);
-		serviceID = Services.GMAIL.id;
+		serviceID = Services.EMAIL.id;
  
 		authPreferences = new AuthPreferences(this);
 		if (authPreferences.getUser() != null

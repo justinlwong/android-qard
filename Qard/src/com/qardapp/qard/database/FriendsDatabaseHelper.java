@@ -11,7 +11,7 @@ import com.qardapp.qard.Services;
 public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "qard.db";
-	private static final int DATABASE_VERSION = 9;
+	private static final int DATABASE_VERSION = 10;
 	
 	// Database table
 	public static final String TABLE_FRIENDS = "friends";
@@ -116,7 +116,6 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 		*/
 		
 		db.execSQL(insertFriendService(0, Services.PHONE.id, "4161234567"));
-		db.execSQL(insertFriendService(0, Services.ADDRESS.id, "32 Yonge St."));
 	}
 
 	@Override

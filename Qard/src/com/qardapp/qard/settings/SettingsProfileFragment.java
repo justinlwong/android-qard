@@ -93,7 +93,7 @@ public class SettingsProfileFragment extends BaseFragment {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(),AccountManagerInfoActivity.class);
-				intent.putExtra("serviceID", Services.GMAIL.id);
+				intent.putExtra("serviceID", Services.EMAIL.id);
 				startActivity(intent);			
 			}
 		});

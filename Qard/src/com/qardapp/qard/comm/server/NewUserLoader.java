@@ -28,32 +28,11 @@ public class NewUserLoader extends
 
 	@Override
 	public ArrayList<ServerNotifications> loadInBackground() {
-
-		HttpClient httpClient = new DefaultHttpClient();
-		// Creating HTTP Post
-		HttpPost httpPost = new HttpPost(NEW_USER_URL);
-
-		JSONObject holder = new JSONObject();
-		try {
-			holder.put("first_name", "First");
-			holder.put("last_name", "Last");
-			holder.put("client_id", "Android01Lo9");
-			httpPost.setHeader("Accept", "application/json");
-			httpPost.setHeader("Content-type", "application/json");
-			httpPost.setEntity(new StringEntity(holder.toString()));
-			HttpResponse response = httpClient.execute(httpPost);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					response.getEntity().getContent(), "UTF-8"));
-			String json = reader.readLine();
-			JSONTokener tokener = new JSONTokener(json);
-			JSONObject finalResult = new JSONObject(tokener);
-			String id = finalResult.getString("id");
-			String token = finalResult.getString("access_token");
-			ServerHelper.setNewUser(context, id, token);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (ServerHelper.getAccessToken(context) != null) {
+			return null;
 		}
+		
+		ServerHelper.getNewUserToken(context);
 		return new ArrayList<ServerNotifications>();
 	}
 

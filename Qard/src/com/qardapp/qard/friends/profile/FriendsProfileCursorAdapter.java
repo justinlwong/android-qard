@@ -74,7 +74,7 @@ public class FriendsProfileCursorAdapter extends CursorAdapter{
 			sMgr = new DefaultServiceManager((Activity) context, Services.LINKEDIN.imageId, Services.LINKEDIN.id, data);	
         } else if (serviceId == Services.FOURSQUARE.id) {
         	sMgr = new FoursquareServiceManager((Activity) context,data);		
-        } else if (serviceId == Services.GMAIL.id) {
+        } else if (serviceId == Services.EMAIL.id) {
 			sMgr = new GmailServiceManager((Activity) context, data);	        			
         } else if (serviceId == Services.GOOGLEPLUS.id) {
 			sMgr = new GooglePlusServiceManager((Activity) context, data);	        			

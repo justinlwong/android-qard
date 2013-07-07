@@ -27,7 +27,7 @@ import com.qardapp.qard.qrcode.QRCodeManager;
 
 public class ProfileFragment extends BaseFragment{
 
-	private String lastUserId = "noid";
+	private String lastUserId = "";
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,11 +89,12 @@ public class ProfileFragment extends BaseFragment{
 		SharedPreferences pref = getActivity().getSharedPreferences(getString(R.string.app_package_name), Context.MODE_PRIVATE);
 		String user_id = pref.getString("user_id", "noid");
 		// Don't regenerate everytime
-		if (!(lastUserId.equals(user_id))) {
+		//if (!(lastUserId.equals(user_id))) {
 			ImageView image = (ImageView) getView().findViewById(R.id.profile_qr_code);
 			String msg = QardMessage.encodeMessage(user_id, first_name, last_name, number);
 			QRCodeManager.genQRCode (msg, image); 
-		}
+		//	lastUserId = user_id;
+		//}
 	}
 
 

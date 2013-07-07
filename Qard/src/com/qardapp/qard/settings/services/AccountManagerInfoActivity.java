@@ -40,7 +40,7 @@ public class AccountManagerInfoActivity extends Activity {
 		    // Take your time to look at all available accounts
 		    Log.d("here","Accounts : " + acname + ", " + actype);
 		    
-		    if (serviceID == Services.GMAIL.id)
+		    if (serviceID == Services.EMAIL.id)
 	        {
 		    
 			    if (emailPattern.matcher(acname).matches() && actype.equals("com.google")) {
