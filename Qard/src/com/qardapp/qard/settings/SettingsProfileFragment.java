@@ -107,7 +107,8 @@ public class SettingsProfileFragment extends BaseFragment {
 				{
 					// Backup option would be to popup dialog to ask user to add it in
 	                Toast.makeText(getActivity(), "No email account was detected on this device!", Toast.LENGTH_LONG).show();					
-				}		
+				}					
+
 			}
 		});
 		

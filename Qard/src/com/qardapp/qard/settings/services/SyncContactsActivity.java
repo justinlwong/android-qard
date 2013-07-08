@@ -74,9 +74,9 @@ public class SyncContactsActivity extends Activity {
 		if (email != null)
 		{
 			evalues.put(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID, user_id);
-			evalues.put(FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID, Services.GMAIL.id);
+			evalues.put(FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID, Services.EMAIL.id);
 			evalues.put(FriendsDatabaseHelper.COLUMN_FS_DATA, email);		
-			cr.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+Services.GMAIL.id), evalues);
+			cr.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+Services.EMAIL.id), evalues);
 		}
 		
     }

@@ -5,13 +5,16 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.qardapp.qard.MainActivity;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
+import com.qardapp.qard.profile.ProfileFragment;
 import com.qardapp.qard.qrcode.QRCodeManager;
 import com.qardapp.qard.settings.services.UpdateDatabase;
 
@@ -34,12 +37,19 @@ public class NewUserTask extends
 		
 		ServerHelper.getNewUserToken(context);
 				
-		if (context instanceof Activity) {
-			View v = ((Activity) context).findViewById(R.id.qrcode_image);
-			if (v !=null)
-				QRCodeManager.genQRCode(ServerHelper.getUserId(context), (ImageView)v);
-		}
+
 		return null;
+	}
+	
+	@Override
+	protected void onPostExecute(String result) {
+		if (context instanceof MainActivity) {
+			//View v = ((MainActivity) context).findViewById(R.id.qrcode_image);
+			Fragment frag = ((MainActivity) context).getSupportFragmentManager().findFragmentByTag(MainActivity.FRAGNAME_PROFILE);
+			if (frag !=null)
+				((ProfileFragment)frag).updateViews();
+		}
+		
 	}
 
 }
