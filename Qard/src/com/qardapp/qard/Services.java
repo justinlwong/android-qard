@@ -1,53 +1,53 @@
 package com.qardapp.qard;
 
 public enum Services {
-	PHONE("Phone Number", 1, R.drawable.phone, R.drawable.phone_gray,
+	PHONE("Phone Number", 1, R.drawable.service_phone, R.drawable.service_phone_disabled,
 			null, null, null, null, null, null, null, null),
-	SKYPE("Skype", 2, R.drawable.facebook, R.drawable.facebook_gray,
+	SKYPE("Skype", 2, R.drawable.service_skype, R.drawable.service_skype_disabled,
 			null, null, null, null, null, null, null, null),
 
-	EMAIL("E-mail", 3, R.drawable.gmail, R.drawable.gmail_gray,
+	EMAIL("E-mail", 3, R.drawable.service_email, R.drawable.service_email_disabled,
 			null, null, null, null, null, null, null, null),		
 
-	WHATSAPP("WhatsApp", 4, R.drawable.whatsapp, R.drawable.whatsapp_gray,
+	WHATSAPP("WhatsApp", 4, R.drawable.service_whatsapp, R.drawable.service_whatsapp_disabled,
 			null, null, null, null, null, null, null, null),
 			
 			
-	FACEBOOK("Facebook", 5, R.drawable.facebook, R.drawable.facebook_gray,
+	FACEBOOK("Facebook", 5, R.drawable.service_facebook, R.drawable.service_facebook_disabled,
 			null, null, null, null, null, null, null, null),
 			
-	GOOGLEPLUS("Google+", 6, R.drawable.gplus, R.drawable.gplus_gray,
+	GOOGLEPLUS("Google+", 6, R.drawable.service_gplus, R.drawable.service_gplus_disabled,
 			null, null, null, "AIzaSyDWPh56YCBmiENeFomBZy1U4fiRJvdM8cI", null, null, null, null),
 
-	FOURSQUARE("Foursquare", 7, R.drawable.foursquare, R.drawable.foursquare_gray,
+	FOURSQUARE("Foursquare", 7, R.drawable.service_foursquare, R.drawable.service_foursquare_disabled,
 					"id", "http://api.foursquare.com/", "https://api.foursquare.com/v2/users/self?oauth_token=", "RG1XWTHCCDCD0ASO0OU5VF1STSTQWEYGUZRWHBXK14J2CMLQ", "N0CKV2ZY2NKNJ2FJKC4PA1KN2EWHVBG4KH24NGAYNSNFOGQG", "oauth://foursquare", null, "https://api.foursquare.com/v2/users/"),
 	
-	LINKEDIN("LinkedIn", 8, R.drawable.linkedin, R.drawable.linkedin_gray,
+	LINKEDIN("LinkedIn", 8, R.drawable.service_linkedin, R.drawable.service_linkedin_disabled,
 			"id", "http://api.linkedin.com/", "http://api.linkedin.com/v1/people/~:(id,first-name,last-name,industry,email-address,site-standard-profile-request)?format=json", "a3dolo9iq9fd", "hKyo855beQ9ggLXZ","oauth://linkedin","r_fullprofile r_emailaddress w_messages", "http://api.linkedin.com/v1/people/~/mailbox"),
 			
 					
-	TWITTER("Twitter", 9, R.drawable.twitter, R.drawable.twitter_gray,
+	TWITTER("Twitter", 9, R.drawable.service_twitter, R.drawable.service_twitter_disabled,
 			"id_str", "http://api.twitter.com/", "https://api.twitter.com/1.1/account/verify_credentials.json", "ZtN4h8Ps9cyNIadDK6cg", "RCE4Gls0cKcdpe19VYLOC4rg7zHcgV0n5f6rPnaV4VU", "oauth://twitter", null, "https://api.twitter.com/1.1/friendships/create.json"),
 			
-	INSTAGRAM("Instagram", 10, R.drawable.instagram, R.drawable.instagram_gray,
+	INSTAGRAM("Instagram", 10, R.drawable.service_instagram, R.drawable.service_instagram_disabled,
 			"id", "http://api.instagram.com/", "https://api.instagram.com/v1/users/self/?access_token=", "b4ff6552928a495a983827d421a09473", "4f2ec0d2154541da9cd158b42752f706", "oauth://instagram", "basic", null),
 
-	FLICKR("Flickr", 11, R.drawable.flickr, R.drawable.flickr_gray,
+	FLICKR("Flickr", 11, R.drawable.service_flickr, R.drawable.service_flickr_disabled,
 			"nsid", "http://api.flickr.com/", "http://api.flickr.com/services/rest/?method=flickr.urls.getUserProfile&format=json&nojsoncallback=1", "13d1fc4d1d2f7924916217597ed71ce8", "af718ebdf5f25310", "oauth://flickr", null, null),
 	
-	TUMBLR("Tumblr", 12, R.drawable.tumblr, R.drawable.tumblr_gray,
+	TUMBLR("Tumblr", 12, R.drawable.service_tumblr, R.drawable.service_tumblr_disabled,
 			null, null, null, null, null, null, null, null),
 	
-	YOUTUBE("Youtube", 13, R.drawable.pinterest, R.drawable.pinterest_gray,
+	YOUTUBE("Youtube", 13, R.drawable.service_youtube, R.drawable.service_youtube_disabled,
 			null, null, null, null, null, null, null, null),
 			
-	BLOGGER("Blogger", 14, R.drawable.pinterest, R.drawable.pinterest_gray,
+	BLOGGER("Blogger", 14, R.drawable.service_blogger, R.drawable.service_blogger_disabled,
 			null, null, null, null, null, null, null, null),
 
-	PINTEREST("Pinterest", 15, R.drawable.pinterest, R.drawable.pinterest_gray,
+	PINTEREST("Pinterest", 15, R.drawable.service_pinterest, R.drawable.service_pinterest_disabled,
 			null, null, null, null, null, null, null, null),
 			
-	WEBPAGE("Web page", 16, R.drawable.whatsapp, R.drawable.whatsapp_gray,
+	WEBPAGE("Web page", 16, R.drawable.service_nexcircle, R.drawable.service_nexcircle_disabled,
 			null, null, null, null, null, null, null, null);
 
 	//TEXT("Text", 2, R.drawable.whatsapp, R.drawable.whatsapp_gray, null, null, null, null, null, null, null, null),
