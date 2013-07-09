@@ -44,7 +44,7 @@ public class AccountChecker {
 		    // Take your time to look at all available accounts
 		    Log.d("here","Accounts : " + acname + ", " + actype);
 		    
-		    if (serviceID == Services.GMAIL.id || serviceID == ALL)
+		    if (serviceID == Services.EMAIL.id || serviceID == ALL)
 	        {
 		    
 			    if (emailPattern.matcher(acname).matches() && actype.equals("com.google")) {
@@ -57,7 +57,7 @@ public class AccountChecker {
 	                Toast.makeText(a, "Added email information!", Toast.LENGTH_LONG).show();
 	        		
 	        		// Update database
-	        		UpdateDatabase.updateDatabase(acname, Services.GMAIL.id,a);
+	        		UpdateDatabase.updateDatabase(acname, Services.EMAIL.id,a);
 	        		rval = true;
 	
 			    }

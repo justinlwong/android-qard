@@ -35,6 +35,10 @@ public class DefaultServiceManager extends ServiceManager {
         {
         	service = Services.INSTAGRAM;
             url = "https://instagram.com/"+data;
+        }else if (serviceID == Services.TUMBLR.id)
+        {
+        	service = Services.TUMBLR;
+            url = data;
         }
         
 		Intent intent =  new Intent(Intent.ACTION_VIEW, Uri.parse(url));

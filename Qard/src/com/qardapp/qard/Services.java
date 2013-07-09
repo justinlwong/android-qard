@@ -36,7 +36,7 @@ public enum Services {
 			"nsid", "http://api.flickr.com/", "http://api.flickr.com/services/rest/?method=flickr.urls.getUserProfile&format=json&nojsoncallback=1", "13d1fc4d1d2f7924916217597ed71ce8", "af718ebdf5f25310", "oauth://flickr", null, null),
 	
 	TUMBLR("Tumblr", 12, R.drawable.service_tumblr, R.drawable.service_tumblr_disabled,
-			null, null, null, null, null, null, null, null),
+			null, "http://api.tumblr.com/v2/", "http://api.tumblr.com/v2/user/info", "ly15mymFMKc75b95H1PTX5R7A4WoOY2ywXpR3UvpvimhdmzmDg", "jmJATGVoGWcGWpf0TtuyFf9bCwxybsvWziI7uT4Y63mebBisoG", "oauth://tumblr", null, null),
 	
 	YOUTUBE("Youtube", 13, R.drawable.service_youtube, R.drawable.service_youtube_disabled,
 			null, null, null, null, null, null, null, null),

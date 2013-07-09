@@ -21,6 +21,7 @@ import com.qardapp.qard.friends.profile.services.GmailServiceManager;
 import com.qardapp.qard.friends.profile.services.GooglePlusServiceManager;
 import com.qardapp.qard.friends.profile.services.PhoneServiceManager;
 import com.qardapp.qard.friends.profile.services.ServiceManager;
+import com.qardapp.qard.friends.profile.services.TumblrServiceManager;
 import com.qardapp.qard.friends.profile.services.TwitterServiceManager;
 import com.qardapp.qard.friends.profile.services.WhatsAppServiceManager;
 
@@ -182,6 +183,8 @@ public class FriendsProfileAdapter extends BaseAdapter{
 		        	holder.manager = new GooglePlusServiceManager((Activity) context, data);	        			
 		        } else if (serviceId == Services.WHATSAPP.id) {
 					holder.manager = new WhatsAppServiceManager((Activity) context, data);	        			
+		        } else if (serviceId == Services.TUMBLR.id) {
+					holder.manager = new TumblrServiceManager((Activity) context, data);	        			
 		        }
 			}
         return convertView;

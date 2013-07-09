@@ -47,6 +47,7 @@ public class SettingsProfileFragment extends BaseFragment {
 		Button b9 = (Button)rootView.findViewById(R.id.googleplusconnect);
 		Button b10 = (Button)rootView.findViewById(R.id.phoneconnect);
 		Button b11 = (Button)rootView.findViewById(R.id.whatsappconnect);
+		Button b12 = (Button)rootView.findViewById(R.id.tumblrconnect);
 
 		b1.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -102,7 +103,7 @@ public class SettingsProfileFragment extends BaseFragment {
 			@Override
 			public void onClick(View v) {
 				// try account check first
-				boolean check = a.getAccountInfo(Services.GMAIL.id);		
+				boolean check = a.getAccountInfo(Services.EMAIL.id);		
 				if (check == false)
 				{
 					// Backup option would be to popup dialog to ask user to add it in
@@ -129,6 +130,15 @@ public class SettingsProfileFragment extends BaseFragment {
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(),OAuthActivity.class);
 				intent.putExtra("serviceID",Services.INSTAGRAM.id);
+				startActivity(intent);			
+			}
+		});
+		
+		b12.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(),OAuthActivity.class);
+				intent.putExtra("serviceID",Services.TUMBLR.id);
 				startActivity(intent);			
 			}
 		});

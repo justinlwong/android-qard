@@ -1,10 +1,12 @@
 package com.qardapp.qard.settings.services;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.FlickrApi;
 import org.scribe.builder.api.Foursquare2Api;
 import org.scribe.builder.api.LinkedInApi;
+import org.scribe.builder.api.TumblrApi;
 import org.scribe.builder.api.TwitterApi;
 import org.scribe.exceptions.OAuthException;
 import org.scribe.model.OAuthRequest;
@@ -186,6 +188,15 @@ public class OAuthActivity extends Activity {
 							                data = mainObject.getString("screen_name");	
 							                username = mainObject.getString("screen_name");
 							                userID = mainObject.getString(service.idFieldName);
+						                } else if (serviceID == Services.TUMBLR.id) {
+						                    JSONObject resp = mainObject.getJSONObject("response");
+						                    JSONObject user = resp.getJSONObject("user");
+						                    JSONArray blogs = user.getJSONArray("blogs");
+						                    JSONObject pblog = blogs.getJSONObject(0);					                    
+							                data = pblog.getString("name");	
+							                username = user.getString("name");
+							                Log.d("here",data);
+							                //userID = mainObject.getString(service.idFieldName);
 						                }
 						                else {
 							                data = mainObject.getString(service.idFieldName);						                	
@@ -307,6 +318,15 @@ public class OAuthActivity extends Activity {
     		.apiSecret(service.apiSecret)
     		.callback(service.callbackURL)
     		.scope(service.scope)
+    		.build();
+        } else if (serviceID == Services.TUMBLR.id)
+        {
+        	service = Services.TUMBLR;
+            mService = new ServiceBuilder()
+    		.provider(TumblrApi.class)
+    		.apiKey(service.apiKey)
+    		.apiSecret(service.apiSecret)
+    		.callback(service.callbackURL)
     		.build();
         }
         
