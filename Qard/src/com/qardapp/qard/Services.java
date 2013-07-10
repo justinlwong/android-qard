@@ -39,7 +39,7 @@ public enum Services {
 			null, "http://api.tumblr.com/v2/", "http://api.tumblr.com/v2/user/info", "ly15mymFMKc75b95H1PTX5R7A4WoOY2ywXpR3UvpvimhdmzmDg", "jmJATGVoGWcGWpf0TtuyFf9bCwxybsvWziI7uT4Y63mebBisoG", "oauth://tumblr", null, null),
 	
 	YOUTUBE("Youtube", 13, R.drawable.service_youtube, R.drawable.service_youtube_disabled,
-			null, null, null, null, null, null, null, null),
+			null, null, "https://gdata.youtube.com/feeds/api/users/default?access_token=", "1096476372365.apps.googleusercontent.com", null, "http://localhost", null, null),
 			
 	BLOGGER("Blogger", 14, R.drawable.service_blogger, R.drawable.service_blogger_disabled,
 			null, null, null, null, null, null, null, null),

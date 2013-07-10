@@ -48,7 +48,8 @@ public class SettingsProfileFragment extends BaseFragment {
 		Button b10 = (Button)rootView.findViewById(R.id.phoneconnect);
 		Button b11 = (Button)rootView.findViewById(R.id.whatsappconnect);
 		Button b12 = (Button)rootView.findViewById(R.id.tumblrconnect);
-
+		Button b13 = (Button)rootView.findViewById(R.id.youtubeconnect);
+		
 		b1.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -139,6 +140,15 @@ public class SettingsProfileFragment extends BaseFragment {
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(),OAuthActivity.class);
 				intent.putExtra("serviceID",Services.TUMBLR.id);
+				startActivity(intent);			
+			}
+		});
+		
+		b13.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(),OAuthActivity.class);
+				intent.putExtra("serviceID",Services.YOUTUBE.id);
 				startActivity(intent);			
 			}
 		});

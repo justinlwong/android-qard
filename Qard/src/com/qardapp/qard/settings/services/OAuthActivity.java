@@ -73,7 +73,7 @@ public class OAuthActivity extends Activity {
 			String authURL = service.authURL;
 
 			try {
-				if (serviceID == Services.FOURSQUARE.id || serviceID == Services.INSTAGRAM.id)
+				if (serviceID == Services.FOURSQUARE.id || serviceID == Services.INSTAGRAM.id || serviceID == Services.YOUTUBE.id)
 				{
 				    authURL = mService.getAuthorizationUrl(null);	
 				} else {
@@ -108,7 +108,7 @@ public class OAuthActivity extends Activity {
 
 					super.shouldOverrideUrlLoading(view, url);
 
-					if( url.startsWith("oauth") ) {
+					if( url.startsWith("oauth") || url.startsWith("http://localhost") ) {
 				        mWebView.setVisibility(WebView.GONE);	
 				        
 				        // Restart loading animation
@@ -125,7 +125,7 @@ public class OAuthActivity extends Activity {
 						  	    Uri uri = Uri.parse(url1);
 			
 							    String verifier = uri.getQueryParameter("oauth_verifier");
-							    if (serviceID == Services.FOURSQUARE.id || serviceID == Services.INSTAGRAM.id )
+							    if (serviceID == Services.FOURSQUARE.id || serviceID == Services.INSTAGRAM.id || serviceID == Services.YOUTUBE.id)
 							    {
 							    	verifier = uri.getQueryParameter("code");
 							    	mRequestToken = null;
@@ -142,12 +142,17 @@ public class OAuthActivity extends Activity {
 							    	urlStr += accessToken.getToken() + "&v=20130606";
 							    } else if (serviceID == Services.INSTAGRAM.id) {
 							    	urlStr += accessToken.getToken();
-							    }
+							    } else if (serviceID == Services.YOUTUBE.id) {
+							    	urlStr += accessToken.getToken() + "&alt=json";
+							    } 
 							    
 							    OAuthRequest request = new OAuthRequest(Verb.GET,urlStr);
 
 							    Token t = new Token(accessToken.getToken(),accessToken.getSecret());
-							    mService.signRequest(t, request);
+							    if (!(serviceID == Services.FOURSQUARE.id || serviceID == Services.INSTAGRAM.id || serviceID == Services.YOUTUBE.id))
+							    {							    
+							    	mService.signRequest(t, request);
+							    }
 							    
 							    Response response = null;
 							    try {
@@ -195,6 +200,12 @@ public class OAuthActivity extends Activity {
 						                    JSONObject pblog = blogs.getJSONObject(0);					                    
 							                data = pblog.getString("name");	
 							                username = user.getString("name");
+							                Log.d("here",data);
+							                //userID = mainObject.getString(service.idFieldName);
+						                }else if (serviceID == Services.YOUTUBE.id) {
+						                    JSONObject resp = mainObject.getJSONObject("entry");
+						                    JSONObject user = resp.getJSONObject("yt$username");
+						                    data = user.getString("$t");					                    	
 							                Log.d("here",data);
 							                //userID = mainObject.getString(service.idFieldName);
 						                }
@@ -326,6 +337,15 @@ public class OAuthActivity extends Activity {
     		.provider(TumblrApi.class)
     		.apiKey(service.apiKey)
     		.apiSecret(service.apiSecret)
+    		.callback(service.callbackURL)
+    		.build();
+        } else if (serviceID == Services.YOUTUBE.id)
+        {
+        	service = Services.YOUTUBE;
+            mService = new ServiceBuilder()
+    		.provider(YoutubeApi.class)
+    		.apiKey(service.apiKey)
+    		.apiSecret("9999")
     		.callback(service.callbackURL)
     		.build();
         }

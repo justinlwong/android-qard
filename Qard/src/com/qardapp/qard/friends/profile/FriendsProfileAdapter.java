@@ -185,6 +185,8 @@ public class FriendsProfileAdapter extends BaseAdapter{
 					holder.manager = new WhatsAppServiceManager((Activity) context, data);	        			
 		        } else if (serviceId == Services.TUMBLR.id) {
 					holder.manager = new TumblrServiceManager((Activity) context, data);	        			
+		        } else if (serviceId == Services.YOUTUBE.id) {
+					holder.manager = new DefaultServiceManager((Activity) context, Services.YOUTUBE.imageId, Services.YOUTUBE.id, data);	        			
 		        }
 			}
         return convertView;

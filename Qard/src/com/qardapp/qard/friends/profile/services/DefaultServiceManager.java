@@ -39,6 +39,10 @@ public class DefaultServiceManager extends ServiceManager {
         {
         	service = Services.TUMBLR;
             url = data;
+        } else if (serviceID == Services.YOUTUBE.id)
+        {
+        	service = Services.YOUTUBE;
+            url = "http://www.youtube.com/user/"+data;
         }
         
 		Intent intent =  new Intent(Intent.ACTION_VIEW, Uri.parse(url));
