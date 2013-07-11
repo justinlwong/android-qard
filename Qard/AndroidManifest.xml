@@ -109,12 +109,14 @@
 		    android:label="widgetBroadcastReceiver" >
 		    <intent-filter>
 		        <action android:name="pl.looksok.intent.action.CHANGE_PICTURE" />
+		        <action android:name="pl.looksok.intent.action.CAMERA"/>
 		    </intent-filter>
 		
 		    <meta-data
 		        android:name="android.appwidget.provider"
 		        android:resource="@xml/widget_provider" />
 		</receiver>
+		
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
