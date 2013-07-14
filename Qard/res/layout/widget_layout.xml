@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="5sp"
+    android:background="@android:drawable/alert_light_frame" >
+
+    <ImageView
+        android:id="@+id/widget_image"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_gravity="center"
+        android:src="@drawable/nexcircle" />
+
+    <Button
+        android:id="@+id/widget_button"
+        android:layout_toRightOf="@id/widget_image"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Image Test!" 
+        android:textColor="#000000"/>
+    
+    <ImageView
+        android:id="@+id/widget_camera"
+        android:layout_width="@dimen/abs__action_bar_default_height"
+        android:layout_height="@dimen/abs__action_bar_default_height"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/widget_button"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="5dp"
+        android:src="@drawable/navigation_camera" />
+    
+    
+
+</RelativeLayout>

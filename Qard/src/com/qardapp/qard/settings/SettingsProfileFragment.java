@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.qardapp.qard.BaseFragment;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
+import com.qardapp.qard.friends.FriendsCursorAdapter;
 import com.qardapp.qard.settings.services.AccountChecker;
 import com.qardapp.qard.settings.services.FacebookLoginActivity;
 import com.qardapp.qard.settings.services.GooglePlusAuthActivity;
@@ -146,6 +148,16 @@ public class SettingsProfileFragment extends BaseFragment {
 				Services.PHONE.getManager(getActivity()).startLoginIntent();	
 			}
 		});
+		
+		/*
+		 *
+		// New layout
+		rootView = inflater.inflate(R.layout.settings_profile_layout1,
+				container, false);
+		ListView listView = (ListView) rootView.findViewById(R.id.settings_service_list);
+		SettingsProfileAdapter adapter = new SettingsProfileAdapter(getActivity());
+		listView.setAdapter(adapter);
+		*/
 		return rootView;
 	}
 	
