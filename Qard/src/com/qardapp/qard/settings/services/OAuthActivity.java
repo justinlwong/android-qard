@@ -51,6 +51,7 @@ public class OAuthActivity extends Activity {
 	String username;
 	String profileURL;
 	String userID;
+	private boolean uses_oauth2 = false;
 	
 	private class OAuthTask extends AsyncTask<Void, Void, String> {
 		
@@ -73,7 +74,7 @@ public class OAuthActivity extends Activity {
 			String authURL = service.authURL;
 
 			try {
-				if (serviceID == Services.FOURSQUARE.id || serviceID == Services.INSTAGRAM.id || serviceID == Services.YOUTUBE.id)
+				if (uses_oauth2)
 				{
 				    authURL = mService.getAuthorizationUrl(null);	
 				} else {
@@ -125,7 +126,7 @@ public class OAuthActivity extends Activity {
 						  	    Uri uri = Uri.parse(url1);
 			
 							    String verifier = uri.getQueryParameter("oauth_verifier");
-							    if (serviceID == Services.FOURSQUARE.id || serviceID == Services.INSTAGRAM.id || serviceID == Services.YOUTUBE.id)
+							    if (uses_oauth2)
 							    {
 							    	verifier = uri.getQueryParameter("code");
 							    	mRequestToken = null;
@@ -149,7 +150,7 @@ public class OAuthActivity extends Activity {
 							    OAuthRequest request = new OAuthRequest(Verb.GET,urlStr);
 
 							    Token t = new Token(accessToken.getToken(),accessToken.getSecret());
-							    if (!(serviceID == Services.FOURSQUARE.id || serviceID == Services.INSTAGRAM.id || serviceID == Services.YOUTUBE.id))
+							    if (!(uses_oauth2))
 							    {							    
 							    	mService.signRequest(t, request);
 							    }
@@ -320,6 +321,8 @@ public class OAuthActivity extends Activity {
     		.apiSecret(service.apiSecret)
     		.callback(service.callbackURL)
     		.build();
+            
+            uses_oauth2 = true;
         } else if (serviceID == Services.INSTAGRAM.id)
         {
         	service = Services.INSTAGRAM;
@@ -330,6 +333,9 @@ public class OAuthActivity extends Activity {
     		.callback(service.callbackURL)
     		.scope(service.scope)
     		.build();
+            
+            uses_oauth2 = true;
+            
         } else if (serviceID == Services.TUMBLR.id)
         {
         	service = Services.TUMBLR;
@@ -348,6 +354,20 @@ public class OAuthActivity extends Activity {
     		.apiSecret("9999")
     		.callback(service.callbackURL)
     		.build();
+            
+            uses_oauth2 = true;
+            
+        } else if (serviceID == Services.PINTEREST.id)
+        {
+        	service = Services.PINTEREST;
+            mService = new ServiceBuilder()
+    		.provider(PinterestApi.class)
+    		.apiKey(service.apiKey)
+    		.apiSecret("9999")
+    		.callback(service.callbackURL)
+    		.build();
+            
+            uses_oauth2 = true;        	
         }
         
 

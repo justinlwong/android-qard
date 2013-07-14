@@ -53,7 +53,7 @@ public class SettingsProfileFragment extends BaseFragment {
 		b1.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				launch(Services.FACEBOOK.id);
+				Services.FACEBOOK.getManager(getActivity()).startLoginIntent();
 				
 			}
 		});
@@ -61,23 +61,14 @@ public class SettingsProfileFragment extends BaseFragment {
 		b2.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// try account check first
-				boolean check = a.getAccountInfo(Services.TWITTER.id);
-				if (check == false)
-				{
-				    Intent intent = new Intent(getActivity(),OAuthActivity.class);
-				    intent.putExtra("serviceID", Services.TWITTER.id);
-				    startActivity(intent);
-				}
+				Services.TWITTER.getManager(getActivity()).startLoginIntent();
 			}
 		});
 //		
 		b3.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(),OAuthActivity.class);
-				intent.putExtra("serviceID", Services.FLICKR.id);
-				startActivity(intent);
+				Services.FLICKR.getManager(getActivity()).startLoginIntent();
 			}
 		});
 //		
@@ -85,71 +76,49 @@ public class SettingsProfileFragment extends BaseFragment {
 		b4.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(),OAuthActivity.class);
-				intent.putExtra("serviceID", Services.LINKEDIN.id);
-				startActivity(intent);			
+				Services.LINKEDIN.getManager(getActivity()).startLoginIntent();			
 			}
 		});
 		
 		b5.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(),OAuthActivity.class);
-				intent.putExtra("serviceID", Services.FOURSQUARE.id);
-				startActivity(intent);			
+				Services.FOURSQUARE.getManager(getActivity()).startLoginIntent();		
 			}
 		});
 		
 		b6.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// try account check first
-				boolean check = a.getAccountInfo(Services.EMAIL.id);		
-				if (check == false)
-				{
-					// Backup option would be to popup dialog to ask user to add it in
-	                Toast.makeText(getActivity(), "No email account was detected on this device!", Toast.LENGTH_LONG).show();					
-				}					
-
+				Services.EMAIL.getManager(getActivity()).startLoginIntent();					
 			}
 		});
 		
 		b11.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// try account check first
-				boolean check = a.getAccountInfo(Services.WHATSAPP.id);		
-				if (check == false)
-				{
-	                Toast.makeText(getActivity(), "WhatsApp was not detected on this device!", Toast.LENGTH_LONG).show();					
-				}
+				Services.WHATSAPP.getManager(getActivity()).startLoginIntent();
 			}
 		});		
 		
 		b7.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(),OAuthActivity.class);
-				intent.putExtra("serviceID",Services.INSTAGRAM.id);
-				startActivity(intent);			
+				Services.INSTAGRAM.getManager(getActivity()).startLoginIntent();		
 			}
 		});
 		
 		b12.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(),OAuthActivity.class);
-				intent.putExtra("serviceID",Services.TUMBLR.id);
-				startActivity(intent);			
+				Services.TUMBLR.getManager(getActivity()).startLoginIntent();		
 			}
 		});
 		
 		b13.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(),OAuthActivity.class);
-				intent.putExtra("serviceID",Services.YOUTUBE.id);
-				startActivity(intent);			
+				Services.YOUTUBE.getManager(getActivity()).startLoginIntent();		
 			}
 		});
 		
@@ -167,44 +136,23 @@ public class SettingsProfileFragment extends BaseFragment {
 		b9.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), GooglePlusAuthActivity.class);
-                startActivity(intent);		
+				Services.GOOGLEPLUS.getManager(getActivity()).startLoginIntent();
 			}
 		});
 		
 		b10.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-                showEditDialog(Services.PHONE.id);		
+				Services.PHONE.getManager(getActivity()).startLoginIntent();	
 			}
 		});
 		return rootView;
 	}
 	
-	public void launch( int serviceID) {
-		Intent intent = null;
-		if (serviceID == Services.FACEBOOK.id) {
-		    intent = new Intent(this.getActivity(),FacebookLoginActivity.class);
-		} 
-		startActivityForResult(intent,0);	
-	}
 
 	@Override
 	public void updateViews() {
 	}
 	
-    private void showEditDialog(int serviceId) {
-    	
-        FragmentManager fm = getFragmentManager();        
-        PopupDialog popupDialog = (PopupDialog) fm.findFragmentByTag("login_fragment");
-       		
-        popupDialog = new PopupDialog();
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        Bundle bund = new Bundle();
-        bund.putInt("serviceType",serviceId);
-        popupDialog.setArguments(bund);
-        //loginDialog.show(transaction, "login_fragment");
-        transaction.add(popupDialog,"login_fragment").commit();
-    }
 
 }

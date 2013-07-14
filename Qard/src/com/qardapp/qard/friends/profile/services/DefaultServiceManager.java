@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.qardapp.qard.Services;
+import com.qardapp.qard.settings.services.AccountChecker;
+import com.qardapp.qard.settings.services.GooglePlusAuthActivity;
+import com.qardapp.qard.settings.services.OAuthActivity;
 
 public class DefaultServiceManager extends ServiceManager {
 
@@ -12,12 +15,9 @@ public class DefaultServiceManager extends ServiceManager {
 	Services service;
 	String url;
 
-	Activity a;
-	
-	public DefaultServiceManager(Activity activity, int serviceImage, int serviceId, String data) {
-		super(activity, serviceImage, data);
+	public DefaultServiceManager(Activity activity, int serviceImage, int serviceId) {
+		super(activity, serviceImage);
 		this.serviceID = serviceId;
-		this.a = activity;
 	}
 
 	@Override
@@ -43,6 +43,22 @@ public class DefaultServiceManager extends ServiceManager {
         {
         	service = Services.YOUTUBE;
             url = "http://www.youtube.com/user/"+data;
+        } else if (serviceID == Services.FOURSQUARE.id)
+        {
+        	service = Services.FOURSQUARE;
+            url = "http://m.foursquare.com/user?uid="+data;
+        } else if (serviceID == Services.TWITTER.id)
+        {
+        	service = Services.TWITTER;
+            url = "https://twitter.com/"+data;
+        } else if (serviceID == Services.TUMBLR.id)
+        {
+        	service = Services.TUMBLR;
+            url = "http://www.tumblr.com/open/app?referrer=mobile_banner&app_args=blog%3FblogName%3D"+data+"%26page%3Dblog";
+        } else if (serviceID == Services.GOOGLEPLUS.id)
+        {
+        	service = Services.GOOGLEPLUS;
+            url = "https://plus.google.com/" + data;
         }
         
 		Intent intent =  new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -58,6 +74,27 @@ public class DefaultServiceManager extends ServiceManager {
 	@Override
 	public boolean isAppInstalled() {
 		return true;
+	}
+	
+	@Override
+	public void startLoginIntent() {
+		if (serviceID == Services.TWITTER.id) {
+			// try account check first
+			boolean check = new AccountChecker(activity).getAccountInfo(Services.TWITTER.id);
+			if (check == false)
+			{
+			    Intent intent = new Intent(activity,OAuthActivity.class);
+			    intent.putExtra("serviceID", Services.TWITTER.id);
+			    activity.startActivity(intent);
+			}			
+		} else if (serviceID == Services.GOOGLEPLUS.id) {
+            Intent intent = new Intent(activity, GooglePlusAuthActivity.class);
+            activity.startActivity(intent);	
+		} else {
+			Intent intent = new Intent(activity,OAuthActivity.class);
+			intent.putExtra("serviceID", serviceID);
+			activity.startActivity(intent);	
+		}
 	}
 
 }

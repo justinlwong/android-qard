@@ -9,18 +9,18 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.qardapp.qard.R;
+import com.qardapp.qard.Services;
+import com.qardapp.qard.settings.services.AccountChecker;
 
 // Note: Twitter resolves URL so no need to launch app explicitly
 
-public class GmailServiceManager extends ServiceManager {
+public class EmailServiceManager extends ServiceManager {
 
-	//public static String PACKAGE_NAME = "com.facebook.katana";
-	public static Integer GMAIL_IMAGE = R.drawable.gmail;
+	public static Integer EMAIL_IMAGE = R.drawable.gmail;
 	
 	// Description of data (include examples)
-	// Twitter uses numeric ids for accessing pages
-	public GmailServiceManager(Activity activity, String data) {
-		super(activity, GMAIL_IMAGE, data );
+	public EmailServiceManager(Activity activity) {
+		super(activity, EMAIL_IMAGE );
 	}
 
 	@Override
@@ -47,5 +47,17 @@ public class GmailServiceManager extends ServiceManager {
 			return false;
 		}
 	}
+	
+	@Override
+	public void startLoginIntent() {
+		// try account check first
+		boolean check = new AccountChecker(activity).getAccountInfo(Services.EMAIL.id);		
+		if (check == false)
+		{
+			// Backup option would be to popup dialog to ask user to add it in
+            Toast.makeText(activity, "No email account was detected on this device!", Toast.LENGTH_LONG).show();					
+		}	
+	}
+	
 	
 }

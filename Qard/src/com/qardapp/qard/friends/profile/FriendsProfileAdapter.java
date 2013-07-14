@@ -1,5 +1,7 @@
 package com.qardapp.qard.friends.profile;
 
+import java.util.logging.Logger;
+
 import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
@@ -15,14 +17,10 @@ import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.friends.profile.services.DefaultServiceManager;
+import com.qardapp.qard.friends.profile.services.EmailServiceManager;
 import com.qardapp.qard.friends.profile.services.FacebookServiceManager;
-import com.qardapp.qard.friends.profile.services.FoursquareServiceManager;
-import com.qardapp.qard.friends.profile.services.GmailServiceManager;
-import com.qardapp.qard.friends.profile.services.GooglePlusServiceManager;
 import com.qardapp.qard.friends.profile.services.PhoneServiceManager;
 import com.qardapp.qard.friends.profile.services.ServiceManager;
-import com.qardapp.qard.friends.profile.services.TumblrServiceManager;
-import com.qardapp.qard.friends.profile.services.TwitterServiceManager;
 import com.qardapp.qard.friends.profile.services.WhatsAppServiceManager;
 
 public class FriendsProfileAdapter extends BaseAdapter{
@@ -164,30 +162,31 @@ public class FriendsProfileAdapter extends BaseAdapter{
 				// Set up service managers depending on service type		
 		        if (serviceId == Services.FACEBOOK.id)
 				{
-		        	holder.manager = new FacebookServiceManager((Activity) context,data);					
+		        	holder.manager = Services.FACEBOOK.getManager((Activity) context);			
 				} else if (serviceId == Services.TWITTER.id) {
-					holder.manager = new TwitterServiceManager((Activity) context,data);		
+					holder.manager = Services.TWITTER.getManager((Activity) context);		
 				} else if (serviceId == Services.FLICKR.id) {
-					holder.manager = new DefaultServiceManager((Activity) context, Services.FLICKR.imageId, Services.FLICKR.id, data);		
+					holder.manager = Services.FLICKR.getManager((Activity) context);			
 				} else if (serviceId == Services.PHONE.id) {
-					holder.manager = new PhoneServiceManager((Activity) context,data);	
+					holder.manager = Services.PHONE.getManager((Activity) context);	
 		        } else if (serviceId == Services.INSTAGRAM.id) {
-		        	holder.manager = new DefaultServiceManager((Activity) context, Services.INSTAGRAM.imageId, Services.INSTAGRAM.id, data);	
+		        	holder.manager = Services.INSTAGRAM.getManager((Activity) context);	
 		        } else if (serviceId == Services.LINKEDIN.id) {
-		        	holder.manager = new DefaultServiceManager((Activity) context, Services.LINKEDIN.imageId, Services.LINKEDIN.id, data);	
+		        	holder.manager = Services.LINKEDIN.getManager((Activity) context);	
 		        } else if (serviceId == Services.FOURSQUARE.id) {
-		        	holder.manager = new FoursquareServiceManager((Activity) context,data);		
+		        	holder.manager = Services.FOURSQUARE.getManager((Activity) context);			
 		        } else if (serviceId == Services.EMAIL.id) {
-		        	holder.manager = new GmailServiceManager((Activity) context, data);	        			
+		        	holder.manager = Services.EMAIL.getManager((Activity) context);	        			
 		        } else if (serviceId == Services.GOOGLEPLUS.id) {
-		        	holder.manager = new GooglePlusServiceManager((Activity) context, data);	        			
+		        	holder.manager = Services.GOOGLEPLUS.getManager((Activity) context);		        			
 		        } else if (serviceId == Services.WHATSAPP.id) {
-					holder.manager = new WhatsAppServiceManager((Activity) context, data);	        			
+					holder.manager = Services.WHATSAPP.getManager((Activity) context);		        			
 		        } else if (serviceId == Services.TUMBLR.id) {
-					holder.manager = new TumblrServiceManager((Activity) context, data);	        			
+					holder.manager = Services.TUMBLR.getManager((Activity) context);		        			
 		        } else if (serviceId == Services.YOUTUBE.id) {
-					holder.manager = new DefaultServiceManager((Activity) context, Services.YOUTUBE.imageId, Services.YOUTUBE.id, data);	        			
+					holder.manager = Services.YOUTUBE.getManager((Activity) context);	      			
 		        }
+		        holder.manager.addData(data);
 			}
         return convertView;
 	}

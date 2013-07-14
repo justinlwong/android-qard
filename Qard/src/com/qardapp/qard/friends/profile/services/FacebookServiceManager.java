@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.qardapp.qard.R;
+import com.qardapp.qard.Services;
+import com.qardapp.qard.settings.services.FacebookLoginActivity;
+import com.qardapp.qard.settings.services.OAuthActivity;
 
 
 public class FacebookServiceManager extends ServiceManager {
@@ -15,8 +18,8 @@ public class FacebookServiceManager extends ServiceManager {
 	
 	// Description of data (include examples)
 	// data - FB user id (eg. raymond.lam.73)
-	public FacebookServiceManager(Activity activity, String data) {
-		super(activity, FB_IMAGE, data );
+	public FacebookServiceManager(Activity activity) {
+		super(activity, FB_IMAGE);
 	}
 
 	@Override
@@ -41,6 +44,12 @@ public class FacebookServiceManager extends ServiceManager {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+	
+	@Override
+	public void startLoginIntent() {
+		Intent intent = new Intent(activity,FacebookLoginActivity.class);
+		activity.startActivityForResult(intent,0);
 	}
 	
 }
