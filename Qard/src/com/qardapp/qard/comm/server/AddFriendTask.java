@@ -18,7 +18,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 
-import com.qardapp.qard.MainActivity;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;

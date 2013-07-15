@@ -2,24 +2,15 @@ package com.qardapp.qard.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.qardapp.qard.BaseFragment;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
-import com.qardapp.qard.friends.FriendsCursorAdapter;
 import com.qardapp.qard.settings.services.AccountChecker;
-import com.qardapp.qard.settings.services.FacebookLoginActivity;
-import com.qardapp.qard.settings.services.GooglePlusAuthActivity;
-import com.qardapp.qard.settings.services.OAuthActivity;
-import com.qardapp.qard.settings.services.PopupDialog;
 import com.qardapp.qard.settings.services.SyncContactsActivity;
 
 public class SettingsProfileFragment extends BaseFragment {

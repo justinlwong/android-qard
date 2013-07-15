@@ -3,8 +3,6 @@ package com.qardapp.qard.settings.services;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.scribe.builder.api.DefaultApi20;
-import org.scribe.extractors.AccessTokenExtractor;
-import org.scribe.extractors.JsonTokenExtractor;
 import org.scribe.model.OAuthConfig;
 import org.scribe.model.OAuthConstants;
 import org.scribe.model.OAuthRequest;

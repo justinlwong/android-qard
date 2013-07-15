@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;

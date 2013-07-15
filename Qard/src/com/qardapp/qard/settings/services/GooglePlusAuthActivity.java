@@ -4,12 +4,9 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,9 +23,6 @@ import com.google.android.gms.common.Scopes;
 import com.google.android.gms.plus.PlusClient;
 import com.google.android.gms.plus.model.people.Person;
 import com.qardapp.qard.Services;
-import com.qardapp.qard.comm.server.AddServiceTask;
-import com.qardapp.qard.database.FriendsDatabaseHelper;
-import com.qardapp.qard.database.FriendsProvider;
 
 public class GooglePlusAuthActivity extends Activity implements
         ConnectionCallbacks, OnConnectionFailedListener {

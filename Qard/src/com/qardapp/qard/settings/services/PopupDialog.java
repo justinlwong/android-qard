@@ -1,8 +1,5 @@
 package com.qardapp.qard.settings.services;
 
-import com.qardapp.qard.R;
-import com.qardapp.qard.Services;
-
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
@@ -14,8 +11,11 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
+
+import com.qardapp.qard.R;
+import com.qardapp.qard.Services;
 
 public class PopupDialog extends DialogFragment implements OnEditorActionListener{
 

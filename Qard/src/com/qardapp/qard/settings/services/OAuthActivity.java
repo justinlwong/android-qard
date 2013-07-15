@@ -18,8 +18,6 @@ import org.scribe.oauth.OAuthService;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -31,9 +29,6 @@ import android.widget.Toast;
 
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
-import com.qardapp.qard.comm.server.AddServiceTask;
-import com.qardapp.qard.database.FriendsDatabaseHelper;
-import com.qardapp.qard.database.FriendsProvider;
 
 public class OAuthActivity extends Activity {
 	

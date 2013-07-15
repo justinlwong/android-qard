@@ -1,12 +1,8 @@
 package com.qardapp.qard.friends.profile;
 
-import java.util.logging.Logger;
-
 import android.app.Activity;
-import android.app.Service;
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +12,7 @@ import android.widget.ImageView;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
-import com.qardapp.qard.friends.profile.services.DefaultServiceManager;
-import com.qardapp.qard.friends.profile.services.EmailServiceManager;
-import com.qardapp.qard.friends.profile.services.FacebookServiceManager;
-import com.qardapp.qard.friends.profile.services.PhoneServiceManager;
 import com.qardapp.qard.friends.profile.services.ServiceManager;
-import com.qardapp.qard.friends.profile.services.WhatsAppServiceManager;
 
 public class FriendsProfileAdapter extends BaseAdapter{
 
