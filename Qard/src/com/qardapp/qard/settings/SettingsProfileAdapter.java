@@ -1,15 +1,13 @@
 package com.qardapp.qard.settings;
 
-import com.qardapp.qard.MainActivity;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
-import com.qardapp.qard.settings.services.FacebookLoginActivity;
-import com.qardapp.qard.settings.services.GooglePlusAuthActivity;
-import com.qardapp.qard.settings.services.OAuthActivity;
-import com.qardapp.qard.settings.services.SyncContactsActivity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,15 +15,27 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class SettingsProfileAdapter extends BaseAdapter{
 
 	private Activity activty;
 	
+	private ArrayList<Services> serviceList;
+	
 	public SettingsProfileAdapter(Activity activity) {
 		super();
 		this.activty = activity;
+		serviceList = new ArrayList<Services>();
+		for (Services ser : Services.values()) {
+			serviceList.add(ser);
+		}
+		Collections.sort(serviceList, new Comparator<Services>() {
+
+			@Override
+			public int compare(Services lhs, Services rhs) {
+				return lhs.priority - rhs.priority;
+			}
+		});
 	}
 	
 	@Override
@@ -56,26 +66,24 @@ public class SettingsProfileAdapter extends BaseAdapter{
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		int serviceId = -1;
-		Services service = Services.values()[0];
-		for (Services ser : Services.values()) {
-			if (ser.priority == position+1) {
-				service = ser;
-				serviceId = ser.id;
-				holder.image.setImageResource(ser.imageId);
-				break;
-			}
-		}
-		holder.button.setText("Sign in to " + service.name);
+		holder.image.setImageResource(serviceList.get(position).imageId);
+		holder.button.setTag(serviceList.get(position));
 		
+		// Add conditional text here
+		holder.button.setText("Sign in to " + serviceList.get(position).name);
+		holder.button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				((Services)v.getTag()).getManager(activty).startLoginIntent();
+			}
+		});
 		return convertView;
 	}
 	
     static class ViewHolder {
     	ImageView image;
     	Button button;
-    	Services service;
-    	boolean active;
     }
 	
 
