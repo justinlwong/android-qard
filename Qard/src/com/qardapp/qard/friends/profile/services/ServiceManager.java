@@ -9,10 +9,9 @@ public abstract class ServiceManager {
 	
 	public Integer imageID;
 	
-	public ServiceManager(Activity activity, Integer imageID, String data) {
+	public ServiceManager(Activity activity, Integer imageID) {
 		this.activity = activity;
 		this.imageID = imageID;
-		this.data = data;
 	}
 	
 	public void switchToService() {
@@ -22,7 +21,13 @@ public abstract class ServiceManager {
 			switchToServiceFallBack();
 	}
 	
+	public void addData(String data)
+	{
+		this.data = data;
+	}
+	
 	public abstract void switchToServiceApp();
 	public abstract void switchToServiceFallBack();
 	public abstract boolean isAppInstalled();
+	public abstract void startLoginIntent();
 }

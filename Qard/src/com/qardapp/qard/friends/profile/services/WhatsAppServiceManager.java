@@ -17,6 +17,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.qardapp.qard.R;
+import com.qardapp.qard.Services;
+import com.qardapp.qard.settings.services.AccountChecker;
 
 public class WhatsAppServiceManager extends ServiceManager {
 
@@ -25,8 +27,8 @@ public class WhatsAppServiceManager extends ServiceManager {
 	public static Integer WHATSAPP_IMAGE = R.drawable.whatsapp;
 	private SharedPreferences mPrefs;
 	
-	public WhatsAppServiceManager(Activity activity, String data) {
-		super(activity, WHATSAPP_IMAGE, data );
+	public WhatsAppServiceManager(Activity activity) {
+		super(activity, WHATSAPP_IMAGE);
 	}
 	
 	public Cursor checkContact()
@@ -117,6 +119,16 @@ public class WhatsAppServiceManager extends ServiceManager {
 			return true;
 		} catch (Exception e) {
 			return false;
+		}
+	}
+
+	@Override
+	public void startLoginIntent() {
+		// try account check first
+		boolean check = new AccountChecker(activity).getAccountInfo(Services.WHATSAPP.id);		
+		if (check == false)
+		{
+	        Toast.makeText(activity, "WhatsApp was not detected on this device!", Toast.LENGTH_LONG).show();					
 		}
 	}
 	

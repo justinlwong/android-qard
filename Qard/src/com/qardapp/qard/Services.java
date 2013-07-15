@@ -1,5 +1,14 @@
 package com.qardapp.qard;
 
+import android.app.Activity;
+
+import com.qardapp.qard.friends.profile.services.DefaultServiceManager;
+import com.qardapp.qard.friends.profile.services.EmailServiceManager;
+import com.qardapp.qard.friends.profile.services.FacebookServiceManager;
+import com.qardapp.qard.friends.profile.services.PhoneServiceManager;
+import com.qardapp.qard.friends.profile.services.ServiceManager;
+import com.qardapp.qard.friends.profile.services.WhatsAppServiceManager;
+
 public enum Services {
 	PHONE("Phone Number", 1, R.drawable.service_phone, R.drawable.service_phone_disabled,
 			null, null, null, null, null, null, null, null),
@@ -10,8 +19,7 @@ public enum Services {
 			null, null, null, null, null, null, null, null),		
 
 	WHATSAPP("WhatsApp", 4, R.drawable.service_whatsapp, R.drawable.service_whatsapp_disabled,
-			null, null, null, null, null, null, null, null),
-			
+			null, null, null, null, null, null, null, null),			
 			
 	FACEBOOK("Facebook", 5, R.drawable.service_facebook, R.drawable.service_facebook_disabled,
 			null, null, null, null, null, null, null, null),
@@ -24,8 +32,7 @@ public enum Services {
 	
 	LINKEDIN("LinkedIn", 8, R.drawable.service_linkedin, R.drawable.service_linkedin_disabled,
 			"id", "http://api.linkedin.com/", "http://api.linkedin.com/v1/people/~:(id,first-name,last-name,industry,email-address,site-standard-profile-request)?format=json", "a3dolo9iq9fd", "hKyo855beQ9ggLXZ","oauth://linkedin","r_fullprofile r_emailaddress w_messages", "http://api.linkedin.com/v1/people/~/mailbox"),
-			
-					
+							
 	TWITTER("Twitter", 9, R.drawable.service_twitter, R.drawable.service_twitter_disabled,
 			"id_str", "http://api.twitter.com/", "https://api.twitter.com/1.1/account/verify_credentials.json", "ZtN4h8Ps9cyNIadDK6cg", "RCE4Gls0cKcdpe19VYLOC4rg7zHcgV0n5f6rPnaV4VU", "oauth://twitter", null, "https://api.twitter.com/1.1/friendships/create.json"),
 			
@@ -68,7 +75,7 @@ public enum Services {
 	public String callbackURL;
 	public String scope;
 	public String addUser;
-	
+
 	private Services (String name, int id, int imageId, int grayImageId, String idFieldName, String authURL, String userQuery, String apiKey, String apiSecret, String callbackURL, String scope, String addUser) {
 		this.name = name;
 		this.id = id;
@@ -83,6 +90,22 @@ public enum Services {
 		this.callbackURL = callbackURL;
 		this.scope = scope;
 		this.addUser = addUser;
+		
+	}
+	
+	public ServiceManager getManager(Activity a ) {
+		if (id == Services.PHONE.id){
+		    return new PhoneServiceManager(a);
+		}  else if (id == Services.EMAIL.id) {
+			return new EmailServiceManager(a);
+		} else if (id == Services.WHATSAPP.id) {
+			return new WhatsAppServiceManager(a);
+		} else if (id == Services.FACEBOOK.id) {
+            return new FacebookServiceManager(a);	
+		} else if (id == Services.GOOGLEPLUS.id || id == Services.FOURSQUARE.id || id == Services.LINKEDIN.id || id == Services.TWITTER.id || id == Services.INSTAGRAM.id || id == Services.FLICKR.id || id == Services.TUMBLR.id || id == Services.YOUTUBE.id) {
+			return new DefaultServiceManager(a, imageId, id);
+		} 
+		return null;
 	}
 	
 }

@@ -15,12 +15,8 @@ import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.friends.profile.services.DefaultServiceManager;
 import com.qardapp.qard.friends.profile.services.FacebookServiceManager;
-import com.qardapp.qard.friends.profile.services.FoursquareServiceManager;
-import com.qardapp.qard.friends.profile.services.GmailServiceManager;
-import com.qardapp.qard.friends.profile.services.GooglePlusServiceManager;
 import com.qardapp.qard.friends.profile.services.PhoneServiceManager;
 import com.qardapp.qard.friends.profile.services.ServiceManager;
-import com.qardapp.qard.friends.profile.services.TwitterServiceManager;
 import com.qardapp.qard.friends.profile.services.WhatsAppServiceManager;
 
 public class FriendsProfileCursorAdapter extends CursorAdapter{
@@ -59,28 +55,7 @@ public class FriendsProfileCursorAdapter extends CursorAdapter{
 		// Set up service managers depending on service type
 		ServiceManager sMgr = null;	
 		String data = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));		
-        if (serviceId == Services.FACEBOOK.id)
-		{
-			sMgr = new FacebookServiceManager((Activity) context,data);					
-		} else if (serviceId == Services.TWITTER.id) {
-			sMgr = new TwitterServiceManager((Activity) context,data);		
-		} else if (serviceId == Services.FLICKR.id) {
-			sMgr = new DefaultServiceManager((Activity) context, Services.FLICKR.imageId, Services.FLICKR.id, data);		
-		} else if (serviceId == Services.PHONE.id) {
-			sMgr = new PhoneServiceManager((Activity) context,data);	
-        } else if (serviceId == Services.INSTAGRAM.id) {
-			sMgr = new DefaultServiceManager((Activity) context, Services.INSTAGRAM.imageId, Services.INSTAGRAM.id, data);	
-        } else if (serviceId == Services.LINKEDIN.id) {
-			sMgr = new DefaultServiceManager((Activity) context, Services.LINKEDIN.imageId, Services.LINKEDIN.id, data);	
-        } else if (serviceId == Services.FOURSQUARE.id) {
-        	sMgr = new FoursquareServiceManager((Activity) context,data);		
-        } else if (serviceId == Services.EMAIL.id) {
-			sMgr = new GmailServiceManager((Activity) context, data);	        			
-        } else if (serviceId == Services.GOOGLEPLUS.id) {
-			sMgr = new GooglePlusServiceManager((Activity) context, data);	        			
-        } else if (serviceId == Services.WHATSAPP.id) {
-			sMgr = new WhatsAppServiceManager((Activity) context, data);	        			
-        }
+
         
         final ServiceManager mgr = sMgr;
         
