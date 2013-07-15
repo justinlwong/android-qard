@@ -114,5 +114,11 @@ public class AddFriendTask extends AsyncTask<String, Void, String>{
 		}
 		return null;
 	}
+	
+	@Override
+	protected void onPostExecute(String result) {
+		if (context instanceof MainActivity)
+			((MainActivity) context).getSupportLoaderManager().restartLoader(MainActivity.REFRESH_LOADER_ID, null, ((MainActivity) context));
+	}
 
 }

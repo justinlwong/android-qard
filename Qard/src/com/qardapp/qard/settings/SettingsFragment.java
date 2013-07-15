@@ -1,5 +1,8 @@
 package com.qardapp.qard.settings;
 
+
+import android.support.v4.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +14,7 @@ import android.widget.Button;
 import com.qardapp.qard.BaseFragment;
 import com.qardapp.qard.MainActivity;
 import com.qardapp.qard.R;
+import com.qardapp.qard.settings.services.SyncContactsActivity;
 
 
 public class SettingsFragment extends BaseFragment{
@@ -60,8 +64,17 @@ public class SettingsFragment extends BaseFragment{
 			}
 		});
 		
-
-		
+		Button syncContacts = (Button) rootView.findViewById(R.id.settings_sync_btn);
+		syncContacts.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+	            //intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+	            //startActivityForResult(intent, 1);
+                Intent intent = new Intent(getActivity(), SyncContactsActivity.class);
+                startActivity(intent);		
+			}
+		});
 		return rootView;
 	}
 
