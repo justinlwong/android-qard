@@ -49,7 +49,7 @@ public class FriendsInfoLoader extends AsyncTaskLoader<ArrayList<ServerNotificat
 			HttpResponse response = httpClient.execute(httpGet);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
 			String json = reader.readLine();
-			if (json.equals("Unauthorized")) {
+			if (json.equals("Unauthorized") || json.equals("error: relation \"oauth_accesstokens\" does not exist")) {
 				ServerHelper.resetUser(context);
 				return null;
 			}
