@@ -21,14 +21,18 @@ public class QardWidgetProvider extends AppWidgetProvider {
 		//change images
 		remoteViews.setOnClickPendingIntent(R.id.widget_button, buildButtonPendingIntent(context));
 		pushWidgetUpdate(context, remoteViews);
-		//
 		
 		//Camera
 	    Intent configIntent = new Intent(context, MainActivity.class);
-	    //QRCodeManager.scanQRCode(configIntent);
+	    configIntent.putExtra("widgetAction", "Scan");
+	    configIntent.putExtra("widgetAction", "QR");
 	    PendingIntent configPendingIntent = PendingIntent.getActivity(context, 0, configIntent, 0);
 	    remoteViews.setOnClickPendingIntent(R.id.widget_camera, configPendingIntent);
+	    configPendingIntent = PendingIntent.getActivity(context, 1, configIntent, 1);
+	    remoteViews.setOnClickPendingIntent(R.id.widget_qr, configPendingIntent);
 	    appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
+	    
+	    
 	}
 
 	public static PendingIntent buildButtonPendingIntent(Context context) {

@@ -138,6 +138,20 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		}
 		switchFragments(FRAG_PROFILE);
 		
+		Bundle widgetResponse = getIntent().getExtras();
+		//String widgetAction = widgetResponse.getString("widgetAction");
+		
+		if (widgetResponse == null){
+			return;
+		}
+		String widgetAction = widgetResponse.getString("widgetAction");
+		if (widgetAction.equals("Scan")){
+			QRCodeManager.scanQRCode(MainActivity.this);
+		}
+		if (widgetAction.equals("QR")){
+			MainActivity.this.switchFragments(FRAG_PROFILE);
+		}
+			
 	}
 
 	public Fragment switchFragments (int id) {

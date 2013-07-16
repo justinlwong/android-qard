@@ -37,6 +37,18 @@
         android:padding="5dp"
         android:src="@drawable/navigation_camera" />
     
+    <ImageView
+        android:id="@+id/widget_qr"
+        android:layout_width="@dimen/abs__action_bar_default_height"
+        android:layout_height="@dimen/abs__action_bar_default_height"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/widget_camera"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="5dp"
+        android:src="@drawable/widget_qr" />
+    
     
 
 </RelativeLayout>
