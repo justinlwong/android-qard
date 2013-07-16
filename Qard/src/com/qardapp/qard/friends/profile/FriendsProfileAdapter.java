@@ -1,27 +1,19 @@
 package com.qardapp.qard.friends.profile;
 
-import java.util.logging.Logger;
-
 import android.app.Activity;
-import android.app.Service;
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.qardapp.qard.BaseFragment;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
-import com.qardapp.qard.friends.profile.services.DefaultServiceManager;
-import com.qardapp.qard.friends.profile.services.EmailServiceManager;
-import com.qardapp.qard.friends.profile.services.FacebookServiceManager;
-import com.qardapp.qard.friends.profile.services.PhoneServiceManager;
 import com.qardapp.qard.friends.profile.services.ServiceManager;
-import com.qardapp.qard.friends.profile.services.WhatsAppServiceManager;
 
 public class FriendsProfileAdapter extends BaseAdapter{
 
@@ -32,10 +24,12 @@ public class FriendsProfileAdapter extends BaseAdapter{
 
 	private Context context;
 	private String dataList[] = new String[Services.values().length+1];
+	private BaseFragment bf;
 	 
-	public FriendsProfileAdapter(Context context, Cursor cursor) {
+	public FriendsProfileAdapter(Context context, Cursor cursor, BaseFragment bf) {
 		super();
 		this.context = context;
+		this.bf = bf;
 		changeCursor(cursor);
 	}
 	
@@ -162,29 +156,31 @@ public class FriendsProfileAdapter extends BaseAdapter{
 				// Set up service managers depending on service type		
 		        if (serviceId == Services.FACEBOOK.id)
 				{
-		        	holder.manager = Services.FACEBOOK.getManager((Activity) context);			
+		        	holder.manager = Services.FACEBOOK.getManager((Activity) context, bf);			
 				} else if (serviceId == Services.TWITTER.id) {
-					holder.manager = Services.TWITTER.getManager((Activity) context);		
+					holder.manager = Services.TWITTER.getManager((Activity) context, bf);		
 				} else if (serviceId == Services.FLICKR.id) {
-					holder.manager = Services.FLICKR.getManager((Activity) context);			
+					holder.manager = Services.FLICKR.getManager((Activity) context, bf);			
 				} else if (serviceId == Services.PHONE.id) {
-					holder.manager = Services.PHONE.getManager((Activity) context);	
+					holder.manager = Services.PHONE.getManager((Activity) context, bf);	
 		        } else if (serviceId == Services.INSTAGRAM.id) {
-		        	holder.manager = Services.INSTAGRAM.getManager((Activity) context);	
+		        	holder.manager = Services.INSTAGRAM.getManager((Activity) context, bf);	
 		        } else if (serviceId == Services.LINKEDIN.id) {
-		        	holder.manager = Services.LINKEDIN.getManager((Activity) context);	
+		        	holder.manager = Services.LINKEDIN.getManager((Activity) context, bf);	
 		        } else if (serviceId == Services.FOURSQUARE.id) {
-		        	holder.manager = Services.FOURSQUARE.getManager((Activity) context);			
+		        	holder.manager = Services.FOURSQUARE.getManager((Activity) context, bf);			
 		        } else if (serviceId == Services.EMAIL.id) {
-		        	holder.manager = Services.EMAIL.getManager((Activity) context);	        			
+		        	holder.manager = Services.EMAIL.getManager((Activity) context, bf);	        			
 		        } else if (serviceId == Services.GOOGLEPLUS.id) {
-		        	holder.manager = Services.GOOGLEPLUS.getManager((Activity) context);		        			
+		        	holder.manager = Services.GOOGLEPLUS.getManager((Activity) context, bf);		        			
 		        } else if (serviceId == Services.WHATSAPP.id) {
-					holder.manager = Services.WHATSAPP.getManager((Activity) context);		        			
+					holder.manager = Services.WHATSAPP.getManager((Activity) context, bf);		        			
 		        } else if (serviceId == Services.TUMBLR.id) {
-					holder.manager = Services.TUMBLR.getManager((Activity) context);		        			
+					holder.manager = Services.TUMBLR.getManager((Activity) context, bf);		        			
 		        } else if (serviceId == Services.YOUTUBE.id) {
-					holder.manager = Services.YOUTUBE.getManager((Activity) context);	      			
+					holder.manager = Services.YOUTUBE.getManager((Activity) context, bf);	      			
+		        } else if (serviceId == Services.BLOGGER.id) {
+					holder.manager = Services.BLOGGER.getManager((Activity) context, bf);	      			
 		        }
 		        holder.manager.addData(data);
 			}

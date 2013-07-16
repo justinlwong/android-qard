@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.qardapp.qard.R;
-import com.qardapp.qard.Services;
 import com.qardapp.qard.settings.services.FacebookLoginActivity;
-import com.qardapp.qard.settings.services.OAuthActivity;
 
 
 public class FacebookServiceManager extends ServiceManager {

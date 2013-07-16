@@ -1,14 +1,10 @@
 package com.qardapp.qard.widget;
 
-import android.app.PendingIntent;
-import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.qardapp.qard.MainActivity;
 import com.qardapp.qard.R;
 
 

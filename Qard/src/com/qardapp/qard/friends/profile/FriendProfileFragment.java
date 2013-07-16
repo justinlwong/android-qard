@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +38,7 @@ public class FriendProfileFragment extends BaseFragment{
 		GridView gridView = (GridView) rootView.findViewById(R.id.friend_profile_gridview);
 		adapter = new FriendsProfileAdapter(
 				this.getActivity(),
-				null);
+				null, this);
 		gridView.setAdapter(adapter);
 		
 		return rootView;

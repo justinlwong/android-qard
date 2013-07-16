@@ -2,19 +2,18 @@ package com.qardapp.qard.settings.services;
 
 import java.util.regex.Pattern;
 
-import com.qardapp.qard.Services;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.widget.Toast;
+
+import com.qardapp.qard.Services;
 
 public class AccountChecker {
 	

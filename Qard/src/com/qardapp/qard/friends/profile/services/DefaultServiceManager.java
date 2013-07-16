@@ -59,7 +59,12 @@ public class DefaultServiceManager extends ServiceManager {
         {
         	service = Services.GOOGLEPLUS;
             url = "https://plus.google.com/" + data;
+        } else if (serviceID == Services.BLOGGER.id)
+        {
+        	service = Services.BLOGGER;
+            url = data;
         }
+        
         
 		Intent intent =  new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 		activity.startActivity(intent);

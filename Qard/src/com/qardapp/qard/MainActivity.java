@@ -24,7 +24,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.qardapp.qard.comm.server.FriendsInfoLoader;
 import com.qardapp.qard.comm.server.NewUserTask;
-import com.qardapp.qard.comm.server.ServerHelper;
 import com.qardapp.qard.comm.server.ServerNotifications;
 import com.qardapp.qard.friends.FriendsFragment;
 import com.qardapp.qard.profile.ProfileFragment;

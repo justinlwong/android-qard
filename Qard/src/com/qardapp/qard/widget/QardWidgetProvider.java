@@ -6,15 +6,10 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.RemoteViews;
 
 import com.qardapp.qard.MainActivity;
 import com.qardapp.qard.R;
-import com.qardapp.qard.qrcode.QRCodeManager;
 
 public class QardWidgetProvider extends AppWidgetProvider {
 

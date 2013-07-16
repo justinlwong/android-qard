@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import com.qardapp.qard.BaseFragment;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
-
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -17,15 +17,19 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 
+
 public class SettingsProfileAdapter extends BaseAdapter{
 
 	private Activity activty;
+	private BaseFragment bf;
 	
 	private ArrayList<Services> serviceList;
 	private ArrayList<Drawable> drawableList;
-	public SettingsProfileAdapter(Activity activity) {
+	
+	public SettingsProfileAdapter(Activity activity, BaseFragment bf) {
 		super();
 		this.activty = activity;
+		this.bf = bf;
 		serviceList = new ArrayList<Services>();
 		drawableList = new ArrayList<Drawable>();
 		for (Services ser : Services.values()) {
@@ -80,7 +84,7 @@ public class SettingsProfileAdapter extends BaseAdapter{
 			
 			@Override
 			public void onClick(View v) {
-				((Services)v.getTag()).getManager(activty).startLoginIntent();
+				((Services)v.getTag()).getManager(activty, bf).startLoginIntent();
 			}
 		});
 		return convertView;

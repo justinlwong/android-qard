@@ -18,8 +18,6 @@ import org.scribe.oauth.OAuthService;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -31,9 +29,6 @@ import android.widget.Toast;
 
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
-import com.qardapp.qard.comm.server.AddServiceTask;
-import com.qardapp.qard.database.FriendsDatabaseHelper;
-import com.qardapp.qard.database.FriendsProvider;
 
 public class OAuthActivity extends Activity {
 	
@@ -150,7 +145,7 @@ public class OAuthActivity extends Activity {
 							    OAuthRequest request = new OAuthRequest(Verb.GET,urlStr);
 
 							    Token t = new Token(accessToken.getToken(),accessToken.getSecret());
-							    if (!(uses_oauth2))
+							    if (!(uses_oauth2) || serviceID == Services.BLOGGER.id)
 							    {							    
 							    	mService.signRequest(t, request);
 							    }
@@ -209,6 +204,11 @@ public class OAuthActivity extends Activity {
 						                    data = user.getString("$t");					                    	
 							                Log.d("here",data);
 							                //userID = mainObject.getString(service.idFieldName);
+						                } else if (serviceID == Services.BLOGGER.id) {
+						                    JSONArray items = mainObject.getJSONArray("items");
+						                    JSONObject first = items.getJSONObject(0);
+						                    data = first.getString("url");	                    	
+							                Log.d("here",data);
 						                }
 						                else {
 							                data = mainObject.getString(service.idFieldName);						                	
@@ -368,6 +368,18 @@ public class OAuthActivity extends Activity {
     		.build();
             
             uses_oauth2 = true;        	
+        } else if (serviceID == Services.BLOGGER.id)
+        {
+        	service = Services.BLOGGER;
+            mService = new ServiceBuilder()
+    		.provider(BloggerApi.class)
+    		.apiKey(service.apiKey)
+    		.apiSecret("9999")
+    		.callback(service.callbackURL)
+    		.build();
+            
+            uses_oauth2 = true;
+            
         }
         
 

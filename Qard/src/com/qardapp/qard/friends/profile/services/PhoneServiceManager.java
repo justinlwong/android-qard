@@ -21,8 +21,9 @@ public class PhoneServiceManager extends ServiceManager {
 	
 	// Description of data (include examples)
 	// data - phone number (eg. 4161234567)
-	public PhoneServiceManager(Activity activity) {
+	public PhoneServiceManager(Activity activity, BaseFragment bf) {
 		super(activity, PHONE_IMAGE);
+		this.bf = bf;
 	}
 
 	@Override
@@ -50,12 +51,7 @@ public class PhoneServiceManager extends ServiceManager {
         showEditDialog(Services.PHONE.id);	
 	}
 	
-	public void getFragment(BaseFragment bf) {
-		this.bf = bf;
-	}
-	
     private void showEditDialog(int serviceId) {
-    	
         FragmentManager fm = bf.getFragmentManager();        
         PopupDialog popupDialog = (PopupDialog) fm.findFragmentByTag("login_fragment");
        		

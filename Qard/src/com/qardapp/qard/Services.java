@@ -49,7 +49,7 @@ public enum Services {
 			null, null, "https://gdata.youtube.com/feeds/api/users/default?access_token=", "1096476372365.apps.googleusercontent.com", null, "http://localhost", null, null),
 			
 	BLOGGER("Blogger", 14, R.drawable.service_blogger, R.drawable.service_blogger_disabled,
-			null, null, null, null, null, null, null, null),
+			null, null, "https://www.googleapis.com/blogger/v3/users/self/blogs", "1096476372365.apps.googleusercontent.com", null, "http://localhost", null, null),
 
 	PINTEREST("Pinterest", 15, R.drawable.service_pinterest, R.drawable.service_pinterest_disabled,
 			null, null, null, null, null, null, null, null),
@@ -93,16 +93,16 @@ public enum Services {
 		
 	}
 	
-	public ServiceManager getManager(Activity a ) {
+	public ServiceManager getManager(Activity a, BaseFragment bf ) {
 		if (id == Services.PHONE.id){
-		    return new PhoneServiceManager(a);
+		    return new PhoneServiceManager(a, bf);
 		}  else if (id == Services.EMAIL.id) {
 			return new EmailServiceManager(a);
 		} else if (id == Services.WHATSAPP.id) {
 			return new WhatsAppServiceManager(a);
 		} else if (id == Services.FACEBOOK.id) {
             return new FacebookServiceManager(a);	
-		} else if (id == Services.GOOGLEPLUS.id || id == Services.FOURSQUARE.id || id == Services.LINKEDIN.id || id == Services.TWITTER.id || id == Services.INSTAGRAM.id || id == Services.FLICKR.id || id == Services.TUMBLR.id || id == Services.YOUTUBE.id) {
+		} else if (id == Services.GOOGLEPLUS.id || id == Services.FOURSQUARE.id || id == Services.LINKEDIN.id || id == Services.TWITTER.id || id == Services.INSTAGRAM.id || id == Services.FLICKR.id || id == Services.TUMBLR.id || id == Services.YOUTUBE.id || id == Services.BLOGGER.id) {
 			return new DefaultServiceManager(a, imageId, id);
 		} 
 		return null;

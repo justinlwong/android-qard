@@ -2,10 +2,6 @@ package com.qardapp.qard.friends.profile.services;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.qardapp.qard.R;

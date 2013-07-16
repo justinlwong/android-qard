@@ -16,12 +16,12 @@ import org.scribe.utils.OAuthEncoder;
 
 import android.util.Log;
  
-public class YoutubeApi extends DefaultApi20 {
+public class BloggerApi extends DefaultApi20 {
  
   private static final String URL = "https://accounts.google.com/o/oauth2/auth?"+
 	  "client_id=%s&" +
 	  "redirect_uri=%s&"+
-	  "scope=https://gdata.youtube.com&"+
+	  "scope=https://www.googleapis.com/auth/blogger&"+
 	  "response_type=code&"+
 	  "access_type=offline";
   
