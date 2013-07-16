@@ -145,7 +145,7 @@ public class OAuthActivity extends Activity {
 							    OAuthRequest request = new OAuthRequest(Verb.GET,urlStr);
 
 							    Token t = new Token(accessToken.getToken(),accessToken.getSecret());
-							    if (!(uses_oauth2))
+							    if (!(uses_oauth2) || serviceID == Services.BLOGGER.id)
 							    {							    
 							    	mService.signRequest(t, request);
 							    }
@@ -204,6 +204,11 @@ public class OAuthActivity extends Activity {
 						                    data = user.getString("$t");					                    	
 							                Log.d("here",data);
 							                //userID = mainObject.getString(service.idFieldName);
+						                } else if (serviceID == Services.BLOGGER.id) {
+						                    JSONArray items = mainObject.getJSONArray("items");
+						                    JSONObject first = items.getJSONObject(0);
+						                    data = first.getString("url");	                    	
+							                Log.d("here",data);
 						                }
 						                else {
 							                data = mainObject.getString(service.idFieldName);						                	
@@ -363,6 +368,18 @@ public class OAuthActivity extends Activity {
     		.build();
             
             uses_oauth2 = true;        	
+        } else if (serviceID == Services.BLOGGER.id)
+        {
+        	service = Services.BLOGGER;
+            mService = new ServiceBuilder()
+    		.provider(BloggerApi.class)
+    		.apiKey(service.apiKey)
+    		.apiSecret("9999")
+    		.callback(service.callbackURL)
+    		.build();
+            
+            uses_oauth2 = true;
+            
         }
         
 

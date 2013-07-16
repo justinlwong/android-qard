@@ -3,28 +3,31 @@ package com.qardapp.qard.settings;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import com.qardapp.qard.BaseFragment;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import com.qardapp.qard.R;
-import com.qardapp.qard.Services;
 
 
 public class SettingsProfileAdapter extends BaseAdapter{
 
 	private Activity activty;
+	private BaseFragment bf;
 	
 	private ArrayList<Services> serviceList;
 	
-	public SettingsProfileAdapter(Activity activity) {
+	public SettingsProfileAdapter(Activity activity, BaseFragment bf) {
 		super();
 		this.activty = activity;
+		this.bf = bf;
 		serviceList = new ArrayList<Services>();
 		for (Services ser : Services.values()) {
 			serviceList.add(ser);
@@ -75,7 +78,7 @@ public class SettingsProfileAdapter extends BaseAdapter{
 			
 			@Override
 			public void onClick(View v) {
-				((Services)v.getTag()).getManager(activty).startLoginIntent();
+				((Services)v.getTag()).getManager(activty, bf).startLoginIntent();
 			}
 		});
 		return convertView;

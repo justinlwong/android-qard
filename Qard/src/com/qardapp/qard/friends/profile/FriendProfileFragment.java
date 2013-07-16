@@ -38,7 +38,7 @@ public class FriendProfileFragment extends BaseFragment{
 		GridView gridView = (GridView) rootView.findViewById(R.id.friend_profile_gridview);
 		adapter = new FriendsProfileAdapter(
 				this.getActivity(),
-				null);
+				null, this);
 		gridView.setAdapter(adapter);
 		
 		return rootView;

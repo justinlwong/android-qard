@@ -25,7 +25,7 @@ public class SettingsProfileFragment extends BaseFragment {
 		View rootView = inflater.inflate(R.layout.settings_profile_layout1,
 				container, false);
 		ListView listView = (ListView) rootView.findViewById(R.id.settings_service_list);
-		SettingsProfileAdapter adapter = new SettingsProfileAdapter(getActivity());
+		SettingsProfileAdapter adapter = new SettingsProfileAdapter(getActivity(), this);
 		listView.setAdapter(adapter);
 		
 		return rootView;
