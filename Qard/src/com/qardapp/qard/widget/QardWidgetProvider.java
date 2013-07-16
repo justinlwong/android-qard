@@ -28,7 +28,7 @@ public class QardWidgetProvider extends AppWidgetProvider {
 	    configIntent.putExtra("widgetAction", "QR");
 	    PendingIntent configPendingIntent = PendingIntent.getActivity(context, 0, configIntent, 0);
 	    remoteViews.setOnClickPendingIntent(R.id.widget_camera, configPendingIntent);
-	    configPendingIntent = PendingIntent.getActivity(context, 1, configIntent, 1);
+	    configPendingIntent = PendingIntent.getActivity(context, 0, configIntent, 1);
 	    remoteViews.setOnClickPendingIntent(R.id.widget_qr, configPendingIntent);
 	    appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
 	    
