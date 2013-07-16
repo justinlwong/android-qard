@@ -8,6 +8,7 @@ import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,11 +22,12 @@ public class SettingsProfileAdapter extends BaseAdapter{
 	private Activity activty;
 	
 	private ArrayList<Services> serviceList;
-	
+	private ArrayList<Drawable> drawableList;
 	public SettingsProfileAdapter(Activity activity) {
 		super();
 		this.activty = activity;
 		serviceList = new ArrayList<Services>();
+		drawableList = new ArrayList<Drawable>();
 		for (Services ser : Services.values()) {
 			serviceList.add(ser);
 		}
@@ -36,6 +38,9 @@ public class SettingsProfileAdapter extends BaseAdapter{
 				return lhs.priority - rhs.priority;
 			}
 		});
+		for (Services ser : serviceList) {
+			drawableList.add(activity.getResources().getDrawable(ser.imageId));
+		}
 	}
 	
 	@Override
@@ -66,7 +71,7 @@ public class SettingsProfileAdapter extends BaseAdapter{
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.image.setImageResource(serviceList.get(position).imageId);
+		holder.image.setImageDrawable(drawableList.get(position));
 		holder.button.setTag(serviceList.get(position));
 		
 		// Add conditional text here
