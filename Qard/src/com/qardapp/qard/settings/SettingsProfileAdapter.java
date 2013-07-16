@@ -7,7 +7,11 @@ import java.util.Comparator;
 import com.qardapp.qard.BaseFragment;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
+import com.qardapp.qard.database.FriendsDatabaseHelper;
+
 import android.app.Activity;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,16 +26,21 @@ public class SettingsProfileAdapter extends BaseAdapter{
 
 	private Activity activty;
 	private BaseFragment bf;
-	
+	private String dataList[] = new String[Services.values().length+1];
+
 	private ArrayList<Services> serviceList;
 	private ArrayList<Drawable> drawableList;
+	private Drawable lightBackground, darkBackground;
 	
-	public SettingsProfileAdapter(Activity activity, BaseFragment bf) {
+	public SettingsProfileAdapter(Activity activity, Cursor cursor, BaseFragment bf) {
 		super();
 		this.activty = activity;
 		this.bf = bf;
 		serviceList = new ArrayList<Services>();
 		drawableList = new ArrayList<Drawable>();
+		lightBackground = activity.getResources().getDrawable(R.drawable.settings_service_item_button_background);
+		darkBackground = activity.getResources().getDrawable(R.drawable.settings_service_item_button_background_dark);
+
 		for (Services ser : Services.values()) {
 			serviceList.add(ser);
 		}
@@ -45,6 +54,7 @@ public class SettingsProfileAdapter extends BaseAdapter{
 		for (Services ser : serviceList) {
 			drawableList.add(activity.getResources().getDrawable(ser.imageId));
 		}
+		changeCursor(cursor);
 	}
 	
 	@Override
@@ -79,7 +89,16 @@ public class SettingsProfileAdapter extends BaseAdapter{
 		holder.button.setTag(serviceList.get(position));
 		
 		// Add conditional text here
-		holder.button.setText("Sign in to " + serviceList.get(position).name);
+		if (dataList[position] == null) {
+			holder.button.setText("Sign in to " + serviceList.get(position).name);
+			holder.button.setTextColor(Color.WHITE);
+			holder.button.setBackground(darkBackground.getConstantState().newDrawable());
+		}
+		else {
+			holder.button.setText("Signed in as: " + dataList[position]);
+			holder.button.setTextColor(Color.DKGRAY);
+			holder.button.setBackground(lightBackground.getConstantState().newDrawable());
+		}
 		holder.button.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -88,6 +107,19 @@ public class SettingsProfileAdapter extends BaseAdapter{
 			}
 		});
 		return convertView;
+	}
+	
+	public void changeCursor (Cursor cursor) {
+		if (cursor != null) {
+			if (cursor.moveToFirst()) {
+				do {
+					int index = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_SERVICE_PRIORITY));
+					dataList[index-1] = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));
+				} while (cursor.moveToNext());
+			}
+			cursor.close();
+		}
+		notifyDataSetChanged();
 	}
 	
     static class ViewHolder {

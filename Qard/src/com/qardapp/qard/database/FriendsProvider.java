@@ -148,13 +148,11 @@ public class FriendsProvider extends ContentProvider {
 			break;
 			// Returns a specific receipt
 		case FRIEND:
-			queryBuilder.setTables(FriendsDatabaseHelper.TABLE_FRIENDS + " LEFT OUTER JOIN " +
+			queryBuilder.setTables(FriendsDatabaseHelper.TABLE_FRIENDS + " CROSS JOIN " + FriendsDatabaseHelper.TABLE_SERVICES + " LEFT OUTER JOIN " +
 					FriendsDatabaseHelper.TABLE_FRIEND_SERVICES  +
 					" ON (" + FriendsDatabaseHelper.TABLE_FRIENDS +
 					"." + FriendsDatabaseHelper.COLUMN_ID + " = "+ FriendsDatabaseHelper.TABLE_FRIEND_SERVICES +
-					"." + FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID +") LEFT OUTER JOIN " +
-					FriendsDatabaseHelper.TABLE_SERVICES  +
-					" ON (" + FriendsDatabaseHelper.TABLE_FRIEND_SERVICES +
+					"." + FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID +" AND " + FriendsDatabaseHelper.TABLE_FRIEND_SERVICES +
 					"." + FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID + " = "+ FriendsDatabaseHelper.TABLE_SERVICES +
 					"." + FriendsDatabaseHelper.COLUMN_SERVICE_ID +")");
 			// Adding the ID to the original query
