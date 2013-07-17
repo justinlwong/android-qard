@@ -90,12 +90,12 @@ public class SettingsProfileAdapter extends BaseAdapter{
 		
 		// Add conditional text here
 		if (dataList[position] == null) {
-			holder.button.setText("Sign in to " + serviceList.get(position).name);
+			holder.button.setText("Enable " + serviceList.get(position).name);
 			holder.button.setTextColor(Color.WHITE);
 			holder.button.setBackground(darkBackground.getConstantState().newDrawable());
 		}
 		else {
-			holder.button.setText("Signed in as: " + dataList[position]);
+			holder.button.setText(dataList[position]);
 			holder.button.setTextColor(Color.DKGRAY);
 			holder.button.setBackground(lightBackground.getConstantState().newDrawable());
 		}
