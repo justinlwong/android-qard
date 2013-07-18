@@ -25,7 +25,7 @@ public enum Services {
 			null, null, null, null, null, null, null, null),
 			
 	GOOGLEPLUS("Google+", 6, R.drawable.service_gplus, R.drawable.service_gplus_disabled,
-			null, null, null, "AIzaSyDWPh56YCBmiENeFomBZy1U4fiRJvdM8cI", null, null, null, null),
+			null, null, "https://www.googleapis.com/plus/v1/people/me?access_token=", "1096476372365.apps.googleusercontent.com", null, "http://localhost", null, null),
 
 	FOURSQUARE("Foursquare", 7, R.drawable.service_foursquare, R.drawable.service_foursquare_disabled,
 					"id", "http://api.foursquare.com/", "https://api.foursquare.com/v2/users/self?oauth_token=", "RG1XWTHCCDCD0ASO0OU5VF1STSTQWEYGUZRWHBXK14J2CMLQ", "N0CKV2ZY2NKNJ2FJKC4PA1KN2EWHVBG4KH24NGAYNSNFOGQG", "oauth://foursquare", null, "https://api.foursquare.com/v2/users/"),

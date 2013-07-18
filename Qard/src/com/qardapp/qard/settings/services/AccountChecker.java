@@ -42,7 +42,7 @@ public class AccountChecker {
 		    String actype = ac.type;
 		    // Take your time to look at all available accounts
 		    Log.d("here","Accounts : " + acname + ", " + actype);
-		    
+
 		    if (serviceID == Services.EMAIL.id || serviceID == ALL)
 	        {
 		    
@@ -50,6 +50,7 @@ public class AccountChecker {
 			        SharedPreferences sp = a.getSharedPreferences("tokens", 0);
 	        		SharedPreferences.Editor editor = sp.edit();
 	        		editor.putString("E-mail_data", acname);
+	        		editor.putString("E-mail_username", acname);
 	        		editor.commit();
 	        		
 	        		// Show toast
@@ -69,6 +70,7 @@ public class AccountChecker {
 			        SharedPreferences sp = a.getSharedPreferences("tokens", 0);
 	        		SharedPreferences.Editor editor = sp.edit();
 	        		editor.putString("WhatsApp_data", phoneNumber);
+	        		editor.putString("WhatsApp_username", phoneNumber);
 	        		editor.commit();
 	        		
 	        		// Show toast
@@ -87,10 +89,9 @@ public class AccountChecker {
 			        SharedPreferences sp = a.getSharedPreferences("tokens", 0);
 	        		SharedPreferences.Editor editor = sp.edit();
 	        		editor.putString("Twitter_data", uname);
+	        		editor.putString("Twitter_username", uname);
 	        		editor.commit();
-	        		
-
-	        		
+	        			        		
 	        		// Update database
 	        		UpdateDatabase.updateDatabase(acname, Services.TWITTER.id,a);
 	        		

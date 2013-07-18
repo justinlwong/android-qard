@@ -140,6 +140,8 @@ public class OAuthActivity extends Activity {
 							    	urlStr += accessToken.getToken();
 							    } else if (serviceID == Services.YOUTUBE.id) {
 							    	urlStr += accessToken.getToken() + "&alt=json";
+							    } else if (serviceID == Services.GOOGLEPLUS.id) {
+							    	urlStr += accessToken.getToken() + "&alt=json";
 							    } 
 							    
 							    OAuthRequest request = new OAuthRequest(Verb.GET,urlStr);
@@ -161,7 +163,27 @@ public class OAuthActivity extends Activity {
 						                {
 						                    JSONObject user = mainObject.getJSONObject("user");
 						                    data = user.getString(service.idFieldName);
-						                    username = user.getString("url").replaceFirst("http://www.flickr.com/people/","");
+						                    //username = user.getString("url").replaceFirst("http://www.flickr.com/people/","");
+						                    // for flickr make 1 more api request to get username
+									    	request = new OAuthRequest(Verb.GET,"http://api.flickr.com/services/rest/?method=flickr.people.getInfo&user_id="+data+"&format=json&nojsoncallback=1");
+										    try {	
+											    t = new Token(accessToken.getToken(),accessToken.getSecret());
+						    
+											    mService.signRequest(t, request);
+                                                response = request.send();
+            							    	if ( response.isSuccessful() )
+            							    	{	
+            						                mainObject = new JSONObject(response.getBody());
+            						                Log.d("response",response.getBody());
+            						                JSONObject person = mainObject.getJSONObject("person");
+            						                JSONObject uname = person.getJSONObject("username");
+            						                username = uname.getString("_content");
+            						                Log.d("here",username);
+            							    	}
+										    }
+										    catch ( Exception e ) {
+										    	e.printStackTrace();
+										    }
 						                } else if (serviceID == Services.FOURSQUARE.id)
 						                {
 						                    JSONObject resp = mainObject.getJSONObject("response");
@@ -201,13 +223,20 @@ public class OAuthActivity extends Activity {
 						                }else if (serviceID == Services.YOUTUBE.id) {
 						                    JSONObject resp = mainObject.getJSONObject("entry");
 						                    JSONObject user = resp.getJSONObject("yt$username");
-						                    data = user.getString("$t");					                    	
+						                    data = user.getString("$t");
+						                    username = data;
 							                Log.d("here",data);
 							                //userID = mainObject.getString(service.idFieldName);
 						                } else if (serviceID == Services.BLOGGER.id) {
 						                    JSONArray items = mainObject.getJSONArray("items");
 						                    JSONObject first = items.getJSONObject(0);
-						                    data = first.getString("url");	                    	
+						                    data = first.getString("url");
+						                    username = data.replace("http://", "");
+						                    username = username.replace("./blogspot.com","");
+							                Log.d("here",data);
+						                } else if (serviceID == Services.GOOGLEPLUS.id) {
+						                    data = mainObject.getString("id");
+						                    username = mainObject.getString("displayName");
 							                Log.d("here",data);
 						                }
 						                else {
@@ -373,6 +402,18 @@ public class OAuthActivity extends Activity {
         	service = Services.BLOGGER;
             mService = new ServiceBuilder()
     		.provider(BloggerApi.class)
+    		.apiKey(service.apiKey)
+    		.apiSecret("9999")
+    		.callback(service.callbackURL)
+    		.build();
+            
+            uses_oauth2 = true;
+            
+        } else if (serviceID == Services.GOOGLEPLUS.id)
+        {
+        	service = Services.GOOGLEPLUS;
+            mService = new ServiceBuilder()
+    		.provider(GooglePlusApi.class)
     		.apiKey(service.apiKey)
     		.apiSecret("9999")
     		.callback(service.callbackURL)

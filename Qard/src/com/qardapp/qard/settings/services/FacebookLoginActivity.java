@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -100,7 +101,9 @@ public class FacebookLoginActivity extends Activity {
                 progDialog.show();
 	            Request.executeMeRequestAsync(session,
 	                    new GraphUserCallback() {
-                        @Override
+                        private SharedPreferences mPrefs;
+
+						@Override
                         public void onCompleted(GraphUser user,
                                 Response response) {
 
@@ -108,6 +111,12 @@ public class FacebookLoginActivity extends Activity {
                             	String userId = null;
                                 Log.d("User",user.getId());
                                 userId = user.getId();
+                                String uname = user.getName();
+                        		// Shared Prefs to get username
+                                mPrefs = activity.getSharedPreferences("tokens", 0);
+				        		SharedPreferences.Editor editor = mPrefs.edit();
+				        		editor.putString("Facebook_username",uname);
+				        		editor.commit();
                                 
                                 AddServiceTask task = new AddServiceTask(FacebookLoginActivity.this, Services.FACEBOOK.id, userId);
                                 task.execute();

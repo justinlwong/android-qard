@@ -1,5 +1,6 @@
 package com.qardapp.qard.settings.services;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
@@ -29,6 +30,7 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
     private String serviceType;
     private String userInput;
     PopupDialog p;
+	private SharedPreferences mPrefs;
 
     public PopupDialog() {
         // Empty constructor required for DialogFragment
@@ -50,7 +52,7 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
         
         if (serviceId == Services.PHONE.id)
         {
-        	serviceType = "Phone";
+        	serviceType = "Phone Number";
         }
         
         getDialog().setTitle("Add "+serviceType+" Info");
@@ -108,6 +110,12 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
         
         UpdateDatabase.updateDatabase(userInput, serviceId, getActivity());
         
+        // Add to username preferences
+        mPrefs = getActivity().getSharedPreferences("tokens", 0);
+		SharedPreferences.Editor editor = mPrefs.edit();
+		editor.putString(serviceType+"_username",userInput);
+		editor.commit();    
+		
 		getActivity().runOnUiThread(new Runnable() {
 		    public void run() {
                 Toast.makeText(getActivity(), "Added " + serviceType + " information!", Toast.LENGTH_LONG).show();

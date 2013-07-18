@@ -10,6 +10,7 @@ import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -27,10 +28,12 @@ public class SettingsProfileAdapter extends BaseAdapter{
 	private Activity activty;
 	private BaseFragment bf;
 	private String dataList[] = new String[Services.values().length+1];
+	private String userList[] = new String[Services.values().length+1];
 
 	private ArrayList<Services> serviceList;
 	private ArrayList<Drawable> drawableList;
 	private Drawable lightBackground, darkBackground;
+	private SharedPreferences mPrefs;
 	
 	public SettingsProfileAdapter(Activity activity, Cursor cursor, BaseFragment bf) {
 		super();
@@ -55,6 +58,9 @@ public class SettingsProfileAdapter extends BaseAdapter{
 			drawableList.add(activity.getResources().getDrawable(ser.imageId));
 		}
 		changeCursor(cursor);
+		
+		// Shared Prefs to get username
+        mPrefs = activity.getSharedPreferences("tokens", 0);
 	}
 	
 	@Override
@@ -95,7 +101,7 @@ public class SettingsProfileAdapter extends BaseAdapter{
 			holder.button.setBackground(darkBackground.getConstantState().newDrawable());
 		}
 		else {
-			holder.button.setText(dataList[position]);
+			holder.button.setText(userList[position]);
 			holder.button.setTextColor(Color.DKGRAY);
 			holder.button.setBackground(lightBackground.getConstantState().newDrawable());
 		}
@@ -115,6 +121,7 @@ public class SettingsProfileAdapter extends BaseAdapter{
 				do {
 					int index = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_SERVICE_PRIORITY));
 					dataList[index-1] = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));
+					userList[index-1] = mPrefs.getString(serviceList.get(index-1).name+"_username","-1");
 				} while (cursor.moveToNext());
 			}
 			cursor.close();

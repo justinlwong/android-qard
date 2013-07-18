@@ -6,7 +6,6 @@ import android.net.Uri;
 
 import com.qardapp.qard.Services;
 import com.qardapp.qard.settings.services.AccountChecker;
-import com.qardapp.qard.settings.services.GooglePlusAuthActivity;
 import com.qardapp.qard.settings.services.OAuthActivity;
 
 public class DefaultServiceManager extends ServiceManager {
@@ -92,9 +91,6 @@ public class DefaultServiceManager extends ServiceManager {
 			    intent.putExtra("serviceID", Services.TWITTER.id);
 			    activity.startActivity(intent);
 			}			
-		} else if (serviceID == Services.GOOGLEPLUS.id) {
-            Intent intent = new Intent(activity, GooglePlusAuthActivity.class);
-            activity.startActivity(intent);	
 		} else {
 			Intent intent = new Intent(activity,OAuthActivity.class);
 			intent.putExtra("serviceID", serviceID);
