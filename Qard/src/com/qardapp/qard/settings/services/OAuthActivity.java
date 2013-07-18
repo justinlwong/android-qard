@@ -232,7 +232,7 @@ public class OAuthActivity extends Activity {
 						                    JSONObject first = items.getJSONObject(0);
 						                    data = first.getString("url");
 						                    username = data.replace("http://", "");
-						                    username = username.replace("./blogspot.com","");
+						                    username = username.replace(".blogspot.com/","");
 							                Log.d("here",data);
 						                } else if (serviceID == Services.GOOGLEPLUS.id) {
 						                    data = mainObject.getString("id");
