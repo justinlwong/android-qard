@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -77,8 +78,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		actionBar.setDisplayUseLogoEnabled(false);
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayShowHomeEnabled(false);
-
-
+		
 		((ImageView) v.findViewById(R.id.menu_back)).setOnClickListener(new OnClickListener() {
 			
 			@Override

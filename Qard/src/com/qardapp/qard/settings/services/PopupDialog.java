@@ -31,6 +31,7 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
     private String userInput;
     PopupDialog p;
 	private SharedPreferences mPrefs;
+	private Services service;
 
     public PopupDialog() {
         // Empty constructor required for DialogFragment
@@ -52,10 +53,18 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
         
         if (serviceId == Services.PHONE.id)
         {
-        	serviceType = "Phone Number";
+        	service = Services.PHONE;
+        } else if (serviceId == Services.SKYPE.id)
+        {
+        	service = Services.SKYPE;
+        	mText.setText("Enter Skype ID");
+        } else if (serviceId == Services.PINTEREST.id)
+        {
+        	service = Services.PINTEREST;
+        	mText.setText("Enter Pinterest username");
         }
         
-        getDialog().setTitle("Add "+serviceType+" Info");
+        getDialog().setTitle("Add "+service.name+" Info");
 
         // Show soft keyboard automatically
         mEditText.requestFocus();
@@ -103,7 +112,7 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
         
         if (userInput.length() == 0)
         {
-            Toast.makeText(getActivity(), "Phone Number must not be empty.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Field must not be empty.", Toast.LENGTH_LONG).show();
             this.dismiss();
             return false;
         }
@@ -113,12 +122,12 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
         // Add to username preferences
         mPrefs = getActivity().getSharedPreferences("tokens", 0);
 		SharedPreferences.Editor editor = mPrefs.edit();
-		editor.putString(serviceType+"_username",userInput);
+		editor.putString(service.name+"_username",userInput);
 		editor.commit();    
 		
 		getActivity().runOnUiThread(new Runnable() {
 		    public void run() {
-                Toast.makeText(getActivity(), "Added " + serviceType + " information!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Added " + service.name + " information!", Toast.LENGTH_LONG).show();
 		    }
 		});
         

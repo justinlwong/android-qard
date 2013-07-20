@@ -6,7 +6,9 @@ import com.qardapp.qard.friends.profile.services.DefaultServiceManager;
 import com.qardapp.qard.friends.profile.services.EmailServiceManager;
 import com.qardapp.qard.friends.profile.services.FacebookServiceManager;
 import com.qardapp.qard.friends.profile.services.PhoneServiceManager;
+import com.qardapp.qard.friends.profile.services.PinterestServiceManager;
 import com.qardapp.qard.friends.profile.services.ServiceManager;
+import com.qardapp.qard.friends.profile.services.SkypeServiceManager;
 import com.qardapp.qard.friends.profile.services.WhatsAppServiceManager;
 
 public enum Services {
@@ -104,7 +106,13 @@ public enum Services {
             return new FacebookServiceManager(a);	
 		} else if (id == Services.GOOGLEPLUS.id || id == Services.FOURSQUARE.id || id == Services.LINKEDIN.id || id == Services.TWITTER.id || id == Services.INSTAGRAM.id || id == Services.FLICKR.id || id == Services.TUMBLR.id || id == Services.YOUTUBE.id || id == Services.BLOGGER.id) {
 			return new DefaultServiceManager(a, imageId, id);
-		} 
+		} else if (id == Services.SKYPE.id)
+		{
+			return new SkypeServiceManager(a, bf);
+		} else if (id == Services.PINTEREST.id)
+		{
+			return new PinterestServiceManager(a, bf);
+		}
 		return null;
 	}
 	

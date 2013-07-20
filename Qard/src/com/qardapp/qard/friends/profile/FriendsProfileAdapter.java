@@ -181,6 +181,10 @@ public class FriendsProfileAdapter extends BaseAdapter{
 					holder.manager = Services.YOUTUBE.getManager((Activity) context, bf);	      			
 		        } else if (serviceId == Services.BLOGGER.id) {
 					holder.manager = Services.BLOGGER.getManager((Activity) context, bf);	      			
+		        } else if (serviceId == Services.SKYPE.id) {
+					holder.manager = Services.SKYPE.getManager((Activity) context, bf);	      			
+		        } else if (serviceId == Services.PINTEREST.id) {
+					holder.manager = Services.PINTEREST.getManager((Activity) context, bf);	      			
 		        }
 		        holder.manager.addData(data);
 			}
