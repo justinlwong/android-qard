@@ -47,7 +47,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:padding="5dp"
-        android:src="@drawable/widget_qr" />
+        android:src="@drawable/phone" />
     
     
 

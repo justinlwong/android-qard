@@ -22,6 +22,7 @@ public class QardWidgetIntentReceiver extends BroadcastReceiver {
 			cameraWidgetButtonListener(context, "CAMERA");
 		}
 		*/
+		
 
 		
 	}

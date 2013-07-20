@@ -1,6 +1,8 @@
 package com.qardapp.qard;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ImageView;
@@ -20,8 +22,18 @@ public class QRCodeDisplayActivity extends Activity {
 		
 				ImageView qrcode = (ImageView) findViewById(R.id.qrcode_image);
 				QRCodeManager.genQRCode (msg, qrcode);
+				//QRCodeManager.genQRCode(msg, qrcode).getDrawable().createFromPath(msg);
+				//QRCodeManager.genQRCode(msg, qrcode).setImageBitmap(widget_test)
+				//qrcode.setImageResource(R.id.widget_qr);
 			}
 		}
+		/*
+		Context context = getBaseContext();
+		Intent configIntent = new Intent(context, MainActivity.class);
+	    configIntent.putExtra("widgetAction", "qr_code_display");
+	    context.sendBroadcast(configIntent);
+		*/
+	    
 	}
 
 	@Override
