@@ -238,6 +238,9 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		frag = getSupportFragmentManager().findFragmentByTag(FRAGNAME_FRIENDS_PROFILE);
 		if (frag != null && frag.isVisible())
 			((BaseFragment) frag).updateViews();
+		frag = getSupportFragmentManager().findFragmentByTag(FRAGNAME_SETTINGS_PROFILE);
+		if (frag != null && frag.isVisible())
+			((BaseFragment) frag).updateViews();
 	}
 	
 	@Override
@@ -246,8 +249,8 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		qrcode = QRCodeManager.checkScanActivityResult(this, requestCode, resultCode, data);
 		if (qrcode != null) {
 			Toast.makeText(this, "Scan Result = " + qrcode, Toast.LENGTH_SHORT).show();
-			refreshFragments();
 		}
+		refreshFragments();
 	}
 
 

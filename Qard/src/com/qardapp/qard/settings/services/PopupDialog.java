@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import com.qardapp.qard.MainActivity;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 
@@ -128,6 +129,10 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
 		getActivity().runOnUiThread(new Runnable() {
 		    public void run() {
                 Toast.makeText(getActivity(), "Added " + service.name + " information!", Toast.LENGTH_LONG).show();
+                // Refresh settings page when the service call is not an activity (eg. PopupDialog)
+                if (getActivity() instanceof MainActivity) {
+                	((MainActivity) getActivity()).refreshFragments();
+                }
 		    }
 		});
         
