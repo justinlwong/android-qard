@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
@@ -121,6 +122,8 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			@Override
 			public void onClick(View v) {
 				getSupportLoaderManager().restartLoader(REFRESH_LOADER_ID, null, MainActivity.this);
+				v.startAnimation( 
+					    AnimationUtils.loadAnimation(MainActivity.this, R.anim.rotate_forever) );
 			}
 		});
 		
@@ -267,10 +270,11 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			View qr_code_image = findViewById(R.id.profile_qr_code);
 			if (qr_code_image != null) {
 				QRCodeManager.genQRCode (user_id, (ImageView)qr_code_image); 
-			}
+			}			
 		}
 		if (loader.getId() == REFRESH_LOADER_ID) {
 			refreshFragments();
+			findViewById(R.id.menu_refresh).clearAnimation();
 		}
 	}
 
