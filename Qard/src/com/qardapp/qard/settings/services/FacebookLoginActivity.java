@@ -38,88 +38,93 @@ public class FacebookLoginActivity extends Activity {
 		
         Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         
+//        progDialog = new ProgressDialog(FacebookLoginActivity.this);
+//        progDialog.setMessage("Connecting...");
+//        progDialog.setIndeterminate(true);
+//        progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        progDialog.setCancelable(false);
+//        progDialog.show();
+
+        Session session = new Session(this);
+        Session.setActiveSession(session);  
         progDialog = new ProgressDialog(FacebookLoginActivity.this);
         progDialog.setMessage("Connecting...");
         progDialog.setIndeterminate(true);
         progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progDialog.setCancelable(false);
         progDialog.show();
-
-        Session session = Session.getActiveSession();
-        Log.d("here","aftergetactive");
-        if (session == null) {
-        	Log.d("here","sessionnull");
-            if (savedInstanceState != null) {
-                session = Session.restoreSession(this, null, statusCallback, savedInstanceState);
-            }
-            if (session == null) {
-                session = new Session(this);
-            }
-            Session.setActiveSession(session);
-            if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
-                session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
-            }
-        } else {
-            if (!session.isOpened() && !session.isClosed()) {
-                session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
-            } else {
-                Session.openActiveSession(this, true, statusCallback);
-            }
+	    if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
+	        session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
+	    }
+//        Log.d("here","aftergetactive");
+//        if (session == null) {
+//        	Log.d("here","sessionnull");
+//            if (savedInstanceState != null) {
+//                session = Session.restoreSession(this, null, statusCallback, savedInstanceState);
+//            }
+//            if (session == null) {
+//                session = new Session(this);
+//            }
+//            Session.setActiveSession(session);
+//            if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
+//                session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
+//            }
+//        } else {
+//            if (!session.isOpened() && !session.isClosed()) {
+//                session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
+//            } else {
+//                Session.openActiveSession(this, true, statusCallback);
+//            }
 //    		runOnUiThread(new Runnable() {
 //    		    public void run() {
 //	                Toast.makeText(activity, "Added " + Services.FACEBOOK.name + " information!", Toast.LENGTH_LONG).show();
 //    		    }
 //    		});
-    		finish();
-        }
+    		//finish();
+//        }
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Session.getActiveSession().addCallback(statusCallback);
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        Session.getActiveSession().addCallback(statusCallback);
+//    }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        Session.getActiveSession().removeCallback(statusCallback);
+//    }
+//    
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//
+//        if(progDialog != null)
+//            progDialog.dismiss();
+//        progDialog = null;
+//    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        Session.getActiveSession().removeCallback(statusCallback);
-    }
-    
-    @Override
-    public void onPause() {
-        super.onPause();
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+//    }
 
-        if(progDialog != null)
-            progDialog.dismiss();
-        progDialog = null;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Session session = Session.getActiveSession();
-        Session.saveSession(session, outState);
-    }
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        Session session = Session.getActiveSession();
+//        Session.saveSession(session, outState);
+//    }
 
     private class SessionStatusCallback implements Session.StatusCallback {
         @Override
         public void call(Session session, SessionState state, Exception exception) {
         	Log.d("here", "got here");
         	if (session.isOpened()) {
-//                progDialog = new ProgressDialog(FacebookLoginActivity.this);
-//                progDialog.setMessage("Connecting...");
-//                progDialog.setIndeterminate(true);
-//                progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//                progDialog.setCancelable(false);
-//                progDialog.show();
+
 	            Request.executeMeRequestAsync(session,
 	                    new GraphUserCallback() {
                         private SharedPreferences mPrefs;
@@ -157,13 +162,13 @@ public class FacebookLoginActivity extends Activity {
 						                Toast.makeText(activity, "Added " + Services.FACEBOOK.name + " information!", Toast.LENGTH_LONG).show();
 				        		    }
 				        		});
-//				        		if (progDialog != null)
-//				        		{
-//				        			if (progDialog.isShowing())
-//				        			{
-//	    						    progDialog.cancel();
-//				        			}
-//				        		}
+				        		if (progDialog != null)
+				        		{
+				        			if (progDialog.isShowing())
+				        			{
+	    						    progDialog.cancel();
+				        			}
+				        		}
 	    						activity.finish();
                             }
                         }
