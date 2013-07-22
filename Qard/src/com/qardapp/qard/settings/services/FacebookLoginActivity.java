@@ -37,6 +37,13 @@ public class FacebookLoginActivity extends Activity {
 		setContentView(R.layout.oauth_layout);
 		
         Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
+        
+        progDialog = new ProgressDialog(FacebookLoginActivity.this);
+        progDialog.setMessage("Connecting...");
+        progDialog.setIndeterminate(true);
+        progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progDialog.setCancelable(false);
+        progDialog.show();
 
         Session session = Session.getActiveSession();
         Log.d("here","aftergetactive");
@@ -53,11 +60,16 @@ public class FacebookLoginActivity extends Activity {
                 session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
             }
         } else {
-    		runOnUiThread(new Runnable() {
-    		    public void run() {
-	                Toast.makeText(activity, "Added " + Services.FACEBOOK.name + " information!", Toast.LENGTH_LONG).show();
-    		    }
-    		});
+            if (!session.isOpened() && !session.isClosed()) {
+                session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
+            } else {
+                Session.openActiveSession(this, true, statusCallback);
+            }
+//    		runOnUiThread(new Runnable() {
+//    		    public void run() {
+//	                Toast.makeText(activity, "Added " + Services.FACEBOOK.name + " information!", Toast.LENGTH_LONG).show();
+//    		    }
+//    		});
     		finish();
         }
 
@@ -73,6 +85,15 @@ public class FacebookLoginActivity extends Activity {
     public void onStop() {
         super.onStop();
         Session.getActiveSession().removeCallback(statusCallback);
+    }
+    
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if(progDialog != null)
+            progDialog.dismiss();
+        progDialog = null;
     }
 
     @Override
@@ -93,12 +114,12 @@ public class FacebookLoginActivity extends Activity {
         public void call(Session session, SessionState state, Exception exception) {
         	Log.d("here", "got here");
         	if (session.isOpened()) {
-                progDialog = new ProgressDialog(FacebookLoginActivity.this);
-                progDialog.setMessage("Connecting...");
-                progDialog.setIndeterminate(true);
-                progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progDialog.setCancelable(false);
-                progDialog.show();
+//                progDialog = new ProgressDialog(FacebookLoginActivity.this);
+//                progDialog.setMessage("Connecting...");
+//                progDialog.setIndeterminate(true);
+//                progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//                progDialog.setCancelable(false);
+//                progDialog.show();
 	            Request.executeMeRequestAsync(session,
 	                    new GraphUserCallback() {
                         private SharedPreferences mPrefs;
@@ -136,7 +157,13 @@ public class FacebookLoginActivity extends Activity {
 						                Toast.makeText(activity, "Added " + Services.FACEBOOK.name + " information!", Toast.LENGTH_LONG).show();
 				        		    }
 				        		});
-	    						progDialog.dismiss();
+//				        		if (progDialog != null)
+//				        		{
+//				        			if (progDialog.isShowing())
+//				        			{
+//	    						    progDialog.cancel();
+//				        			}
+//				        		}
 	    						activity.finish();
                             }
                         }
