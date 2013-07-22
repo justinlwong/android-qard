@@ -12,7 +12,10 @@ import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.friends.profile.services.ServiceManager;
+////////////////
+// Not Used
 
+@Deprecated
 public class FriendsProfileCursorAdapter extends CursorAdapter{
 
 	 static class ViewHolder {

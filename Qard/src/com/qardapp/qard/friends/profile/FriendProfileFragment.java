@@ -24,6 +24,7 @@ import com.qardapp.qard.Services;
 import com.qardapp.qard.comm.server.AddFriendTask;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
+import com.qardapp.qard.util.ImageUtil;
 
 
 public class FriendProfileFragment extends BaseFragment{
@@ -117,6 +118,8 @@ public class FriendProfileFragment extends BaseFragment{
 				
 			}
 			adapter.changeCursor(cursor);
+			ImageView profilePic = (ImageView) getView().findViewById(R.id.friend_profile_image);
+			profilePic.setImageBitmap(ImageUtil.getProfilePic(getActivity(), (int)friend_id, null));
 		}
 		
 	}
