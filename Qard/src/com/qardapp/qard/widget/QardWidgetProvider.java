@@ -22,8 +22,8 @@ public class QardWidgetProvider extends AppWidgetProvider {
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
+	    //RemoteViews remoteViews = new RemoteViews(context.getPackageName(),R.id.qrcode_image);
 	    updateSwitch(context, appWidgetManager, appWidgetIds[0]);
-
 
 	}
 
@@ -35,6 +35,7 @@ public class QardWidgetProvider extends AppWidgetProvider {
 		//ImageView qrcode = (ImageView) findViewById(R.id.qrcode_image);
 		//remoteViews.setImageViewResource(R.id.widget_qr, R.id.profile_qr_code);
 		//remoteViews.setImageViewResource(R.id.widget_qr, getImageToSet());
+		
 		//change images
 		remoteViews.setOnClickPendingIntent(R.id.widget_button, buildButtonPendingIntent(context));
 		pushWidgetUpdate(context, remoteViews);
@@ -42,10 +43,11 @@ public class QardWidgetProvider extends AppWidgetProvider {
 		//Camera
 	    Intent configIntent = new Intent(context, MainActivity.class);
 	    configIntent.putExtra("widgetAction", "Scan");
-	    configIntent.putExtra("widgetAction", "QR");
 	    PendingIntent configPendingIntent = PendingIntent.getActivity(context, 0, configIntent, 1);
 	    remoteViews.setOnClickPendingIntent(R.id.widget_camera, configPendingIntent);
-	    configPendingIntent = PendingIntent.getActivity(context, 0, configIntent, 2);
+	    
+	    configIntent.putExtra("widgetAction", "QR");
+	    configPendingIntent = PendingIntent.getActivity(context, 1, configIntent, 1);
 	    remoteViews.setOnClickPendingIntent(R.id.widget_qr, configPendingIntent);
 	    appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
 	}

@@ -150,8 +150,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		}
 		if (widgetAction.equals("QR")){
 			MainActivity.this.switchFragments(FRAG_PROFILE);
-		}
-			
+		}			
 	}
 
 	public Fragment switchFragments (int id) {
