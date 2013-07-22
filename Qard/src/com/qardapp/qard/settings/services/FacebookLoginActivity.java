@@ -45,17 +45,18 @@ public class FacebookLoginActivity extends Activity {
 //        progDialog.setCancelable(false);
 //        progDialog.show();
 
-        Session session = new Session(this);
-        Session.setActiveSession(session);  
+//        Session session = new Session(this);
+//        Session.setActiveSession(session);  
+        Session.openActiveSession(this, true, statusCallback);
         progDialog = new ProgressDialog(FacebookLoginActivity.this);
         progDialog.setMessage("Connecting...");
         progDialog.setIndeterminate(true);
         progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progDialog.setCancelable(false);
         progDialog.show();
-	    if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
-	        session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
-	    }
+//	    if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
+//	        session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
+//	    }
 //        Log.d("here","aftergetactive");
 //        if (session == null) {
 //        	Log.d("here","sessionnull");
