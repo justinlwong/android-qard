@@ -50,9 +50,8 @@ public class ProfileFragment extends BaseFragment{
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(), QRCodeDisplayActivity.class);
-				//Bundle bundle = new Bundle();
-				//bundle.putString("msg", "Test");
-				intent.putExtra("msg", "HelloTesting123456");
+
+				intent.putExtra("msg", QardMessage.getMessage(getActivity()));
 				startActivity(intent);
 			}
 		});

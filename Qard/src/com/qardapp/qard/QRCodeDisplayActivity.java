@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ImageView;
 
+import com.qardapp.qard.nfc.NFCManager;
 import com.qardapp.qard.qrcode.QRCodeManager;
 
 public class QRCodeDisplayActivity extends Activity {
@@ -22,9 +24,9 @@ public class QRCodeDisplayActivity extends Activity {
 		
 				ImageView qrcode = (ImageView) findViewById(R.id.qrcode_image);
 				QRCodeManager.genQRCode (msg, qrcode);
-				//QRCodeManager.genQRCode(msg, qrcode).getDrawable().createFromPath(msg);
-				//QRCodeManager.genQRCode(msg, qrcode).setImageBitmap(widget_test)
-				//qrcode.setImageResource(R.id.widget_qr);
+				Log.d("MSG", msg);
+
+				NFCManager.sendNFC(msg, this);
 			}
 		}
 		/*
