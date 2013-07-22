@@ -7,11 +7,21 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".QRCodeDisplayActivity" >
-
+	<TextView
+        android:id="@+id/nfc_help_msg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:textAlignment="center"
+        android:text="Bump your phone with another Android Beam device to send" />
     <ImageView
         android:id="@+id/qrcode_image"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_below="@id/nfc_help_msg"
         android:padding="10dp" />
+
+
 
 </RelativeLayout>

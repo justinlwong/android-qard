@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
@@ -23,6 +24,8 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.qardapp.qard.comm.QardMessage;
+import com.qardapp.qard.comm.server.AddFriendTask;
 import com.qardapp.qard.comm.server.FriendsInfoLoader;
 import com.qardapp.qard.comm.server.NewUserTask;
 import com.qardapp.qard.comm.server.ServerNotifications;
@@ -121,6 +124,8 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			@Override
 			public void onClick(View v) {
 				getSupportLoaderManager().restartLoader(REFRESH_LOADER_ID, null, MainActivity.this);
+				v.startAnimation( 
+					    AnimationUtils.loadAnimation(MainActivity.this, R.anim.rotate_forever) );
 			}
 		});
 		
@@ -138,19 +143,30 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		}
 		switchFragments(FRAG_PROFILE);
 		
-		Bundle widgetResponse = getIntent().getExtras();
-		//String widgetAction = widgetResponse.getString("widgetAction");
-		
-		if (widgetResponse == null){
-			return;
+		Bundle extra = getIntent().getExtras();
+
+		if (extra != null) {
+			String widgetAction = extra.getString("widgetAction");
+			if (widgetAction.equals("Scan")){
+				QRCodeManager.scanQRCode(MainActivity.this);
+			}
+			if (widgetAction.equals("QR")){
+				MainActivity.this.switchFragments(FRAG_PROFILE);
+			}
+			
+			
+			String nfc_msg = extra.getString("nfc_data");
+			if (nfc_msg != null) {
+				ArrayList<String> resultValues = QardMessage.decodeMessage(nfc_msg);
+		    	if (resultValues != null) {
+		    		AddFriendTask task = new AddFriendTask(this, resultValues.get(QardMessage.ID),
+		    				resultValues.get(QardMessage.FIRST_NAME), resultValues.get(QardMessage.LAST_NAME),
+		    				resultValues.get(QardMessage.PHONE));
+		    		task.execute();
+		    	}
+			}
 		}
-		String widgetAction = widgetResponse.getString("widgetAction");
-		if (widgetAction.equals("Scan")){
-			QRCodeManager.scanQRCode(MainActivity.this);
-		}
-		if (widgetAction.equals("QR")){
-			MainActivity.this.switchFragments(FRAG_PROFILE);
-		}			
+			
 	}
 
 	public Fragment switchFragments (int id) {
@@ -234,6 +250,9 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		frag = getSupportFragmentManager().findFragmentByTag(FRAGNAME_FRIENDS_PROFILE);
 		if (frag != null && frag.isVisible())
 			((BaseFragment) frag).updateViews();
+		frag = getSupportFragmentManager().findFragmentByTag(FRAGNAME_SETTINGS_PROFILE);
+		if (frag != null && frag.isVisible())
+			((BaseFragment) frag).updateViews();
 	}
 	
 	@Override
@@ -242,8 +261,8 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		qrcode = QRCodeManager.checkScanActivityResult(this, requestCode, resultCode, data);
 		if (qrcode != null) {
 			Toast.makeText(this, "Scan Result = " + qrcode, Toast.LENGTH_SHORT).show();
-			refreshFragments();
 		}
+		refreshFragments();
 	}
 
 
@@ -266,10 +285,11 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			View qr_code_image = findViewById(R.id.profile_qr_code);
 			if (qr_code_image != null) {
 				QRCodeManager.genQRCode (user_id, (ImageView)qr_code_image); 
-			}
+			}			
 		}
 		if (loader.getId() == REFRESH_LOADER_ID) {
 			refreshFragments();
+			findViewById(R.id.menu_refresh).clearAnimation();
 		}
 	}
 

@@ -4,6 +4,8 @@ import java.io.File;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.support.v4.widget.CursorAdapter;
 import android.telephony.PhoneNumberUtils;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 
 import com.qardapp.qard.R;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
+import com.qardapp.qard.util.ImageUtil;
 
 public class FriendsCursorAdapter extends CursorAdapter{
 
@@ -37,20 +40,16 @@ public class FriendsCursorAdapter extends CursorAdapter{
 		String first_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FIRST_NAME));
 		String last_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_LAST_NAME));
 		String phone = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));
-		
+		int id = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_ID));
+
     	holder.name.setText(first_name + " " + last_name);
     	if (phone != null)
     		holder.phone.setText(PhoneNumberUtils.formatNumber(phone));
     	
     	// Display Profile Pic
     	String profilePicFile = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_PROFILE_PIC_LOC));
-    	if (profilePicFile == null || profilePicFile.isEmpty())
-    		holder.profilePic.setImageResource(R.drawable.profile_default);
-    	else {
-    		File filePath = context.getFileStreamPath(profilePicFile);
-    		holder.profilePic.setImageDrawable(Drawable.createFromPath(filePath.toString()));
-    	}
-    	
+    	holder.profilePic.setImageBitmap(ImageUtil.getProfilePic(context, id, profilePicFile));
+
     	holder.statusLayout.removeAllViews();
     	if (cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_CONFIRMED)) == 0 &&
     			cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_HIDE_CONFIRMED)) == 0) {
@@ -70,6 +69,8 @@ public class FriendsCursorAdapter extends CursorAdapter{
     	holder.profilePic = (ImageView) view.findViewById(R.id.friends_profile_pic);
     	holder.statusLayout = (LinearLayout) view.findViewById(R.id.friends_status_icons);
     	view.setTag(holder);
+		int id = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_ID));
+
 		String first_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FIRST_NAME));
 		String last_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_LAST_NAME));
     	holder.name.setText(first_name + " " + last_name);
@@ -78,12 +79,7 @@ public class FriendsCursorAdapter extends CursorAdapter{
     		holder.phone.setText(PhoneNumberUtils.formatNumber(phone));
     	// Display Profile Pic
     	String profilePicFile = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_PROFILE_PIC_LOC));
-    	if (profilePicFile == null || profilePicFile.isEmpty())
-    		holder.profilePic.setImageResource(R.drawable.profile_default);
-    	else {
-    		File filePath = context.getFileStreamPath(profilePicFile);
-    		holder.profilePic.setImageDrawable(Drawable.createFromPath(filePath.toString()));
-    	}
+    	holder.profilePic.setImageBitmap(ImageUtil.getProfilePic(context, id, profilePicFile));
     	
     	if (cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_CONFIRMED)) == 0 &&
     			cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_HIDE_CONFIRMED)) == 0) {

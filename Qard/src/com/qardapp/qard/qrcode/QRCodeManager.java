@@ -5,6 +5,7 @@ import java.util.Hashtable;
 
 import net.sourceforge.zbar.Symbol;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
@@ -58,6 +59,10 @@ public class QRCodeManager {
 		    }
 		}
 		return null;
+	}
+	
+	public static ImageView genMyQRCode (Context context, ImageView imageView) {
+		return genQRCode (QardMessage.getMessage(context), imageView, 0);
 	}
 	
 	public static ImageView genQRCode (String text, ImageView imageView) {
