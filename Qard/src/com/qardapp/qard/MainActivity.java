@@ -24,6 +24,8 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.qardapp.qard.comm.QardMessage;
+import com.qardapp.qard.comm.server.AddFriendTask;
 import com.qardapp.qard.comm.server.FriendsInfoLoader;
 import com.qardapp.qard.comm.server.NewUserTask;
 import com.qardapp.qard.comm.server.ServerNotifications;
@@ -141,18 +143,28 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		}
 		switchFragments(FRAG_PROFILE);
 		
-		Bundle widgetResponse = getIntent().getExtras();
-		//String widgetAction = widgetResponse.getString("widgetAction");
-		
-		if (widgetResponse == null){
-			return;
-		}
-		String widgetAction = widgetResponse.getString("widgetAction");
-		if (widgetAction.equals("Scan")){
-			QRCodeManager.scanQRCode(MainActivity.this);
-		}
-		if (widgetAction.equals("QR")){
-			MainActivity.this.switchFragments(FRAG_PROFILE);
+		Bundle extra = getIntent().getExtras();
+
+		if (extra != null) {
+			String widgetAction = extra.getString("widgetAction");
+			if (widgetAction.equals("Scan")){
+				QRCodeManager.scanQRCode(MainActivity.this);
+			}
+			if (widgetAction.equals("QR")){
+				MainActivity.this.switchFragments(FRAG_PROFILE);
+			}
+			
+			
+			String nfc_msg = extra.getString("nfc_data");
+			if (nfc_msg != null) {
+				ArrayList<String> resultValues = QardMessage.decodeMessage(nfc_msg);
+		    	if (resultValues != null) {
+		    		AddFriendTask task = new AddFriendTask(this, resultValues.get(QardMessage.ID),
+		    				resultValues.get(QardMessage.FIRST_NAME), resultValues.get(QardMessage.LAST_NAME),
+		    				resultValues.get(QardMessage.PHONE));
+		    		task.execute();
+		    	}
+			}
 		}
 			
 	}
