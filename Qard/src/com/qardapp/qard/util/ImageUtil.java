@@ -9,7 +9,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
@@ -32,7 +34,9 @@ public class ImageUtil {
 		    		Log.d("test", "Using saved image");
 		
 			    	BitmapFactory.Options options = new BitmapFactory.Options();
-					options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+				    options.inScaled = false;
+				    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+				    options.inDither = false;
 					return BitmapFactory.decodeFile(file.getAbsolutePath(), options);
 			    }
 			}
@@ -50,29 +54,52 @@ public class ImageUtil {
 				DEFAULT_PROFILE_PIC = BitmapFactory.decodeResource(context.getResources(), R.drawable.profile_default);
 			bitmap = DEFAULT_PROFILE_PIC;
 		}
-		Bitmap crop = BitmapFactory.decodeResource(context.getResources(), R.drawable.circle_crop);
-		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-	            bitmap.getHeight(), Config.ARGB_8888);
+		BitmapFactory.Options options = new BitmapFactory.Options();
+	    options.inScaled = false;
+	    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+	    options.inDither = false;
+	    
+	    int size = bitmap.getHeight() < bitmap.getWidth() ? bitmap.getHeight(): bitmap.getWidth();
+	    
+		Bitmap output = Bitmap.createBitmap(size,
+				size, Config.ARGB_8888);
 	    Canvas canvas = new Canvas(output);
-		crop =  Bitmap.createScaledBitmap(crop, bitmap.getWidth(), bitmap.getHeight(), false);
+	    
+		Bitmap crop = BitmapFactory.decodeResource(context.getResources(), R.drawable.circle_crop, options);
+/*
+	    Bitmap scaledCrop = Bitmap.createBitmap(bitmap.getWidth(),
+	            bitmap.getHeight(), Config.ARGB_8888);
+	    Log.d("size", size + " " + crop.getWidth());
+	    float ratioX = size / (float) crop.getWidth();
+	    float ratioY = size / (float) crop.getHeight();
+	    float middleX = size / 2.0f;
+	    float middleY = size / 2.0f;
+	    Matrix scaleMatrix = new Matrix();
+	    scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+	    Canvas canvas1 = new Canvas(scaledCrop);
+	    canvas1.setMatrix(scaleMatrix);
+	    canvas1.drawBitmap(crop, middleX- crop.getWidth() /2, middleY- crop.getHeight() /2, new Paint(Paint.FILTER_BITMAP_FLAG));*/
+		crop =  Bitmap.createScaledBitmap(crop, size, size, true);
 
 	    Paint paint = new Paint();
-	    final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+	    final Rect rect = new Rect((bitmap.getWidth() - size) /2, (bitmap.getHeight() - size) /2, size, size);
+	    final Rect finalRect = new Rect(0, 0, size, size);
 
 	    paint.setAntiAlias(true);
 	    paint.setFilterBitmap(true);
 	    paint.setDither(true);
 	    canvas.drawARGB(0, 0, 0, 0);
 	    paint.setColor(0xff000000);
-	    canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
-	            bitmap.getWidth() / 2, paint);
+	    canvas.drawCircle(size / 2, size / 2,
+	            bitmap.getWidth() / 2 - 2, paint);
 	    paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
 	    canvas.drawBitmap(bitmap, rect, rect, paint);
 	    paint = new Paint();
 	    paint.setAntiAlias(true);
 	    paint.setFilterBitmap(true);
 	    paint.setDither(true);
-	    canvas.drawBitmap(crop, rect, rect, paint);
+	    canvas.drawBitmap(crop, rect, finalRect, paint);
 
 	    
 	    boolean mExternalStorageAvailable = false;

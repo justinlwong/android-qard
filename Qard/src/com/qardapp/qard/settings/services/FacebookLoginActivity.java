@@ -173,7 +173,11 @@ public class FacebookLoginActivity extends Activity {
 				        		        	Log.d("here", image_value.toString());
 				        		        	//OAuthRequest request = new OAuthRequest(Verb.GET,"http://graph.facebook.com/"+uname+"?fields=picture")
 											//URL image_value = new URL("http://graph.facebook.com/" + uname+ "/picture?type=large" );
-											Bitmap profPict = BitmapFactory.decodeStream(image_value.openConnection().getInputStream());
+				        		    		BitmapFactory.Options options = new BitmapFactory.Options();
+				        		    	    options.inScaled = false;
+				        		    	    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+				        		    	    options.inDither = false;
+				        		        	Bitmap profPict = BitmapFactory.decodeStream(image_value.openConnection().getInputStream(), null, options);
 											Log.d("here","gotprofilepic");
 				        		            ImageUtil.createProfilePic(activity, 0, profPict);
 				        		            Log.d("here", "added profile picture");
