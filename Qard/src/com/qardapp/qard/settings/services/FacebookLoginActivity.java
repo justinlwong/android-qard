@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.scribe.model.OAuthRequest;
+import org.scribe.model.Verb;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -145,14 +148,18 @@ public class FacebookLoginActivity extends Activity {
                             if (user != null) {
                             	String userId = null;
                                 Log.d("User",user.getId());
+                            
                                 userId = user.getId();
                                 final String name = user.getName();
                                 final String uname = user.getUsername();
+                                //Log.d("here", user.picture);
                         		// Shared Prefs to get username
                                 mPrefs = activity.getSharedPreferences("tokens", 0);
 				        		SharedPreferences.Editor editor = mPrefs.edit();
 				        		editor.putString("Facebook_username",name);
+				        		final String accessToken = session.getAccessToken();
 				        		editor.putString("Facebook_access_token", session.getAccessToken());
+				        		Log.d("here",session.getAccessToken());
 				        		editor.commit();
 				        		
 				        		// Get picture
@@ -162,7 +169,10 @@ public class FacebookLoginActivity extends Activity {
 				        		    public void run() {
 				        		        try {
 				        		        	Log.d("here",uname);
-											URL image_value = new URL("http://graph.facebook.com/" + uname+ "/picture?type=large" );
+				        		        	URL image_value = new URL("https://graph.facebook.com/"+uname+"/picture?width=500&height=500" );
+				        		        	Log.d("here", image_value.toString());
+				        		        	//OAuthRequest request = new OAuthRequest(Verb.GET,"http://graph.facebook.com/"+uname+"?fields=picture")
+											//URL image_value = new URL("http://graph.facebook.com/" + uname+ "/picture?type=large" );
 											Bitmap profPict = BitmapFactory.decodeStream(image_value.openConnection().getInputStream());
 											Log.d("here","gotprofilepic");
 				        		            ImageUtil.createProfilePic(activity, 0, profPict);
