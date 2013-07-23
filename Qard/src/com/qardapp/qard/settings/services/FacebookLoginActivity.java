@@ -1,11 +1,17 @@
 package com.qardapp.qard.settings.services;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +30,7 @@ import com.qardapp.qard.Services;
 import com.qardapp.qard.comm.server.AddServiceTask;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
+import com.qardapp.qard.util.ImageUtil;
 
 public class FacebookLoginActivity extends Activity {
 
@@ -107,11 +114,11 @@ public class FacebookLoginActivity extends Activity {
 //        progDialog = null;
 //    }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
-//    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+    }
 
 //    @Override
 //    protected void onSaveInstanceState(Bundle outState) {
@@ -122,8 +129,9 @@ public class FacebookLoginActivity extends Activity {
 
     private class SessionStatusCallback implements Session.StatusCallback {
         @Override
-        public void call(Session session, SessionState state, Exception exception) {
+        public void call(final Session session, SessionState state, Exception exception) {
         	Log.d("here", "got here");
+        	Log.d("here", String.valueOf(session.isOpened()));
         	if (session.isOpened()) {
 
 	            Request.executeMeRequestAsync(session,
@@ -133,17 +141,40 @@ public class FacebookLoginActivity extends Activity {
 						@Override
                         public void onCompleted(GraphUser user,
                                 Response response) {
-
+                            Log.d("here", user.toString());
                             if (user != null) {
                             	String userId = null;
                                 Log.d("User",user.getId());
                                 userId = user.getId();
-                                String uname = user.getName();
+                                final String name = user.getName();
+                                final String uname = user.getUsername();
                         		// Shared Prefs to get username
                                 mPrefs = activity.getSharedPreferences("tokens", 0);
 				        		SharedPreferences.Editor editor = mPrefs.edit();
-				        		editor.putString("Facebook_username",uname);
+				        		editor.putString("Facebook_username",name);
+				        		editor.putString("Facebook_access_token", session.getAccessToken());
 				        		editor.commit();
+				        		
+				        		// Get picture
+				        		
+				        		Thread thread = new Thread(new Runnable(){
+				        		    @Override
+				        		    public void run() {
+				        		        try {
+				        		        	Log.d("here",uname);
+											URL image_value = new URL("http://graph.facebook.com/" + uname+ "/picture?type=large" );
+											Bitmap profPict = BitmapFactory.decodeStream(image_value.openConnection().getInputStream());
+											Log.d("here","gotprofilepic");
+				        		            ImageUtil.createProfilePic(activity, 0, profPict);
+				        		            Log.d("here", "added profile picture");
+				        		        } catch (Exception e) {
+				        		            e.printStackTrace();
+				        		        }
+				        		    }
+				        		});
+
+				        		thread.start(); 
+
                                 
                                 AddServiceTask task = new AddServiceTask(FacebookLoginActivity.this, Services.FACEBOOK.id, userId);
                                 task.execute();
@@ -175,7 +206,7 @@ public class FacebookLoginActivity extends Activity {
                         }
 	            });
 
-            }
+            } 
         	
 
         }
