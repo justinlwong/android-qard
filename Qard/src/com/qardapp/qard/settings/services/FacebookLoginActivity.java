@@ -107,11 +107,11 @@ public class FacebookLoginActivity extends Activity {
 //        progDialog = null;
 //    }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
-//    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+    }
 
 //    @Override
 //    protected void onSaveInstanceState(Bundle outState) {
@@ -124,6 +124,7 @@ public class FacebookLoginActivity extends Activity {
         @Override
         public void call(Session session, SessionState state, Exception exception) {
         	Log.d("here", "got here");
+        	Log.d("here", String.valueOf(session.isOpened()));
         	if (session.isOpened()) {
 
 	            Request.executeMeRequestAsync(session,
@@ -133,7 +134,7 @@ public class FacebookLoginActivity extends Activity {
 						@Override
                         public void onCompleted(GraphUser user,
                                 Response response) {
-
+                            Log.d("here", user.toString());
                             if (user != null) {
                             	String userId = null;
                                 Log.d("User",user.getId());
@@ -175,7 +176,7 @@ public class FacebookLoginActivity extends Activity {
                         }
 	            });
 
-            }
+            } 
         	
 
         }
