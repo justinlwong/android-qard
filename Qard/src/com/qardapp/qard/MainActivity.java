@@ -2,6 +2,8 @@ package com.qardapp.qard;
 
 import java.util.ArrayList;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,6 +35,7 @@ import com.qardapp.qard.friends.FriendsFragment;
 import com.qardapp.qard.profile.ProfileFragment;
 import com.qardapp.qard.qrcode.QRCodeManager;
 import com.qardapp.qard.settings.SettingsFragment;
+import com.qardapp.qard.widget.QardWidgetProvider;
 
 public class MainActivity extends SherlockFragmentActivity implements LoaderCallbacks<ArrayList<ServerNotifications>> {
 
@@ -56,8 +59,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		
+		setContentView(R.layout.activity_main);		
 
 		// !! NOTE: Reset database on app update for testing 
 		// Token Setup
@@ -285,6 +287,14 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			View qr_code_image = findViewById(R.id.profile_qr_code);
 			if (qr_code_image != null) {
 				QRCodeManager.genQRCode (user_id, (ImageView)qr_code_image); 
+				Log.d("here", "reached here");
+				
+				// Update widget with qr code
+//				AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+//				RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.id.widget_qr);
+//				ComponentName thisWidget = new ComponentName(this, QardWidgetProvider.class);
+//				remoteViews.setImageViewResource(R.id.widget_qr, R.id.profile_qr_code);
+//				appWidgetManager.updateAppWidget(thisWidget, remoteViews);
 			}			
 		}
 		if (loader.getId() == REFRESH_LOADER_ID) {

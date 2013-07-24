@@ -1,15 +1,19 @@
 package com.qardapp.qard;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.ImageView;
+import android.widget.RemoteViews;
 
 import com.qardapp.qard.nfc.NFCManager;
 import com.qardapp.qard.qrcode.QRCodeManager;
+import com.qardapp.qard.widget.QardWidgetProvider;
 
 public class QRCodeDisplayActivity extends Activity {
 

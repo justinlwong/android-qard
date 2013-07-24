@@ -48,15 +48,6 @@ public class FacebookLoginActivity extends Activity {
 		
         Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         
-//        progDialog = new ProgressDialog(FacebookLoginActivity.this);
-//        progDialog.setMessage("Connecting...");
-//        progDialog.setIndeterminate(true);
-//        progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//        progDialog.setCancelable(false);
-//        progDialog.show();
-
-//        Session session = new Session(this);
-//        Session.setActiveSession(session);  
         Session.openActiveSession(this, true, statusCallback);
         progDialog = new ProgressDialog(FacebookLoginActivity.this);
         progDialog.setMessage("Connecting...");
@@ -64,58 +55,9 @@ public class FacebookLoginActivity extends Activity {
         progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progDialog.setCancelable(false);
         progDialog.show();
-//	    if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
-//	        session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
-//	    }
-//        Log.d("here","aftergetactive");
-//        if (session == null) {
-//        	Log.d("here","sessionnull");
-//            if (savedInstanceState != null) {
-//                session = Session.restoreSession(this, null, statusCallback, savedInstanceState);
-//            }
-//            if (session == null) {
-//                session = new Session(this);
-//            }
-//            Session.setActiveSession(session);
-//            if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
-//                session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
-//            }
-//        } else {
-//            if (!session.isOpened() && !session.isClosed()) {
-//                session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
-//            } else {
-//                Session.openActiveSession(this, true, statusCallback);
-//            }
-//    		runOnUiThread(new Runnable() {
-//    		    public void run() {
-//	                Toast.makeText(activity, "Added " + Services.FACEBOOK.name + " information!", Toast.LENGTH_LONG).show();
-//    		    }
-//    		});
-    		//finish();
-//        }
 
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        Session.getActiveSession().addCallback(statusCallback);
-//    }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        Session.getActiveSession().removeCallback(statusCallback);
-//    }
-//    
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//
-//        if(progDialog != null)
-//            progDialog.dismiss();
-//        progDialog = null;
-//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -123,12 +65,6 @@ public class FacebookLoginActivity extends Activity {
         Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
     }
 
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        Session session = Session.getActiveSession();
-//        Session.saveSession(session, outState);
-//    }
 
     private class SessionStatusCallback implements Session.StatusCallback {
         @Override
@@ -159,7 +95,6 @@ public class FacebookLoginActivity extends Activity {
 				        		editor.putString("Facebook_username",name);
 				        		final String accessToken = session.getAccessToken();
 				        		editor.putString("Facebook_access_token", session.getAccessToken());
-				        		Log.d("here",session.getAccessToken());
 				        		editor.commit();
 				        		
 				        		// Get picture
@@ -167,23 +102,7 @@ public class FacebookLoginActivity extends Activity {
 				        		Thread thread = new Thread(new Runnable(){
 				        		    @Override
 				        		    public void run() {
-				        		        try {
-				        		        	Log.d("here",uname);
-				        		        	URL image_value = new URL("https://graph.facebook.com/"+uname+"/picture?width=500&height=500" );
-				        		        	Log.d("here", image_value.toString());
-				        		        	//OAuthRequest request = new OAuthRequest(Verb.GET,"http://graph.facebook.com/"+uname+"?fields=picture")
-											//URL image_value = new URL("http://graph.facebook.com/" + uname+ "/picture?type=large" );
-				        		    		BitmapFactory.Options options = new BitmapFactory.Options();
-				        		    	    options.inScaled = false;
-				        		    	    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-				        		    	    options.inDither = false;
-				        		        	Bitmap profPict = BitmapFactory.decodeStream(image_value.openConnection().getInputStream(), null, options);
-											Log.d("here","gotprofilepic");
-				        		            ImageUtil.createProfilePic(activity, 0, profPict);
-				        		            Log.d("here", "added profile picture");
-				        		        } catch (Exception e) {
-				        		            e.printStackTrace();
-				        		        }
+				        		        ImageUtil.getFBProfilePic(activity, uname, 0);
 				        		    }
 				        		});
 

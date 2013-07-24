@@ -20,8 +20,10 @@ import android.net.Uri;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
+import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
+import com.qardapp.qard.util.ImageUtil;
 
 public class FriendsInfoLoader extends AsyncTaskLoader<ArrayList<ServerNotifications>> {
 
@@ -61,8 +63,21 @@ public class FriendsInfoLoader extends AsyncTaskLoader<ArrayList<ServerNotificat
 				for (int x = 0; x < info.length(); x++) {
 					JSONObject obj = info.getJSONObject(x);
 					String service_id = obj.getString("service_id");
-					String user_id = obj.getString("friend_id");
-					String data = obj.getString("service_data");
+					final String user_id = obj.getString("friend_id");
+					final String data = obj.getString("service_data");
+					
+					// If service is facebook, grab picture
+					if (Integer.parseInt(service_id) == Services.FACEBOOK.id)
+					{
+		        		Thread thread = new Thread(new Runnable(){
+		        		    @Override
+		        		    public void run() {
+		        		        ImageUtil.getFBProfilePic(context, data, Integer.parseInt(user_id));
+		        		    }
+		        		});
+		        		thread.start();
+					}
+					
 					ContentResolver resolver = context.getContentResolver();
 					String where = FriendsDatabaseHelper.COLUMN_USER_ID + "=?";
 					String[] args = new String[] {user_id};

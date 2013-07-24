@@ -2,6 +2,8 @@ package com.qardapp.qard.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import com.qardapp.qard.R;
 
@@ -23,6 +25,28 @@ public class ImageUtil {
 	
 	
 	private static Bitmap DEFAULT_PROFILE_PIC;
+	
+	public static void getFBProfilePic(Context context, String uname, int id) {
+    	Log.d("here",uname);
+    	URL image_value;
+		try {
+			image_value = new URL("https://graph.facebook.com/"+uname+"/picture?width=250&height=250" );
+	    	Log.d("here", image_value.toString());
+	    	//OAuthRequest request = new OAuthRequest(Verb.GET,"http://graph.facebook.com/"+uname+"?fields=picture")
+			//URL image_value = new URL("http://graph.facebook.com/" + uname+ "/picture?type=large" );
+			BitmapFactory.Options options = new BitmapFactory.Options();
+		    options.inScaled = false;
+		    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+		    options.inDither = false;
+	    	Bitmap profPict = BitmapFactory.decodeStream(image_value.openConnection().getInputStream(), null, options);
+			Log.d("here","gotprofilepic");
+	        ImageUtil.createProfilePic(context, id, profPict);
+	        Log.d("here", "added profile picture");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public static Bitmap getProfilePic (Context context, int id, String  profilePicFile) {
 		
