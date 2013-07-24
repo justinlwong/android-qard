@@ -86,7 +86,7 @@ public class QRCodeManager {
                 for (int x = 0; x < width; x++)
                 {
                      pixels[offset + x] = bitMatrix.get(x, y) ? QRCODE_COLOR_FOREGROUND
-                     : QRCODE_COLOR_BACKGROUND;
+                     : 0xFFFFFFFF;
                     //pixels[offset + x] = bitMatrix.get(x, y) ? colorBack : colorFront;
                 }
             }
