@@ -96,7 +96,7 @@ public class QRCodeManager {
             scale = 200/width;
             if (scale < 1)
             	scale = 1;
-            Bitmap scaled = Bitmap.createScaledBitmap(bitmap, width*scale, height*scale, true);
+            Bitmap scaled = Bitmap.createScaledBitmap(bitmap, width*scale, height*scale, false);
             return scaled;
 		} catch (WriterException e) {
 			// TODO Auto-generated catch block
