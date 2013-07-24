@@ -1,5 +1,6 @@
 package com.qardapp.qard.widget;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -19,6 +20,21 @@ import com.qardapp.qard.qrcode.QRCodeManager;
 
 public class QardWidgetProvider extends AppWidgetProvider {
 
+	/*
+	private final Activity parent;
+
+    // constructor
+    public QardWidgetProvider(Activity parent) {
+        this.parent = parent;
+    }
+	*/
+	/*TODO
+	public Activity activity;
+	public QardWidgetProvider(Activity _activity){
+		this.activity = _activity;
+	}
+	*/
+    
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
@@ -35,6 +51,19 @@ public class QardWidgetProvider extends AppWidgetProvider {
 		//remoteViews.setImageViewResource(R.id.widget_qr, R.drawable.qrcode_image);
 		//ImageView qrcode = (ImageView) findViewById(R.id.qrcode_image);
 		//remoteViews.setImageViewResource(R.id.widget_qr, R.id.profile_qr_code);
+		//ImageView imageView = (ImageView) findViewById(R.id.widget_qr);
+		//QRCodeManager.genMyQRCode(context, imageView);
+		//QardWidgetProvider myQardWidgetProvider = new QardWidgetProvider(this.parent);
+		//View qr_code_image = parent.findViewById(R.id.widget_qr);
+		//RemoteViews qr_code_image = new RemoteViews(context.getPackageName(),R.id.widget_qr);
+		
+		/*TODO
+		View qr_code_image = (View) this.activity.findViewById(R.id.widget_qr); 
+		if (qr_code_image != null) {
+			QRCodeManager.genMyQRCode (context, (ImageView)qr_code_image); 
+		}
+		*/	
+		
 		//remoteViews.setImageViewResource(R.id.widget_qr, getImageToSet());
 		String msg = QardMessage.getMessage(context);
 		remoteViews.setImageViewBitmap(R.id.widget_qr, QRCodeManager.genQRCodeBitmap(msg, 3));
