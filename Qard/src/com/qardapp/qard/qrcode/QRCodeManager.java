@@ -69,6 +69,43 @@ public class QRCodeManager {
 		return genQRCode (text, imageView, 0);
 	}
 	
+	public static Bitmap genQRCodeBitmap (String text, int scale) {
+		Hashtable<EncodeHintType, Object> hintMap = new Hashtable<EncodeHintType, Object>();
+        hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
+        hintMap.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        try {
+			BitMatrix bitMatrix = qrCodeWriter.encode(text,
+			        BarcodeFormat.QR_CODE, 0, 0, hintMap);
+			int width = bitMatrix.getWidth();
+            int height = bitMatrix.getHeight();
+            int[] pixels = new int[width * height];
+            for (int y = 0; y < height; y++)
+            {
+                int offset = y * width;
+                for (int x = 0; x < width; x++)
+                {
+                     pixels[offset + x] = bitMatrix.get(x, y) ? QRCODE_COLOR_FOREGROUND
+                     : QRCODE_COLOR_BACKGROUND;
+                    //pixels[offset + x] = bitMatrix.get(x, y) ? colorBack : colorFront;
+                }
+            }
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+            // Set the size to around 200 and let it scale natively
+            scale = 200/width;
+            if (scale < 1)
+            	scale = 1;
+            Bitmap scaled = Bitmap.createScaledBitmap(bitmap, width*scale, height*scale, true);
+            return scaled;
+		} catch (WriterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        return null;
+	}
+	
 	public static ImageView genQRCode (String text, ImageView imageView, int scale) {
 		Hashtable<EncodeHintType, Object> hintMap = new Hashtable<EncodeHintType, Object>();
         hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);

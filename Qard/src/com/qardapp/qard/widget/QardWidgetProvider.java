@@ -14,6 +14,7 @@ import android.widget.RemoteViews;
 
 import com.qardapp.qard.MainActivity;
 import com.qardapp.qard.R;
+import com.qardapp.qard.comm.QardMessage;
 import com.qardapp.qard.qrcode.QRCodeManager;
 
 public class QardWidgetProvider extends AppWidgetProvider {
@@ -35,7 +36,8 @@ public class QardWidgetProvider extends AppWidgetProvider {
 		//ImageView qrcode = (ImageView) findViewById(R.id.qrcode_image);
 		//remoteViews.setImageViewResource(R.id.widget_qr, R.id.profile_qr_code);
 		//remoteViews.setImageViewResource(R.id.widget_qr, getImageToSet());
-		
+		String msg = QardMessage.getMessage(context);
+		remoteViews.setImageViewBitmap(R.id.widget_qr, QRCodeManager.genQRCodeBitmap(msg, 3));
 		//change images
 		remoteViews.setOnClickPendingIntent(R.id.widget_button, buildButtonPendingIntent(context));
 		pushWidgetUpdate(context, remoteViews);
