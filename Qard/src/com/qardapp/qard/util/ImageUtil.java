@@ -78,12 +78,28 @@ public class ImageUtil {
 				DEFAULT_PROFILE_PIC = BitmapFactory.decodeResource(context.getResources(), R.drawable.profile_default);
 			bitmap = DEFAULT_PROFILE_PIC;
 		}
+		
+		float density = context.getResources().getDisplayMetrics().density;
+		
 		BitmapFactory.Options options = new BitmapFactory.Options();
 	    options.inScaled = false;
 	    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 	    options.inDither = false;
 	    
-	    int size = bitmap.getHeight() < bitmap.getWidth() ? bitmap.getHeight(): bitmap.getWidth();
+	    int min_dim, x_offset =0, y_offset=0;
+	    if ( bitmap.getHeight() < bitmap.getWidth()) {
+	    	min_dim = bitmap.getHeight();
+	    	x_offset =  (bitmap.getWidth() - min_dim) /2;
+	    } else {
+	    	min_dim = bitmap.getWidth();
+	    	y_offset =  (bitmap.getHeight() - min_dim) /2;
+	    }
+	    int size = (int) (80 * density + 0.5);
+	    float scale = size /(float)min_dim;
+	    Matrix matrix = new Matrix();
+	    matrix.postScale(scale, scale);
+	    Bitmap croppedBitmap = Bitmap.createBitmap(bitmap, x_offset, y_offset,min_dim, min_dim, matrix, true);
+
 	    
 		Bitmap output = Bitmap.createBitmap(size,
 				size, Config.ARGB_8888);
@@ -107,7 +123,6 @@ public class ImageUtil {
 		crop =  Bitmap.createScaledBitmap(crop, size, size, true);
 
 	    Paint paint = new Paint();
-	    final Rect rect = new Rect((bitmap.getWidth() - size) /2, (bitmap.getHeight() - size) /2, size, size);
 	    final Rect finalRect = new Rect(0, 0, size, size);
 
 	    paint.setAntiAlias(true);
@@ -116,14 +131,14 @@ public class ImageUtil {
 	    canvas.drawARGB(0, 0, 0, 0);
 	    paint.setColor(0xff000000);
 	    canvas.drawCircle(size / 2, size / 2,
-	            bitmap.getWidth() / 2 - 2, paint);
+	            size / 2 - 2, paint);
 	    paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
-	    canvas.drawBitmap(bitmap, rect, rect, paint);
+	    canvas.drawBitmap(croppedBitmap, finalRect, finalRect, paint);
 	    paint = new Paint();
 	    paint.setAntiAlias(true);
 	    paint.setFilterBitmap(true);
 	    paint.setDither(true);
-	    canvas.drawBitmap(crop, rect, finalRect, paint);
+	    canvas.drawBitmap(crop, finalRect, finalRect, paint);
 
 	    
 	    boolean mExternalStorageAvailable = false;

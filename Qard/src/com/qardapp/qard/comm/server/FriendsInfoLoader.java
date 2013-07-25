@@ -66,23 +66,13 @@ public class FriendsInfoLoader extends AsyncTaskLoader<ArrayList<ServerNotificat
 					final String user_id = obj.getString("friend_id");
 					final String data = obj.getString("service_data");
 					
-					// If service is facebook, grab picture
-					if (Integer.parseInt(service_id) == Services.FACEBOOK.id)
-					{
-		        		Thread thread = new Thread(new Runnable(){
-		        		    @Override
-		        		    public void run() {
-		        		        ImageUtil.getFBProfilePic(context, data, Integer.parseInt(user_id));
-		        		    }
-		        		});
-		        		thread.start();
-					}
+
 					
 					ContentResolver resolver = context.getContentResolver();
 					String where = FriendsDatabaseHelper.COLUMN_USER_ID + "=?";
 					String[] args = new String[] {user_id};
 					Cursor cur = resolver.query(FriendsProvider.CONTENT_URI, null, where, args, null);
-					int friend_id = 0;
+					final int friend_id;
 					String first_name = obj.getString("first_name");
 					String last_name = obj.getString("last_name");
 					if (cur.getCount() == 0 ) {
@@ -101,6 +91,17 @@ public class FriendsInfoLoader extends AsyncTaskLoader<ArrayList<ServerNotificat
 						values.put(FriendsDatabaseHelper.COLUMN_FIRST_NAME, first_name);
 						values.put(FriendsDatabaseHelper.COLUMN_LAST_NAME, last_name);
 						resolver.update(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/" + friend_id), values, null, null);
+					}
+					// If service is facebook, grab picture
+					if (Integer.parseInt(service_id) == Services.FACEBOOK.id)
+					{
+		        		Thread thread = new Thread(new Runnable(){
+		        		    @Override
+		        		    public void run() {
+		        		        ImageUtil.getFBProfilePic(context, data, friend_id);
+		        		    }
+		        		});
+		        		thread.start();
 					}
 					cur.close();
 					if (service_id != null && !(service_id.equals("null"))) {
