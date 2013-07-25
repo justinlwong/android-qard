@@ -7,11 +7,13 @@
 
     <ImageView
         android:id="@+id/friend_profile_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:scaleType="center"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_marginLeft="10dp"
         android:src="@drawable/profile_default" />
 

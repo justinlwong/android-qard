@@ -94,7 +94,7 @@ public class ImageUtil {
 	    	min_dim = bitmap.getWidth();
 	    	y_offset =  (bitmap.getHeight() - min_dim) /2;
 	    }
-	    int size = (int) (80 * density + 0.5);
+	    int size = (int) (70 * density + 0.5);
 	    float scale = size /(float)min_dim;
 	    Matrix matrix = new Matrix();
 	    matrix.postScale(scale, scale);
