@@ -105,7 +105,7 @@ public class ImageUtil {
 				size, Config.ARGB_8888);
 	    Canvas canvas = new Canvas(output);
 	    
-		Bitmap crop = BitmapFactory.decodeResource(context.getResources(), R.drawable.circle_crop, options);
+		//Bitmap crop = BitmapFactory.decodeResource(context.getResources(), R.drawable.circle_crop, options);
 /*
 	    Bitmap scaledCrop = Bitmap.createBitmap(bitmap.getWidth(),
 	            bitmap.getHeight(), Config.ARGB_8888);
@@ -120,7 +120,7 @@ public class ImageUtil {
 	    Canvas canvas1 = new Canvas(scaledCrop);
 	    canvas1.setMatrix(scaleMatrix);
 	    canvas1.drawBitmap(crop, middleX- crop.getWidth() /2, middleY- crop.getHeight() /2, new Paint(Paint.FILTER_BITMAP_FLAG));*/
-		crop =  Bitmap.createScaledBitmap(crop, size, size, true);
+		//crop =  Bitmap.createScaledBitmap(crop, size, size, true);
 
 	    Paint paint = new Paint();
 	    final Rect finalRect = new Rect(0, 0, size, size);
@@ -134,13 +134,23 @@ public class ImageUtil {
 	            size / 2 - 2, paint);
 	    paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
 	    canvas.drawBitmap(croppedBitmap, finalRect, finalRect, paint);
+	    /*
 	    paint = new Paint();
 	    paint.setAntiAlias(true);
 	    paint.setFilterBitmap(true);
 	    paint.setDither(true);
 	    canvas.drawBitmap(crop, finalRect, finalRect, paint);
-
-	    
+	     */
+	    /*
+	    paint = new Paint();
+	    paint.setAntiAlias(true);
+	    paint.setFilterBitmap(true);
+	    paint.setDither(true);
+	    paint.setColor(0xffffffff);
+	    paint.setStyle(Paint.Style.STROKE);
+	    paint.setStrokeWidth(2f);
+	    canvas.drawCircle(size / 2, size / 2,size / 2 - 1, paint);
+	    */
 	    boolean mExternalStorageAvailable = false;
 	    boolean mExternalStorageWriteable = false;
 	    String state = Environment.getExternalStorageState();
