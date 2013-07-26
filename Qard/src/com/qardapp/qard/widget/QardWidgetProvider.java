@@ -66,7 +66,7 @@ public class QardWidgetProvider extends AppWidgetProvider {
 		
 		//remoteViews.setImageViewResource(R.id.widget_qr, getImageToSet());
 		String msg = QardMessage.getMessage(context);
-		remoteViews.setImageViewBitmap(R.id.widget_qr, QRCodeManager.genQRCodeBitmap(msg, 3));
+		remoteViews.setImageViewBitmap(R.id.widget_qr, QRCodeManager.genQRCodeBitmap(msg, 10));
 		//change images
 		remoteViews.setOnClickPendingIntent(R.id.widget_button, buildButtonPendingIntent(context));
 		pushWidgetUpdate(context, remoteViews);
