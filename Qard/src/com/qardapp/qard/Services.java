@@ -9,6 +9,7 @@ import com.qardapp.qard.friends.profile.services.PhoneServiceManager;
 import com.qardapp.qard.friends.profile.services.PinterestServiceManager;
 import com.qardapp.qard.friends.profile.services.ServiceManager;
 import com.qardapp.qard.friends.profile.services.SkypeServiceManager;
+import com.qardapp.qard.friends.profile.services.WebpageServiceManager;
 import com.qardapp.qard.friends.profile.services.WhatsAppServiceManager;
 
 public enum Services {
@@ -112,6 +113,9 @@ public enum Services {
 		} else if (id == Services.PINTEREST.id)
 		{
 			return new PinterestServiceManager(a, bf);
+		} else if (id == Services.WEBPAGE.id)
+		{
+			return new WebpageServiceManager(a, bf);
 		}
 		return null;
 	}

@@ -3,16 +3,16 @@
     android:id="@+id/edit_name"
     android:layout_width="wrap_content" android:layout_height="wrap_content"
     android:layout_gravity="center" android:orientation="vertical"  >
-
-    <TextView
-        android:id="@+id/instructions" android:text="Enter phone number" 
-        android:layout_width="wrap_content" android:layout_height="wrap_content" />
       
-    <EditText
-        android:id="@+id/screenName1"
-        android:layout_width="match_parent"  android:layout_height="wrap_content" 
-        android:inputType="text"
-        android:imeOptions="actionDone" />
+	<EditText
+       android:id="@+id/screenName2"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:minLines="8"
+       android:gravity="left|top"
+       android:inputType="textMultiLine" 
+       android:imeOptions="actionDone">
+   </EditText>
         
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
@@ -37,4 +37,3 @@
     </RelativeLayout>
  
 </LinearLayout>
-

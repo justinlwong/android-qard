@@ -185,6 +185,8 @@ public class FriendsProfileAdapter extends BaseAdapter{
 					holder.manager = Services.SKYPE.getManager((Activity) context, bf);	      			
 		        } else if (serviceId == Services.PINTEREST.id) {
 					holder.manager = Services.PINTEREST.getManager((Activity) context, bf);	      			
+		        } else if (serviceId == Services.WEBPAGE.id) {
+					holder.manager = Services.WEBPAGE.getManager((Activity) context, bf);	      			
 		        }
 		        holder.manager.addData(data);
 			}
