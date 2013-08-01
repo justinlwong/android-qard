@@ -1,6 +1,8 @@
 package com.qardapp.qard.settings;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,8 @@ import com.qardapp.qard.R;
 import com.qardapp.qard.comm.server.QardLoginActivity;
 import com.qardapp.qard.comm.server.ServerHelper;
 import com.qardapp.qard.comm.server.UpdateUserTask;
+import com.qardapp.qard.database.FriendsDatabaseHelper;
+import com.qardapp.qard.database.FriendsProvider;
 
 public class SettingsAccountFragment extends BaseFragment {
 	
@@ -62,5 +66,17 @@ public class SettingsAccountFragment extends BaseFragment {
 		} else {
 			current_id_field.setText("(DEBUG) Current qard id not found, restart?");
 		}
+		
+		ContentResolver res = getActivity().getContentResolver();
+		Cursor cursor = res.query(FriendsProvider.MY_URI, null, null, null, null);
+		
+		cursor.moveToFirst();
+		
+		EditText firstNameText = (EditText) getView().findViewById(R.id.settings_first_name);
+		EditText lastNameText = (EditText) getView().findViewById(R.id.settings_first_name);
+		String first_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FIRST_NAME));
+		String last_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_LAST_NAME));
+		firstNameText.setText(first_name);
+		lastNameText.setText(last_name);
 	}
 }

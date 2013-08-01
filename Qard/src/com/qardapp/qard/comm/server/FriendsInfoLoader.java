@@ -69,7 +69,6 @@ public class FriendsInfoLoader extends AsyncTaskLoader<ArrayList<ServerNotificat
 					String service_id = obj.getString("service_id");
 					final String user_id = obj.getString("friend_id");
 					final String data = obj.getString("service_data");
-					
 
 					
 					ContentResolver resolver = context.getContentResolver();
@@ -94,6 +93,8 @@ public class FriendsInfoLoader extends AsyncTaskLoader<ArrayList<ServerNotificat
 						ContentValues values = new ContentValues();
 						values.put(FriendsDatabaseHelper.COLUMN_FIRST_NAME, first_name);
 						values.put(FriendsDatabaseHelper.COLUMN_LAST_NAME, last_name);
+						if (obj.has("old_friend_id"))
+							values.put(FriendsDatabaseHelper.COLUMN_USER_ID, obj.getInt("old_friend_id"));
 						resolver.update(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/" + friend_id), values, null, null);
 					}
 					// If service is facebook, grab picture

@@ -47,7 +47,9 @@ public class ImageUtil {
 			e.printStackTrace();
 		}
 	}
-	
+	public static Bitmap getProfilePic (Context context, int id) {
+		return getProfilePic(context, id, null);
+	}
 	public static Bitmap getProfilePic (Context context, int id, String  profilePicFile) {
 		
 	    String state = Environment.getExternalStorageState();

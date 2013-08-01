@@ -23,6 +23,7 @@ import com.qardapp.qard.comm.QardMessage;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 import com.qardapp.qard.qrcode.QRCodeManager;
+import com.qardapp.qard.util.ImageUtil;
 
 public class ProfileFragment extends BaseFragment{
 
@@ -86,6 +87,8 @@ public class ProfileFragment extends BaseFragment{
 			number = "";
 		SharedPreferences pref = getActivity().getSharedPreferences(getString(R.string.app_package_name), Context.MODE_PRIVATE);
 		String user_id = pref.getString("user_id", "noid");
+		ImageView profilePic = (ImageView) getView().findViewById(R.id.profile_image);
+		profilePic.setImageBitmap(ImageUtil.getProfilePic(getActivity(), 0));
 		// Don't regenerate everytime
 		//if (!(lastUserId.equals(user_id))) {
 			ImageView image = (ImageView) getView().findViewById(R.id.profile_qr_code);

@@ -35,6 +35,7 @@ import com.qardapp.qard.friends.FriendsFragment;
 import com.qardapp.qard.profile.ProfileFragment;
 import com.qardapp.qard.qrcode.QRCodeManager;
 import com.qardapp.qard.settings.SettingsFragment;
+import com.qardapp.qard.util.ImageUtil;
 import com.qardapp.qard.widget.QardWidgetProvider;
 
 public class MainActivity extends SherlockFragmentActivity implements LoaderCallbacks<ArrayList<ServerNotifications>> {
@@ -92,7 +93,9 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 				onBackPressed();
 			}
 		});
-		((ImageView) v.findViewById(R.id.menu_me)).setOnClickListener(new OnClickListener() {
+		ImageView menuMe = (ImageView) v.findViewById(R.id.menu_me);
+		menuMe.setImageBitmap(ImageUtil.getProfilePic(this, 0));
+		menuMe.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
