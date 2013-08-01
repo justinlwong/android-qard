@@ -13,6 +13,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.util.Log;
 
 public class QardMessage {
 	public static int ID = 1;
@@ -23,7 +24,7 @@ public class QardMessage {
 	
 	public static String getMessage (Context context) {
 		ContentResolver res = context.getContentResolver();
-		String where = FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID +"=?";
+		String where = FriendsDatabaseHelper.COLUMN_SERVICE_ID +"=?";
 		String args[] = {Services.PHONE.id + ""};
 		Cursor cursor = res.query(FriendsProvider.MY_URI, null, where, args, null);
 		cursor.moveToFirst();
@@ -32,11 +33,15 @@ public class QardMessage {
 		String first_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FIRST_NAME));
 		String last_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_LAST_NAME));
     	String phone = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));
+    	if (phone == null)
+    		phone = "";
 		return encodeMessage (user_id, first_name, last_name, phone);
 	}
 	
 	
 	public static String encodeMessage (String id, String first, String last, String phone) {
+		if (phone == null)
+			phone = "";
 		return "Q/" + id +"/" + first + "/" + last + "/"+ phone;
 	}
 	
