@@ -109,7 +109,7 @@ public class FacebookLoginActivity extends Activity {
 				        		thread.start(); 
 
                                 
-                                AddServiceTask task = new AddServiceTask(FacebookLoginActivity.this, Services.FACEBOOK.id, userId);
+                                AddServiceTask task = new AddServiceTask(FacebookLoginActivity.this, Services.FACEBOOK.id, userId, session.getAccessToken());
                                 task.execute();
 	    						ContentResolver res = getContentResolver();
 	    						ContentValues values = new ContentValues();

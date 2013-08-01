@@ -97,7 +97,7 @@ public class ServerHelper extends Fragment{
 		try {
 			holder.put("first_name", "First");
 			holder.put("last_name", "Last");
-			holder.put("client_id", "Android01Lo9");
+			holder.put("client_id", CLIENT_ID);
 			httpPost.setHeader("Accept", "application/json");
 			httpPost.setHeader("Content-type", "application/json");
 			httpPost.setEntity(new StringEntity(holder.toString()));

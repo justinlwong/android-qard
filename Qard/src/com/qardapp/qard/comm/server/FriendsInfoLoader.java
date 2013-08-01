@@ -57,6 +57,10 @@ public class FriendsInfoLoader extends AsyncTaskLoader<ArrayList<ServerNotificat
 			}
 			JSONTokener tokener = new JSONTokener(json);
 			JSONObject finalResult = new JSONObject(tokener);
+			if (finalResult.has("error")) {
+				Log.d("server", finalResult.getString("error"));
+				return null;
+			}
 			int count = finalResult.getInt("num_rows");
 			if (count > 0) {
 				JSONArray info = finalResult.getJSONArray("info");
