@@ -156,7 +156,9 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 				QRCodeManager.scanQRCode(MainActivity.this);
 			}
 			if (widgetAction.equals("QR")){
-				MainActivity.this.switchFragments(FRAG_PROFILE);
+				//MainActivity.this.switchFragments(FRAG_PROFILE);
+				Intent intent = new Intent(this.getApplicationContext(), QRCodeDisplayActivity.class);
+				startActivity(intent);
 			}
 			
 			
