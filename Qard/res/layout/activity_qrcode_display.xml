@@ -23,7 +23,8 @@
         android:layout_width="fill_parent"
         android:layout_height="300dp"
         android:layout_below="@id/nfc_help_msg"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:src="@drawable/phone" />
     <Button
         android:id="@+id/profile_send"
         android:layout_width="match_parent"

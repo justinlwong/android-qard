@@ -158,6 +158,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			if (widgetAction.equals("QR")){
 				//MainActivity.this.switchFragments(FRAG_PROFILE);
 				Intent intent = new Intent(this.getApplicationContext(), QRCodeDisplayActivity.class);
+				intent.putExtra("msg", QardMessage.getMessage(this.getApplicationContext()));
 				startActivity(intent);
 			}
 			
