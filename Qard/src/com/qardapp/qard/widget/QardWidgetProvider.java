@@ -19,21 +19,6 @@ import com.qardapp.qard.comm.QardMessage;
 import com.qardapp.qard.qrcode.QRCodeManager;
 
 public class QardWidgetProvider extends AppWidgetProvider {
-
-	/*
-	private final Activity parent;
-
-    // constructor
-    public QardWidgetProvider(Activity parent) {
-        this.parent = parent;
-    }
-	*/
-	/*TODO
-	public Activity activity;
-	public QardWidgetProvider(Activity _activity){
-		this.activity = _activity;
-	}
-	*/
     
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
@@ -57,25 +42,20 @@ public class QardWidgetProvider extends AppWidgetProvider {
 		//View qr_code_image = parent.findViewById(R.id.widget_qr);
 		//RemoteViews qr_code_image = new RemoteViews(context.getPackageName(),R.id.widget_qr);
 		
-		/*TODO
-		View qr_code_image = (View) this.activity.findViewById(R.id.widget_qr); 
-		if (qr_code_image != null) {
-			QRCodeManager.genMyQRCode (context, (ImageView)qr_code_image); 
-		}
-		*/	
-		
 		//remoteViews.setImageViewResource(R.id.widget_qr, getImageToSet());
 		String msg = QardMessage.getMessage(context);
 		remoteViews.setImageViewBitmap(R.id.widget_qr, QRCodeManager.genQRCodeBitmap(msg, 10));
 		//change images
-		remoteViews.setOnClickPendingIntent(R.id.widget_button, buildButtonPendingIntent(context));
+		//GAVIN
+		//remoteViews.setOnClickPendingIntent(R.id.widget_button, buildButtonPendingIntent(context));
 		pushWidgetUpdate(context, remoteViews);
 		
 		//Camera
 	    Intent configIntent = new Intent(context, MainActivity.class);
 	    configIntent.putExtra("widgetAction", "Scan");
 	    PendingIntent configPendingIntent = PendingIntent.getActivity(context, 0, configIntent, 1);
-	    remoteViews.setOnClickPendingIntent(R.id.widget_camera, configPendingIntent);
+	    //GAVIN
+	    //remoteViews.setOnClickPendingIntent(R.id.widget_camera, configPendingIntent);
 	    
 	    configIntent.putExtra("widgetAction", "QR");
 	    configPendingIntent = PendingIntent.getActivity(context, 1, configIntent, 1);
@@ -93,11 +73,4 @@ public class QardWidgetProvider extends AppWidgetProvider {
 	    AppWidgetManager manager = AppWidgetManager.getInstance(context);
 	    manager.updateAppWidget(myWidget, remoteViews);		
 	}
-	/*
-	private int getImageToSet(Context context) {
-		ImageView qrcode = (ImageView) findViewById(R.id.qrcode_image);
-		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-		return QRCodeManager.genQRCode (msg, qrcode);
-		
-	}*/
 }

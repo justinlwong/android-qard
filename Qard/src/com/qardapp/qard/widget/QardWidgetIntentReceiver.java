@@ -29,10 +29,12 @@ public class QardWidgetIntentReceiver extends BroadcastReceiver {
 
 	private void updateWidgetPictureAndButtonListener(Context context, String widgetAction) {
 		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-		remoteViews.setImageViewResource(R.id.widget_image, getImageToSet());
+		//GAVIN
+		//remoteViews.setImageViewResource(R.id.widget_image, getImageToSet());
 
 		//REMEMBER TO ALWAYS REFRESH YOUR BUTTON CLICK LISTENERS!!!
-		remoteViews.setOnClickPendingIntent(R.id.widget_button, QardWidgetProvider.buildButtonPendingIntent(context));
+		//GAVIN
+		//remoteViews.setOnClickPendingIntent(R.id.widget_button, QardWidgetProvider.buildButtonPendingIntent(context));
 
 		QardWidgetProvider.pushWidgetUpdate(context.getApplicationContext(), remoteViews);
 	}
