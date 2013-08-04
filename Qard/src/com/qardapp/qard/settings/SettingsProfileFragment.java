@@ -35,8 +35,6 @@ public class SettingsProfileFragment extends BaseFragment {
 	private Drawable darkBackground;
 	ImageView iView;
 	Button b;
-	Cursor cursor;
-	ContentResolver res;
 	View rootView;
 	LinearLayout profilelayout;
 	View fullView;
@@ -50,13 +48,9 @@ public class SettingsProfileFragment extends BaseFragment {
 				container, false);
 		ListView listView = (ListView) rootView.findViewById(R.id.settings_service_list);
 		
-		res = getActivity().getContentResolver();
-		cursor = res.query(FriendsProvider.MY_URI, null, null, null, null);
-		cursor.moveToFirst();
-		
 		// Get layout
 		profilelayout = (LinearLayout)rootView.findViewById(R.id.profilelayout);
-		addFullView();
+
 				
 		adapter = new SettingsProfileAdapter(getActivity(), null, this );
 		listView.setAdapter(adapter);
@@ -64,7 +58,9 @@ public class SettingsProfileFragment extends BaseFragment {
 		return rootView;
 	}
 	
-	public void addFullView() {
+	public void addFullView(Cursor cursor) {
+		cursor.moveToFirst();
+		profilelayout.removeAllViews();
 		fullView = LayoutInflater.from(getActivity()).inflate(R.layout.settings_service_item, null);
 		iView = (ImageView) fullView.findViewById(R.id.settings_service_item_image);
 		b = (Button) fullView.findViewById(R.id.settings_service_item_button);
@@ -107,6 +103,8 @@ public class SettingsProfileFragment extends BaseFragment {
 	public void updateViews() {	
 		ContentResolver res = getActivity().getContentResolver();
 		Cursor cursor = res.query(FriendsProvider.MY_URI, null, null, null, null);
+		
+		addFullView(cursor);
 		adapter.changeCursor(cursor);
 	}
 	

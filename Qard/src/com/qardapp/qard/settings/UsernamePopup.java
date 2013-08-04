@@ -93,14 +93,11 @@ public class UsernamePopup extends DialogFragment{
         
 		UpdateUserTask task = new UpdateUserTask(getActivity(),
 				firstName,
-				lastName,
-				"testname",
-				"12341234");
+				lastName);
 		task.execute();
-		
 		getActivity().runOnUiThread(new Runnable() {
 		    public void run() {
-
+		    	
 	            Toast.makeText(getActivity(), "Added username!", Toast.LENGTH_LONG).show();
 
 		    }
