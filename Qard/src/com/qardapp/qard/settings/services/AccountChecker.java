@@ -13,6 +13,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.widget.Toast;
 
+import com.qardapp.qard.MainActivity;
 import com.qardapp.qard.Services;
 
 public class AccountChecker {
@@ -59,6 +60,10 @@ public class AccountChecker {
 	        		// Update database
 	        		UpdateDatabase.updateDatabase(acname, Services.EMAIL.id,a);
 	        		rval = true;
+	                // Refresh settings page when the service call is not an activity (eg. PopupDialog)
+	                if (a instanceof MainActivity) {
+	                	((MainActivity)a).refreshFragments();
+	                }
 	
 			    }
 	        } else if (serviceID == Services.WHATSAPP.id || serviceID == ALL)
@@ -79,6 +84,10 @@ public class AccountChecker {
 	        		// Update database
 	        		UpdateDatabase.updateDatabase(acname, Services.WHATSAPP.id,a);
 	        		rval = true;
+	                // Refresh settings page when the service call is not an activity (eg. PopupDialog)
+	                if (a instanceof MainActivity) {
+	                	((MainActivity)a).refreshFragments();
+	                }
 			    }
 	        } else if (serviceID == Services.TWITTER.id || serviceID == ALL)
 	        {
@@ -111,6 +120,10 @@ public class AccountChecker {
     		                }  
 	        		    }}, null);
 	        	    rval = true;
+	                // Refresh settings page when the service call is not an activity (eg. PopupDialog)
+	                if (a instanceof MainActivity) {
+	                	((MainActivity)a).refreshFragments();
+	                }
 			    }
 			 
 	        }
