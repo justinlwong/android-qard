@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_name"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:layout_gravity="center" android:orientation="vertical"  >
+
+    <TextView
+        android:id="@+id/textinstructions" android:text="Enter first and last name" 
+        android:layout_width="wrap_content" android:layout_height="wrap_content" />
+      
+    <EditText
+        android:id="@+id/firstname"
+        android:layout_width="match_parent"  android:layout_height="wrap_content" 
+        android:inputType="text"
+        android:imeOptions="actionDone" />
+        
+    <EditText
+        android:id="@+id/lastname"
+        android:layout_width="match_parent"  android:layout_height="wrap_content" 
+        android:inputType="text"
+        android:imeOptions="actionDone" />    
+        
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_gravity="center_horizontal">
+    	
+        <Button
+            android:id="@+id/okButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:minWidth="100dp"/>
+ 
+        <Button
+            android:id="@+id/cancelButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:minWidth="100dp"
+            android:layout_toRightOf="@+id/okButton2"/>
+            
+    </RelativeLayout>
+ 
+</LinearLayout>
+
+

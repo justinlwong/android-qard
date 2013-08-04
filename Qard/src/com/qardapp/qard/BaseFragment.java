@@ -15,4 +15,6 @@ public abstract class BaseFragment extends SherlockFragment{
 	
 	public abstract void updateViews();
 
+	public void updateUser(){};
+
 }

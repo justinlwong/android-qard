@@ -79,4 +79,5 @@ public class SettingsAccountFragment extends BaseFragment {
 		firstNameText.setText(first_name);
 		lastNameText.setText(last_name);
 	}
+
 }

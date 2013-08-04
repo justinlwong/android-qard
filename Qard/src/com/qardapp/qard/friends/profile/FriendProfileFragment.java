@@ -123,4 +123,10 @@ public class FriendProfileFragment extends BaseFragment{
 		}
 		
 	}
+
+	@Override
+	public void updateUser() {
+		// TODO Auto-generated method stub
+		
+	}
 }

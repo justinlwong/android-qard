@@ -82,6 +82,12 @@ public class SettingsFragment extends BaseFragment{
 	public void updateViews() {
 
 	}
+
+	@Override
+	public void updateUser() {
+		// TODO Auto-generated method stub
+		
+	}
 		
 }
 
