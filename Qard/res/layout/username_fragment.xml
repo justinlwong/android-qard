@@ -6,24 +6,55 @@
 
     <TextView
         android:id="@+id/textinstructions" android:text="Enter first and last name" 
-        android:layout_width="wrap_content" android:layout_height="wrap_content" />
-      
+        android:layout_width="wrap_content" android:layout_height="wrap_content" 
+        android:paddingLeft="12dip"
+    	android:paddingRight="12dip"/>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:gravity="bottom"
+    	android:paddingLeft="12dip"
+    	android:paddingRight="12dip"> 
+    <TextView
+        android:id="@+id/t1"
+        android:text="First :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dip"
+        />	  
+    	  
     <EditText
         android:id="@+id/firstname"
         android:layout_width="match_parent"  android:layout_height="wrap_content" 
         android:inputType="text"
-        android:imeOptions="actionDone" />
-        
+        android:imeOptions="actionDone" 
+        android:layout_toRightOf="@id/t1"/>
+
+    </RelativeLayout>
+    
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:gravity="bottom"
+    	android:paddingLeft="12dip"
+    	android:paddingRight="12dip"> 
+    <TextView
+        android:id="@+id/t2"
+        android:text="Last :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dip"/>	           
     <EditText
         android:id="@+id/lastname"
         android:layout_width="match_parent"  android:layout_height="wrap_content" 
         android:inputType="text"
-        android:imeOptions="actionDone" />    
-        
+        android:imeOptions="actionDone" 
+        android:layout_toRightOf="@id/t2"/>    
+     </RelativeLayout>       
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
-    	android:layout_gravity="center_horizontal">
+    	android:layout_gravity="center">
     	
         <Button
             android:id="@+id/okButton2"
