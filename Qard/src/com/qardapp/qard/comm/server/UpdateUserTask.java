@@ -16,6 +16,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.qardapp.qard.MainActivity;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 
@@ -35,6 +36,10 @@ public class UpdateUserTask extends
 		this.password = password;
 	}
 
+	public UpdateUserTask(Context context, String first_name, String last_name) {
+		this(context, first_name, last_name, null, null);
+	}
+	
 	@Override
 	protected String doInBackground(String... params) {
 		if (ServerHelper.getAccessToken(context) == null) {
@@ -48,8 +53,10 @@ public class UpdateUserTask extends
 		try {
 			holder.put("first_name", first_name);
 			holder.put("last_name", last_name);
-			holder.put("username", username);
-			holder.put("password", password);
+			if (username != null) {
+				holder.put("username", username);
+				holder.put("password", password);
+			}
 			holder.put("access_token", ServerHelper.getAccessToken(context));
 			httpPost.setHeader("Accept", "application/json");
 			httpPost.setHeader("Content-type", "application/json");
@@ -72,7 +79,8 @@ public class UpdateUserTask extends
 				values.put(FriendsDatabaseHelper.COLUMN_USER_ID, id);
 				ContentResolver resolver = context.getContentResolver();
 				resolver.update(FriendsProvider.MY_URI, values, null, null);
-				ServerHelper.setUserName(context, finalResult.getString("username"));
+				if (username != null)
+					ServerHelper.setUserName(context, finalResult.getString("username"));
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -80,5 +88,8 @@ public class UpdateUserTask extends
 		}
 		return null;
 	}
-
+	@Override
+	protected void onPostExecute(String result) {
+		((MainActivity)context).refreshFragments();
+	}
 }
