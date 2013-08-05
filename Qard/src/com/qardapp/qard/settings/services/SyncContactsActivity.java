@@ -189,7 +189,6 @@ public class SyncContactsActivity extends Activity {
 	     
 		@Override  
 		protected void onPostExecute(Void v) { 
-			progDialog.dismiss();
 			a.finish();
 		}
 
