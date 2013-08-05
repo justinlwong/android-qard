@@ -37,7 +37,7 @@ public class DefaultServiceManager extends ServiceManager {
         }else if (serviceID == Services.TUMBLR.id)
         {
         	service = Services.TUMBLR;
-            url = data;
+            url = "http://"+data+".tumblr.com";
         } else if (serviceID == Services.YOUTUBE.id)
         {
         	service = Services.YOUTUBE;

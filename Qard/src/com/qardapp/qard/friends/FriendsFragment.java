@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -37,7 +38,7 @@ public class FriendsFragment extends BaseFragment implements LoaderCallbacks<Arr
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.friends_layout,
 				container, false);
-		ListView listView = (ListView) rootView
+		GridView listView = (GridView) rootView
 				.findViewById(R.id.friends_listview);
 		
 		SearchView search = (SearchView) rootView.findViewById(R.id.friends_search);

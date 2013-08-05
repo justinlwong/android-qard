@@ -6,21 +6,27 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     android:gravity="center"
+    android:layout_gravity="center"
     android:orientation="vertical" >
 
     <SearchView
         android:id="@+id/friends_search"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Search Friends" >
+        android:queryHint="Search Friends"
+        android:paddingBottom="10dp" >
     </SearchView>
 
-    <ListView
+    <GridView
         android:id="@+id/friends_listview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
         android:gravity="center"
-        android:dividerHeight="5dp" >
-    </ListView>
+        android:numColumns="3"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth" >
+    </GridView>
 
 </LinearLayout>

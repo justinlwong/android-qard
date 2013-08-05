@@ -155,7 +155,7 @@ public class OAuthActivity extends Activity {
 							    Response response = null;
 							    try {
 							        response = request.send();
-						    		Log.d("response",response.getBody());
+						    		Log.d("response",String.valueOf(response.getCode()));
 							    	if ( response.isSuccessful() )
 							    	{	
 						                JSONObject mainObject = new JSONObject(response.getBody());
@@ -243,6 +243,15 @@ public class OAuthActivity extends Activity {
 							                data = mainObject.getString(service.idFieldName);						                	
 						                }
 						                UpdateDatabase.updateDatabase(data, serviceID, activity);
+							    	} else {
+							    		// Http request failed so just finish
+						        		runOnUiThread(new Runnable() {
+						        		    public void run() {
+								                Toast.makeText(activity, "Could not add " + service.name + " information!", Toast.LENGTH_LONG).show();
+						        		    }
+						        		});
+				        		
+							  		    finish();
 							    	}
 							    }
 							    catch ( Exception e ) {
