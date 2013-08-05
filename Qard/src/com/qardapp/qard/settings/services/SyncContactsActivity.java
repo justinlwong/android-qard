@@ -48,12 +48,18 @@ public class SyncContactsActivity extends Activity {
 		
 		if (c.moveToFirst())
 		{
-			String phoneMatch = c.getString(c.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));  
-			Log.d("phone",phoneMatch);
-			// Duplicate so don't add this
-			if (phoneMatch.compareTo(phone) == 0)
+			while (c.isAfterLast() == false)
 			{
-				return;
+				String phoneMatch = c.getString(c.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));  
+				Log.d("phone",phoneMatch);
+				// Duplicate so don't add this
+				if (phoneMatch.equals(phone))
+				{
+					return;
+				} else {
+					Log.d("norepeat",phone + " " + phoneMatch);
+				}
+				c.moveToNext();
 			}
 
 		}

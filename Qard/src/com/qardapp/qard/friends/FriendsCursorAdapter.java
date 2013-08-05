@@ -43,7 +43,7 @@ public class FriendsCursorAdapter extends CursorAdapter{
 		int id = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_ID));
 		String full_name;
 		
-		if (first_name.length() > 12) {
+		if (first_name.length() > 14) {
 			// Add .. to show that the name was too long and got cut off
 			full_name = first_name.substring(0,12) + "..";
 		} else {
