@@ -50,7 +50,8 @@ public class FriendsFragment extends BaseFragment implements LoaderCallbacks<Arr
 		
 		SearchView search = (SearchView) rootView.findViewById(R.id.friends_search);
 		search.setIconifiedByDefault(false);
-		//***********************
+		/*
+		//Start GG
 		// Check if there was a last search filter query
 				if (last_query != null)
 					search.setQuery(last_query, false);
@@ -105,8 +106,8 @@ public class FriendsFragment extends BaseFragment implements LoaderCallbacks<Arr
 					}
 				});
 		
-		
-		//////////////////////
+		*/
+		//End GG
 		/*
 		Cursor cursor = null;
 		ContentResolver res = getActivity().getContentResolver();
