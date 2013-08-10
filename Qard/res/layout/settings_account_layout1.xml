@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#00ACED">
+	<ImageView
+        android:id="@+id/app_icon"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/nexcircle_about" />
+	
+	<TextView
+        android:id="@+id/app_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_below="@id/app_icon"
+        android:textStyle="bold"
+        android:textSize="50sp"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:text="nexcircle"
+        android:paddingBottom="30dp" />
+	
+	<EditText
+	    android:id="@+id/login_email"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/app_name"
+	    android:background="#FFFFFF"
+	    android:padding="10dp"
+	    android:hint="Email"
+	    android:layout_marginBottom="5dp"
+	    android:inputType="textEmailAddress"/>
+	<EditText
+	    android:id="@+id/login_password"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/login_email"
+	    android:background="#FFFFFF"
+	    android:padding="10dp"
+	    android:hint="Password"
+	    android:layout_marginBottom="20dp"
+	    android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_password"
+        android:textStyle="bold"
+        android:background="#0075B4"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="5dp"
+        android:text="Log In" />
+    <Button
+        android:id="@+id/signup_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_btn"
+        android:textStyle="bold"
+        android:background="#0075B4"
+        android:layout_marginBottom="5dp"
+        android:textColor="#FFFFFF"
+        android:text="Sign Up for NexCircle" />
+    <Button
+        android:id="@+id/skip_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_below="@id/signup_btn"
+        android:background="#0075B4"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="10dp"
+        android:text="Start without Login" />
+    <TextView
+        android:id="@+id/forgot_pw"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_below="@id/skip_btn"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:textColor="#FFFFFF"
+        android:text="Forgot your password?" />
+
+
+</RelativeLayout>
