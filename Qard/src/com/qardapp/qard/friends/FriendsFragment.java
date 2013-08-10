@@ -23,6 +23,7 @@ import android.widget.FilterQueryProvider;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 
 import com.qardapp.qard.BaseFragment;
 import com.qardapp.qard.MainActivity;
@@ -40,6 +41,10 @@ public class FriendsFragment extends BaseFragment implements LoaderCallbacks<Arr
 	private boolean searchOpen = false;
 	private FriendsCursorAdapter adapter;
 	
+	public static String selector = null;
+	public static String last_query = null;
+	public static String selector_args[] = null;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -51,6 +56,64 @@ public class FriendsFragment extends BaseFragment implements LoaderCallbacks<Arr
 		EditText search = (EditText) rootView.findViewById(R.id.friends_search);
 		//search.setIconifiedByDefault(false);
 		
+		/*
+		//Start GG
+		// Check if there was a last search filter query
+				if (last_query != null)
+					search.setQuery(last_query, false);
+
+				// If the user types into the search bar, update the list
+				search.setOnQueryTextListener(new OnQueryTextListener() {
+
+					public boolean onQueryTextSubmit(String query) {
+
+						// Filter if there is something in the search bar
+						if (!(query.equals(""))) {
+							String args[] = { "%" + query + "%", "%" + query + "%" };
+							selector_args = args.clone();
+							selector = FriendsDatabaseHelper.COLUMN_FIRST_NAME
+									+ " LIKE ? OR "
+									+ FriendsDatabaseHelper.COLUMN_LAST_NAME
+									+ " LIKE ?";
+							Log.e("hi", "got here");
+							//showFriends(view, selector, selector_args);
+							last_query = query;
+						} else {
+							selector = null;
+							selector_args = null;
+							last_query = null;
+							Log.e("hi", "not got here");
+							//showFriends(view, null, null);
+						}
+						return false;
+					}
+
+					@Override
+					public boolean onQueryTextChange(String newText) {
+						// Filter if there is something in the search bar
+						if (newText.length() >= 3) {
+							String args[] = { "%" + newText + "%", "%" + newText + "%" };
+							selector_args = args.clone();
+							selector = FriendsDatabaseHelper.COLUMN_FIRST_NAME
+									+ " LIKE ? OR "
+									+ FriendsDatabaseHelper.COLUMN_LAST_NAME
+									+ " LIKE ?";
+							Log.e("hi", "got here change");
+							//showFriends(view, selector, selector_args);
+							last_query = newText;
+						} else if (selector != null) {
+							selector = null;
+							selector_args = null;
+							//showFriends(view, null, null);
+							last_query = null;
+						}
+
+						return false;
+					}
+				});
+		
+		*/
+		//End GG
 		/*
 		Cursor cursor = null;
 		ContentResolver res = getActivity().getContentResolver();

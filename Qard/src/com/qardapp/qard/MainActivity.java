@@ -52,6 +52,8 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	public static String FRAGNAME_FRIENDS_PROFILE = "FRAGNAME_FRIENDS_PROFILE";
 	public static String FRAGNAME_SETTINGS_PROFILE = "FRAGNAME_SETTINGS_PROFILE";
 	public static String FRAGNAME_SETTINGS_ACCOUNT = "FRAGNAME_SETTINGS_ACCOUNT";
+	public static String FRAGNAME_SETTINGS_ABOUT = "FRAGNAME_SETTINGS_ABOUT";
+
 	
 	public static int REFRESH_LOADER_ID = 0;
 	public static int NEW_USER_LOADER_ID = 1;

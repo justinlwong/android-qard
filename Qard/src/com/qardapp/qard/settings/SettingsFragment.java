@@ -75,6 +75,24 @@ public class SettingsFragment extends BaseFragment{
                 startActivity(intent);		
 			}
 		});
+		
+		Button about = (Button) rootView.findViewById(R.id.settings_about_btn);
+		about.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				FragmentManager manager = SettingsFragment.this.getFragmentManager();
+				SettingsAboutFragment fragment = (SettingsAboutFragment) manager.findFragmentByTag(MainActivity.FRAGNAME_SETTINGS_ABOUT);
+				if (fragment == null)
+					fragment = new SettingsAboutFragment();
+				FragmentTransaction transaction = SettingsFragment.this.getFragmentManager().beginTransaction();
+				transaction.replace(R.id.main_container, fragment, MainActivity.FRAGNAME_SETTINGS_ABOUT);
+				transaction.addToBackStack(null);
+				// Commit the transaction
+				transaction.commit();
+			}
+		});
+		
 		return rootView;
 	}
 

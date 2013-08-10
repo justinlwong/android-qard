@@ -25,9 +25,9 @@ public class SettingsAccountFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		View rootView = inflater.inflate(R.layout.settings_account_layout,
+		View rootView = inflater.inflate(R.layout.settings_account_layout1,
 				container, false);
-		
+		/*
 		Button login = (Button) rootView.findViewById(R.id.settings_login_btn);
 		login.setOnClickListener(new View.OnClickListener() {
 			
@@ -52,13 +52,14 @@ public class SettingsAccountFragment extends BaseFragment {
 			}
 		});
 		
-
+*/
 		
 		return rootView;
 	}
 
 	@Override
 	public void updateViews() {
+		/*
 		TextView current_id_field = (TextView) getView().findViewById(R.id.settings_current_id);
 		String user_id = ServerHelper.getUserId(getActivity());
 		if (user_id != null) {
@@ -77,7 +78,6 @@ public class SettingsAccountFragment extends BaseFragment {
 		String first_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FIRST_NAME));
 		String last_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_LAST_NAME));
 		firstNameText.setText(first_name);
-		lastNameText.setText(last_name);
+		lastNameText.setText(last_name);*/
 	}
-
 }
