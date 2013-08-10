@@ -9,13 +9,13 @@
     android:layout_gravity="center"
     android:orientation="vertical" >
 
-    <SearchView
+    <EditText
         android:id="@+id/friends_search"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Search Friends"
+        android:hint="Search Friends"
         android:paddingBottom="10dp" >
-    </SearchView>
+    </EditText>
 
     <GridView
         android:id="@+id/friends_listview"

@@ -12,16 +12,21 @@ import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AlphabetIndexer;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.qardapp.qard.R;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.util.ImageUtil;
 
-public class FriendsCursorAdapter extends CursorAdapter{
+public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
+	
+    AlphabetIndexer mAlphabetIndexer;
 
 	 static class ViewHolder {
 	    	TextView name;
@@ -109,6 +114,5 @@ public class FriendsCursorAdapter extends CursorAdapter{
 //    	}
         return view;
 	}
-
 	
 }
