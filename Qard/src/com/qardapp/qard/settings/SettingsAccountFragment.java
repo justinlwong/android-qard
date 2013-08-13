@@ -25,7 +25,7 @@ public class SettingsAccountFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		View rootView = inflater.inflate(R.layout.settings_account_layout1,
+		View rootView = inflater.inflate(R.layout.settings_account_layout2,
 				container, false);
 		/*
 		Button login = (Button) rootView.findViewById(R.id.settings_login_btn);

@@ -7,53 +7,55 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#00ACED">
+    <!--  
 	<ImageView
         android:id="@+id/app_icon"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/nexcircle_about" />
-	<!--  
-	<TextView
-        android:id="@+id/app_name"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_below="@id/app_icon"
-        android:textSize="70sp"
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-        android:text="nexcircle" />
 	-->
 	<ImageView
         android:id="@+id/app_name_icon"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/app_icon"
         android:paddingBottom="10dp"
         android:src="@drawable/app_name_icon" />
-	
-	<TextView
-        android:id="@+id/app_about"
+	<ImageView
+        android:id="@+id/intro_pic"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#0075B4"
-        android:textAlignment="center"
         android:layout_below="@id/app_name_icon"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:text="Version 1.0.0\n\n2013 NexCircle Inc.\nAll Rights Reserved." 
-        android:paddingBottom="60dp"/>
-    <Button
-        android:id="@+id/nexcircle_url_btn"
-        android:layout_width="match_parent"
+        android:paddingBottom="60dp"
+        android:src="@drawable/intro_page_pic" />
+	
+	<!-- 
+	<ImageView
+        android:id="@+id/login_fb"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/app_about"
+        android:layout_below="@id/app_name_icon"
+        android:paddingBottom="20dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/login_fb" />
+	-->
+	<Button
+        android:id="@+id/login_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/intro_pic"
         android:background="#0075B4"
-        android:textStyle="bold"
+        android:text="Login with Facebook"
+        android:layout_marginBottom="10dp"
         android:textColor="#FFFFFF"
-        android:layout_marginBottom="1dp"
-        android:text="NexCircle on the Web" />
-
+        android:textStyle="bold" />
+    <Button
+        android:id="@+id/skip_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_btn"
+        android:background="#0075B4"
+        android:text="Start without Login"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
 
 </RelativeLayout>
