@@ -18,6 +18,7 @@ import com.qardapp.qard.comm.server.ServerHelper;
 import com.qardapp.qard.comm.server.UpdateUserTask;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
+import com.qardapp.qard.settings.services.FacebookLoginActivity;
 
 public class SettingsAccountFragment extends BaseFragment {
 	
@@ -27,6 +28,18 @@ public class SettingsAccountFragment extends BaseFragment {
 		
 		View rootView = inflater.inflate(R.layout.settings_account_layout2,
 				container, false);
+
+		Button login = (Button) rootView.findViewById(R.id.login_btn);
+		login.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(),FacebookLoginActivity.class);
+				intent.putExtra("launchType", 1);
+				getActivity().startActivityForResult(intent,0);
+			}
+		});
+		
 		/*
 		Button login = (Button) rootView.findViewById(R.id.settings_login_btn);
 		login.setOnClickListener(new View.OnClickListener() {

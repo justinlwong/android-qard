@@ -47,6 +47,7 @@ public class FacebookServiceManager extends ServiceManager {
 	@Override
 	public void startLoginIntent() {
 		Intent intent = new Intent(activity,FacebookLoginActivity.class);
+		intent.putExtra("launchType", 0);
 		activity.startActivityForResult(intent,0);
 	}
 	

@@ -40,11 +40,14 @@ public class FacebookLoginActivity extends Activity {
     private Session.StatusCallback statusCallback = new SessionStatusCallback();
     private Activity activity = this;
 	private ProgressDialog progDialog;
+	int type;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		setContentView(R.layout.oauth_layout);
+		
+		type = getIntent().getIntExtra("launchType", 0);
 		
         Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         
@@ -124,7 +127,11 @@ public class FacebookLoginActivity extends Activity {
 	    						res.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/0/service/"+Services.FACEBOOK.id), values);
 				        		runOnUiThread(new Runnable() {
 				        		    public void run() {
-						                Toast.makeText(activity, "Added " + Services.FACEBOOK.name + " information!", Toast.LENGTH_LONG).show();
+				        		    	if (type == 0) {
+						                    Toast.makeText(activity, "Added " + Services.FACEBOOK.name + " information!", Toast.LENGTH_LONG).show();
+				        		    	} else {
+						                    Toast.makeText(activity, "Added credentials!", Toast.LENGTH_LONG).show();				        		    		
+				        		    	}
 				        		    }
 				        		});
 				        		if (progDialog != null)
