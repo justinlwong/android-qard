@@ -11,7 +11,7 @@ import com.qardapp.qard.Services;
 public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "qard.db";
-	private static final int DATABASE_VERSION = 10;
+	private static final int DATABASE_VERSION = 11;
 	
 	// Database table
 	public static final String TABLE_FRIENDS = "friends";
@@ -24,6 +24,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_CONFIRMED = "confirmed";
 	public static final String COLUMN_HIDE_CONFIRMED = "hide_confirmed";
 	public static final String COLUMN_DATE_ADDED = "date_added";
+	public static final String COLUMN_FRIEND_SERVER_QUEUED = "friend_server_queued";
 
 	// Service Table
 	public static final String TABLE_SERVICES = "services";
@@ -32,13 +33,12 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_SERVICE_PRIORITY = "service_priority";
 	public static final String COLUMN_SERVICE_PIC_LOC = "service_pic_loc";
 
-
 	// Friend_Service Join Table
 	public static final String TABLE_FRIEND_SERVICES = "friend_services";
 	public static final String COLUMN_FS_FRIEND_ID = "fs_friend_id";
 	public static final String COLUMN_FS_SERVICE_ID = "fs_service_id";
 	public static final String COLUMN_FS_DATA = "fs_data";
-
+	public static final String COLUMN_FS_SERVER_QUEUED = "fs_server_queued";
 
 	private static final String FRIENDS_TABLE_CREATE = "create table " 
 			+ TABLE_FRIENDS
@@ -51,7 +51,8 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 			+ COLUMN_PROFILE_PIC_LOC + " text , " 
 			+ COLUMN_CONFIRMED + " boolean default false, " 
 			+ COLUMN_HIDE_CONFIRMED + " boolean default false, " 
-			+ COLUMN_DATE_ADDED + " long  " 
+			+ COLUMN_DATE_ADDED + " long, "
+			+ COLUMN_FRIEND_SERVER_QUEUED + " boolean default false "
 			+ ");";
 	
 	private static final String SERVICES_TABLE_CREATE = "create table " 
@@ -68,7 +69,8 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 			+ "(" 
 			+ COLUMN_FS_FRIEND_ID + " integer not null, " 
 			+ COLUMN_FS_SERVICE_ID + " integer not null, " 
-			+ COLUMN_FS_DATA + " text default ''" 
+			+ COLUMN_FS_DATA + " text default '', "
+			+ COLUMN_FS_SERVER_QUEUED + " boolean default false "
 			+ ");";
 		  
 	public FriendsDatabaseHelper(Context context) {
