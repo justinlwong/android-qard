@@ -25,7 +25,8 @@ public class FriendsProvider extends ContentProvider {
 	private static final int FRIEND_SERVICE = 30;
 	private static final int SERVICES = 40;
 	private static final int SERVICE_DATA = 50;
-
+	private static final int QUEUE = 60;
+	
 	private static final String AUTHORITY = "com.qardapp.qard.database";
 
 	private static final String BASE_PATH = "qard";
@@ -48,7 +49,7 @@ public class FriendsProvider extends ContentProvider {
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#/service/#", FRIEND_SERVICE);
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/services", SERVICES);
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/service_data", SERVICE_DATA);
-
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/queue", QUEUE);
 	}
 
 	@Override
@@ -80,6 +81,9 @@ public class FriendsProvider extends ContentProvider {
 			rowsDeleted = sqlDB.delete(FriendsDatabaseHelper.TABLE_FRIEND_SERVICES, selection,
 					selectionArgs);
 			break;
+		case QUEUE:
+			rowsDeleted = sqlDB.delete(FriendsDatabaseHelper.TABLE_QUEUED_MSG, selection,
+					selectionArgs);
 		default:
 			throw new IllegalArgumentException("Unknown URI: " + uri);
 		}
@@ -110,6 +114,10 @@ public class FriendsProvider extends ContentProvider {
 			id = sqlDB.insert(FriendsDatabaseHelper.TABLE_FRIEND_SERVICES, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
 			return Uri.parse(BASE_PATH + "/" + values.getAsString(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID));
+		case QUEUE:
+			id = sqlDB.insert(FriendsDatabaseHelper.TABLE_FRIEND_SERVICES, null, values);
+			getContext().getContentResolver().notifyChange(uri, null);
+			return Uri.parse(BASE_PATH + "/queue/"+id);
 		default:
 			throw new IllegalArgumentException("Unknown URI: " + uri);
 		}
@@ -179,6 +187,11 @@ public class FriendsProvider extends ContentProvider {
 			queryBuilder.setTables(FriendsDatabaseHelper.TABLE_SERVICES);
 			if (sortOrder == null)
 				sortOrder = FriendsDatabaseHelper.COLUMN_SERVICE_PRIORITY + " ASC";	      
+			break;
+		case QUEUE:
+			queryBuilder.setTables(FriendsDatabaseHelper.TABLE_QUEUED_MSG);
+			if (sortOrder == null)
+				sortOrder = FriendsDatabaseHelper.COLUMN_QM_TIME + " ASC";	      
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI: " + uri);

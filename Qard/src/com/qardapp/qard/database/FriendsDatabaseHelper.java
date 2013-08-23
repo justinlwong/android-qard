@@ -24,7 +24,6 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_CONFIRMED = "confirmed";
 	public static final String COLUMN_HIDE_CONFIRMED = "hide_confirmed";
 	public static final String COLUMN_DATE_ADDED = "date_added";
-	public static final String COLUMN_FRIEND_SERVER_QUEUED = "friend_server_queued";
 
 	// Service Table
 	public static final String TABLE_SERVICES = "services";
@@ -38,8 +37,20 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_FS_FRIEND_ID = "fs_friend_id";
 	public static final String COLUMN_FS_SERVICE_ID = "fs_service_id";
 	public static final String COLUMN_FS_DATA = "fs_data";
-	public static final String COLUMN_FS_SERVER_QUEUED = "fs_server_queued";
 
+	// QUEUED_MSG table
+	public static final String TABLE_QUEUED_MSG = "queued_msg";
+	public static final String COLUMN_QM_ID = "qm_id";
+	public static final String COLUMN_QM_TYPE = "qm_type";
+	public static final String COLUMN_QM_DATA = "qm_msg";
+	public static final String COLUMN_QM_TIME = "qm_time";
+	
+	public static final int QUEUED_NONE = 0;
+	public static final int QUEUED_ADD_FRIEND = 1;
+	public static final int QUEUED_DELETE_FRIEND = 2;
+	public static final int QUEUED_CONFIRM_FRIEND = 3;
+	public static final int QUEUED_UPDATE_SERVICES = 4;
+	
 	private static final String FRIENDS_TABLE_CREATE = "create table " 
 			+ TABLE_FRIENDS
 			+ "(" 
@@ -51,8 +62,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 			+ COLUMN_PROFILE_PIC_LOC + " text , " 
 			+ COLUMN_CONFIRMED + " boolean default false, " 
 			+ COLUMN_HIDE_CONFIRMED + " boolean default false, " 
-			+ COLUMN_DATE_ADDED + " long, "
-			+ COLUMN_FRIEND_SERVER_QUEUED + " boolean default false "
+			+ COLUMN_DATE_ADDED + " long "
 			+ ");";
 	
 	private static final String SERVICES_TABLE_CREATE = "create table " 
@@ -69,10 +79,17 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 			+ "(" 
 			+ COLUMN_FS_FRIEND_ID + " integer not null, " 
 			+ COLUMN_FS_SERVICE_ID + " integer not null, " 
-			+ COLUMN_FS_DATA + " text default '', "
-			+ COLUMN_FS_SERVER_QUEUED + " boolean default false "
+			+ COLUMN_FS_DATA + " text default '' "
 			+ ");";
-		  
+	
+	private static final String QUEUED_MSG_TABLE_CREATE = "create table " 
+			+ TABLE_QUEUED_MSG
+			+ "(" 
+			+ COLUMN_QM_ID + " integer primary key autoincrement, " 
+			+ COLUMN_QM_TYPE + " integer not null, " 
+			+ COLUMN_QM_DATA + " text default '', "
+			+ COLUMN_QM_TIME + " long "
+			+ ");";  
 	public FriendsDatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		//context.deleteDatabase(DATABASE_NAME);
@@ -83,7 +100,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(FRIENDS_TABLE_CREATE);
 		db.execSQL(SERVICES_TABLE_CREATE);
 		db.execSQL(FRIEND_SERVICES_TABLE_CREATE);
-		
+		db.execSQL(QUEUED_MSG_TABLE_CREATE);
 		//Services
 		
 		for (Services service :Services.values()) {
