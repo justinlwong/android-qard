@@ -27,7 +27,7 @@ public class NewUserTask extends
 	@Override
 	protected void onPostExecute(String result) {
 		if (context instanceof MainActivity) {
-			((MainActivity) context).getSupportLoaderManager().restartLoader(MainActivity.REFRESH_LOADER_ID, null, ((MainActivity) context));
+			((MainActivity) context).refreshFragments();
 		}	
 	}
 }
