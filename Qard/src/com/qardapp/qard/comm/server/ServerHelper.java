@@ -16,14 +16,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.qardapp.qard.R;
 
 public class ServerHelper extends Fragment{
 
-	public static String SERVER_URL = "https://qard-server.herokuapp.com";
-	//public static String SERVER_URL = "http://10.0.1.14:5000";
+	//public static String SERVER_URL = "https://qard-server.herokuapp.com";
+	public static String SERVER_URL = "http://10.0.1.18:5000";
 	private static String NEW_USER_URL = ServerHelper.SERVER_URL + "/new_user";
 	public  static String CLIENT_ID = "Android01Lo9";
 	public static String CLIENT_SEC = "GooAndroid1";
@@ -48,6 +49,7 @@ public class ServerHelper extends Fragment{
 	}
 	
 	public static boolean setNewUser (Context context, String user_id, String token) {
+		Log.d("New User Id", user_id);
 		SharedPreferences.Editor editor = context.getSharedPreferences(
 				context.getString(R.string.app_package_name),
 				Context.MODE_PRIVATE).edit();
@@ -95,9 +97,10 @@ public class ServerHelper extends Fragment{
 
 		JSONObject holder = new JSONObject();
 		try {
-			holder.put("first_name", "First");
-			holder.put("last_name", "Last");
+			holder.put("first_name", "Me");
+			holder.put("last_name", "Me");
 			holder.put("client_id", CLIENT_ID);
+			holder.put("client_secret", CLIENT_SEC);
 			httpPost.setHeader("Accept", "application/json");
 			httpPost.setHeader("Content-type", "application/json");
 			httpPost.setEntity(new StringEntity(holder.toString()));

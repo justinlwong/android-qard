@@ -84,6 +84,7 @@ public class FriendsProvider extends ContentProvider {
 		case QUEUE:
 			rowsDeleted = sqlDB.delete(FriendsDatabaseHelper.TABLE_QUEUED_MSG, selection,
 					selectionArgs);
+			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI: " + uri);
 		}
@@ -115,7 +116,7 @@ public class FriendsProvider extends ContentProvider {
 			getContext().getContentResolver().notifyChange(uri, null);
 			return Uri.parse(BASE_PATH + "/" + values.getAsString(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID));
 		case QUEUE:
-			id = sqlDB.insert(FriendsDatabaseHelper.TABLE_FRIEND_SERVICES, null, values);
+			id = sqlDB.insert(FriendsDatabaseHelper.TABLE_QUEUED_MSG, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
 			return Uri.parse(BASE_PATH + "/queue/"+id);
 		default:

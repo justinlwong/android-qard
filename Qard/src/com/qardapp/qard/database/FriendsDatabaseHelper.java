@@ -11,7 +11,7 @@ import com.qardapp.qard.Services;
 public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "qard.db";
-	private static final int DATABASE_VERSION = 11;
+	private static final int DATABASE_VERSION = 12;
 	
 	// Database table
 	public static final String TABLE_FRIENDS = "friends";
@@ -50,6 +50,7 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 	public static final int QUEUED_DELETE_FRIEND = 2;
 	public static final int QUEUED_CONFIRM_FRIEND = 3;
 	public static final int QUEUED_UPDATE_SERVICES = 4;
+	public static final int QUEUED_UPDATE_PROFILE = 5;
 	
 	private static final String FRIENDS_TABLE_CREATE = "create table " 
 			+ TABLE_FRIENDS

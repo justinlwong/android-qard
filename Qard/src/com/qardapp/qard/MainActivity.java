@@ -29,7 +29,9 @@ import com.actionbarsherlock.view.MenuItem;
 import com.qardapp.qard.comm.QardMessage;
 import com.qardapp.qard.comm.server.AddFriendTask;
 import com.qardapp.qard.comm.server.FriendsInfoLoader;
+import com.qardapp.qard.comm.server.GetFriendsWithServicesTask;
 import com.qardapp.qard.comm.server.NewUserTask;
+import com.qardapp.qard.comm.server.ServerHelper;
 import com.qardapp.qard.comm.server.ServerNotifications;
 import com.qardapp.qard.friends.FriendsFragment;
 import com.qardapp.qard.profile.ProfileFragment;
@@ -130,9 +132,10 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			
 			@Override
 			public void onClick(View v) {
-				getSupportLoaderManager().restartLoader(REFRESH_LOADER_ID, null, MainActivity.this);
 				v.startAnimation( 
 					    AnimationUtils.loadAnimation(MainActivity.this, R.anim.rotate_forever) );
+				GetFriendsWithServicesTask task = new GetFriendsWithServicesTask(MainActivity.this);
+	    		task.execute();
 			}
 		});
 		
@@ -279,8 +282,8 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	@Override
 	public Loader<ArrayList<ServerNotifications>> onCreateLoader(int id,
 			Bundle arg1) {
-		if (id == REFRESH_LOADER_ID)
-			return new FriendsInfoLoader(this);
+		//if (id == REFRESH_LOADER_ID)
+		//	return new FriendsInfoLoader(this);
 		//if (id == NEW_USER_LOADER_ID)
 			//return new NewUserLoader(this);
 		return null;
@@ -289,6 +292,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	@Override
 	public void onLoadFinished(Loader<ArrayList<ServerNotifications>> loader,
 			ArrayList<ServerNotifications> result) {
+		/*
 		if (loader.getId() == NEW_USER_LOADER_ID) {
 			SharedPreferences pref = this.getSharedPreferences(getString(R.string.app_package_name), Context.MODE_PRIVATE);
 			String user_id = pref.getString("user_id", null);
@@ -309,6 +313,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			refreshFragments();
 			findViewById(R.id.menu_refresh).clearAnimation();
 		}
+		*/
 	}
 
 	@Override
