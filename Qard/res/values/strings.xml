@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Qard</string>
+    <string name="app_name">Nexcircle</string>
     <string name="app_package_name">com.qardapp.qard</string>
     <string name="action_settings">Settings</string>
     <string name="title_profile">Profile</string>

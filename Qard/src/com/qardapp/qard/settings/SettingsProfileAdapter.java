@@ -5,27 +5,34 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import com.qardapp.qard.BaseFragment;
+import com.qardapp.qard.MainActivity;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
+import com.qardapp.qard.settings.services.UpdateDatabase;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 
 public class SettingsProfileAdapter extends BaseAdapter{
 
-	private Activity activty;
+	private Activity activity;
 	private BaseFragment bf;
 	private String dataList[] = new String[Services.values().length+1];
 	private String userList[] = new String[Services.values().length+1];
@@ -37,7 +44,7 @@ public class SettingsProfileAdapter extends BaseAdapter{
 	
 	public SettingsProfileAdapter(Activity activity, Cursor cursor, BaseFragment bf) {
 		super();
-		this.activty = activity;
+		this.activity = activity;
 		this.bf = bf;
 		serviceList = new ArrayList<Services>();
 		drawableList = new ArrayList<Drawable>();
@@ -80,8 +87,8 @@ public class SettingsProfileAdapter extends BaseAdapter{
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		ViewHolder holder;
+	public View getView(final int position, View convertView, ViewGroup parent) {
+		final ViewHolder holder;
 		if (convertView == null) {
     		convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.settings_service_item, null);
     		holder = new ViewHolder();
@@ -109,9 +116,44 @@ public class SettingsProfileAdapter extends BaseAdapter{
 			
 			@Override
 			public void onClick(View v) {
-				((Services)v.getTag()).getManager(activty, bf).startLoginIntent();
+				((Services)v.getTag()).getManager(activity, bf).startLoginIntent();
 			}
 		});
+		
+		holder.button.setOnLongClickListener(new View.OnLongClickListener() {
+			
+			@Override
+			public boolean onLongClick(View v) {
+				PopupMenu mypopupmenu = new PopupMenu(activity, v);
+				MenuInflater inflater = mypopupmenu.getMenuInflater();
+				inflater.inflate(R.layout.stock_item_menu, mypopupmenu.getMenu());
+				mypopupmenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+					
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						switch (item.getItemId())
+						{
+						case R.id.edit_item:
+							((Services)holder.button.getTag()).getManager(activity, bf).startLoginIntent();	
+							return true;
+						case R.id.remove_item:
+							Log.d("here", "removing");
+							UpdateDatabase.updateDatabase(null, serviceList.get(position).id, activity);
+			                // Refresh settings page when the service call is not an activity (eg. PopupDialog)
+			                if (activity instanceof MainActivity) {
+			                	((MainActivity)activity).refreshFragments();
+			                }
+			
+						default:
+						}
+						return false;
+					}
+				});
+				mypopupmenu.show();
+				return false;
+			}
+		});
+		
 		return convertView;
 	}
 	
