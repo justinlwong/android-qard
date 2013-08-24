@@ -140,7 +140,7 @@ public class FriendsFragment extends BaseFragment {
 				FriendProfileFragment fragment = (FriendProfileFragment) manager.findFragmentByTag(MainActivity.FRAGNAME_FRIENDS_PROFILE);
 				if (fragment == null)
 					fragment = new FriendProfileFragment();
-				fragment.setId(id);
+				fragment.setId((int)id);
 				FragmentTransaction transaction = FriendsFragment.this.getFragmentManager().beginTransaction();
 				transaction.replace(R.id.main_container, fragment, MainActivity.FRAGNAME_FRIENDS_PROFILE);
 				transaction.addToBackStack(null);

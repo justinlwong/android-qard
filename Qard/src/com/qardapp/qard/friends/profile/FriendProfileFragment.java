@@ -22,6 +22,7 @@ import com.qardapp.qard.BaseFragment;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.comm.server.AddFriendTask;
+import com.qardapp.qard.comm.server.GetFriendInfoTask;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 import com.qardapp.qard.util.ImageUtil;
@@ -29,8 +30,8 @@ import com.qardapp.qard.util.ImageUtil;
 
 public class FriendProfileFragment extends BaseFragment{
 	
-	private long friend_id;
-	private long friend_qard_id;
+	private int friend_id;
+	private int friend_qard_id;
 	private FriendsProfileAdapter adapter;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -42,10 +43,15 @@ public class FriendProfileFragment extends BaseFragment{
 				null, this);
 		gridView.setAdapter(adapter);
 		
+		if (friend_id > 0 ){
+			new GetFriendInfoTask(this.getActivity(), friend_id).execute();
+
+		}
+		
 		return rootView;
 	}
 	
-	public void setId (long id) {
+	public void setId (int id) {
 		friend_id = id;
 	}
 	
@@ -61,7 +67,7 @@ public class FriendProfileFragment extends BaseFragment{
 				cursor.moveToFirst();
 				TextView view = (TextView) getView().findViewById(R.id.friend_profile_name);
 				friend_qard_id = cursor
-						.getLong(cursor
+						.getInt(cursor
 								.getColumnIndex(FriendsDatabaseHelper.COLUMN_USER_ID));
 				String first_name = cursor
 						.getString(cursor

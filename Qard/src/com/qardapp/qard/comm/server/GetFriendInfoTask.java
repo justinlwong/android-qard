@@ -10,26 +10,32 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
-import com.qardapp.qard.MainActivity;
-import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 import com.qardapp.qard.util.ImageUtil;
 
-public class GetFriendsWithServicesTask extends ServerTask{
+public class GetFriendInfoTask extends ServerTask{
 
 	private Context context;
-	private static String FRIENDS_INFO_URL = "/user/friends/info";
+	private static String FRIENDS_INFO_URL = "/user/friend";
+	private int local_id;
+	private int user_id;
 	
-	public GetFriendsWithServicesTask(Context context) {
+	public GetFriendInfoTask(Context context, int local_id) {
 		super(context, FRIENDS_INFO_URL);
 		this.context = context;
+		this.local_id = local_id;
 	}
 	
 	@Override
 	protected String doInBackground(String... params) {
 		try {
+			ContentResolver resolver = context.getContentResolver();
+			Cursor cur = resolver.query(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, ""+ local_id), null, null, null, null);
+			cur.moveToFirst();
+			user_id = cur.getInt(cur.getColumnIndex(FriendsDatabaseHelper.COLUMN_USER_ID));
+			url = url + "/" + user_id;
 			makeGet(null);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -42,7 +48,7 @@ public class GetFriendsWithServicesTask extends ServerTask{
 		try {
 			int count = response.getInt("num_rows");
 			if (count > 0) {
-				JSONArray friends = response.getJSONArray("friends");
+				JSONArray friends = response.getJSONArray("friend");
 				for (int x = 0; x < friends.length(); x++) {
 					JSONObject obj = friends.getJSONObject(x);
 					final String user_id = obj.getString("friend_id");
@@ -50,7 +56,6 @@ public class GetFriendsWithServicesTask extends ServerTask{
 					String last_name = obj.getString("last_name");
 					String service_id = obj.getString("service_id");
 					final String data = obj.getString("service_data");
-					
 					
 					ContentResolver resolver = context.getContentResolver();
 					String where = FriendsDatabaseHelper.COLUMN_USER_ID + "=?";
@@ -60,15 +65,7 @@ public class GetFriendsWithServicesTask extends ServerTask{
 
 					if (cur.getCount() == 0 ) {
 
-						ContentValues values = new ContentValues();
-						values.put(FriendsDatabaseHelper.COLUMN_FIRST_NAME, first_name);
-						values.put(FriendsDatabaseHelper.COLUMN_LAST_NAME, last_name);
-						if (obj.has("new_friend_id") && !(obj.isNull("new_friend_id")))
-							values.put(FriendsDatabaseHelper.COLUMN_USER_ID, obj.getInt("new_friend_id"));
-						else
-							values.put(FriendsDatabaseHelper.COLUMN_USER_ID, user_id);	
-						Uri uri = resolver.insert(FriendsProvider.CONTENT_URI, values);
-						local_id = Integer.parseInt(uri.getLastPathSegment());
+						return;
 					} else {
 						cur.moveToFirst();
 						local_id = cur.getInt(cur.getColumnIndex(FriendsDatabaseHelper.COLUMN_ID));
@@ -80,7 +77,7 @@ public class GetFriendsWithServicesTask extends ServerTask{
 							values.put(FriendsDatabaseHelper.COLUMN_USER_ID, obj.getInt("new_friend_id"));
 						else
 							values.put(FriendsDatabaseHelper.COLUMN_USER_ID, user_id);	
-						resolver.update(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "" + local_id), values, null, null);
+						resolver.update(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, ""+ local_id), values, null, null);
 					}
 					// If service is facebook, grab picture
 					if (service_id != null && !(service_id.equals("null")) && Integer.parseInt(service_id) == Services.FACEBOOK.id)
@@ -109,14 +106,6 @@ public class GetFriendsWithServicesTask extends ServerTask{
 			Log.e("Server", response.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-	
-	@Override
-	protected void onPostExecute(String result) {
-		super.onPostExecute(result);
-		if (context instanceof MainActivity) {
-			((MainActivity) context).findViewById(R.id.menu_refresh).clearAnimation();
 		}
 	}
 
