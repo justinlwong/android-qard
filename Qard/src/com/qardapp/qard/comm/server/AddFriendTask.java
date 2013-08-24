@@ -50,6 +50,10 @@ public class AddFriendTask extends ServerTask{
 				makeQueuedPost();
 				return null;
 			}
+			// Don't add self
+			if (ServerHelper.getUserId(context) == friend_id) {
+				return null;
+			}
 			ContentResolver resolver = context.getContentResolver();
 			String where = FriendsDatabaseHelper.TABLE_FRIENDS + "."+FriendsDatabaseHelper.COLUMN_USER_ID + "=?";
 			String[] args = new String[] {friend_id};
