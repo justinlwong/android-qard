@@ -24,6 +24,7 @@ import com.qardapp.qard.R;
 public class ServerHelper extends Fragment{
 
 	public static String SERVER_URL = "https://qard-server.herokuapp.com";
+	public static String FRONT_SERVER_URL = "http://nexcircle.com";
 	//public static String SERVER_URL = "http://10.0.1.18:5000";
 	private static String NEW_USER_URL = ServerHelper.SERVER_URL + "/new_user";
 	public  static String CLIENT_ID = "Android01Lo9";

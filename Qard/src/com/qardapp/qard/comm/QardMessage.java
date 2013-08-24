@@ -1,11 +1,18 @@
 package com.qardapp.qard.comm;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
+
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
+import com.qardapp.qard.comm.server.ServerHelper;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 
@@ -13,6 +20,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
 
 public class QardMessage {
@@ -40,23 +48,23 @@ public class QardMessage {
 	
 	
 	public static String encodeMessage (String id, String first, String last, String phone) {
+		List<NameValuePair> params = new LinkedList<NameValuePair>();
+		params.add(new BasicNameValuePair("f", first));
+		params.add(new BasicNameValuePair("l", last));
 		if (phone == null)
-			phone = "";
-		return "Q/" + id +"/" + first + "/" + last + "/"+ phone;
+			params.add(new BasicNameValuePair("p", phone));
+		String url = ServerHelper.FRONT_SERVER_URL + "/user/" + id + "?" + URLEncodedUtils.format(params, "utf-8");;
+		return url;
 	}
 	
 	public static ArrayList<String> decodeMessage (String msg) {
-		Pattern pat = Pattern.compile(pattern);
-		Matcher m = pat.matcher(msg);
-		if (m.matches()) {
-			ArrayList<String> values = new ArrayList<String>();
-			values.add(0, msg);
-			values.add(ID, m.group(ID));
-			values.add(FIRST_NAME, m.group(FIRST_NAME));
-			values.add(LAST_NAME, m.group(LAST_NAME));
-			values.add(PHONE, m.group(PHONE));
-			return values;
-		}
-		return null;
+		Uri url = Uri.parse(msg);
+		ArrayList<String> values = new ArrayList<String>();
+		values.add(0, msg);
+		values.add(ID, url.getLastPathSegment());
+		values.add(FIRST_NAME, url.getQueryParameter("f"));
+		values.add(LAST_NAME, url.getQueryParameter("l"));
+		values.add(PHONE, url.getQueryParameter("p"));
+		return values;
 	}
 }
