@@ -48,7 +48,6 @@ public class FriendsDatabaseHelper extends SQLiteOpenHelper {
 	public static final int QUEUED_NONE = 0;
 	public static final int QUEUED_ADD_FRIEND = 1;
 	public static final int QUEUED_DELETE_FRIEND = 2;
-	public static final int QUEUED_CONFIRM_FRIEND = 3;
 	public static final int QUEUED_UPDATE_SERVICES = 4;
 	public static final int QUEUED_UPDATE_PROFILE = 5;
 	

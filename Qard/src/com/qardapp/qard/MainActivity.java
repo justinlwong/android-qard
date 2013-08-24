@@ -2,11 +2,12 @@ package com.qardapp.qard;
 
 import java.util.ArrayList;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,7 +20,6 @@ import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -28,17 +28,17 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.qardapp.qard.comm.QardMessage;
 import com.qardapp.qard.comm.server.AddFriendTask;
-import com.qardapp.qard.comm.server.FriendsInfoLoader;
+import com.qardapp.qard.comm.server.AddServiceTask;
 import com.qardapp.qard.comm.server.GetFriendsWithServicesTask;
 import com.qardapp.qard.comm.server.NewUserTask;
-import com.qardapp.qard.comm.server.ServerHelper;
 import com.qardapp.qard.comm.server.ServerNotifications;
+import com.qardapp.qard.database.FriendsDatabaseHelper;
+import com.qardapp.qard.database.FriendsProvider;
 import com.qardapp.qard.friends.FriendsFragment;
 import com.qardapp.qard.profile.ProfileFragment;
 import com.qardapp.qard.qrcode.QRCodeManager;
 import com.qardapp.qard.settings.SettingsFragment;
 import com.qardapp.qard.util.ImageUtil;
-import com.qardapp.qard.widget.QardWidgetProvider;
 
 public class MainActivity extends SherlockFragmentActivity implements LoaderCallbacks<ArrayList<ServerNotifications>> {
 
@@ -320,6 +320,26 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	public void onLoaderReset(Loader<ArrayList<ServerNotifications>> loader) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		ContentResolver resolver = getContentResolver();
+		Cursor cursor = resolver.query(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "queue") , null, null, null, null);
+		while (cursor.moveToNext()) {
+			int type = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_QM_TYPE));
+			int queue_id = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_QM_ID));
+			if (type == FriendsDatabaseHelper.QUEUED_ADD_FRIEND) {
+				new AddFriendTask(this, queue_id).execute();
+			}
+			else if (type == FriendsDatabaseHelper.QUEUED_DELETE_FRIEND) {
+				//new AddFriendTask(this, queue_id).execute();
+			}
+			else if (type == FriendsDatabaseHelper.QUEUED_UPDATE_SERVICES) {
+				new AddServiceTask(this, queue_id).execute();
+			}
+		}
 	}
 
 }

@@ -17,7 +17,7 @@ public class UpdateUserTask extends ServerTask {
 	private String first_name, last_name, username, password;
 
 	public UpdateUserTask(Context context, String first_name, String last_name, String username, String password) {
-		super(context, UPDATE_USER_URL, FriendsDatabaseHelper.QUEUED_UPDATE_PROFILE);
+		super(context, UPDATE_USER_URL);
 		this.context = context;
 		this.first_name = first_name;
 		this.last_name = last_name;
@@ -28,16 +28,16 @@ public class UpdateUserTask extends ServerTask {
 	public UpdateUserTask(Context context, String first_name, String last_name) {
 		this(context, first_name, last_name, null, null);
 	}
-	
-	public UpdateUserTask (Context context, int queue_id) {
-		super(context, UPDATE_USER_URL, FriendsDatabaseHelper.QUEUED_UPDATE_PROFILE, queue_id);
-		this.context = context;
-	}
+
 	
 	@Override
 	protected String doInBackground(String... params) {
 		
 		try {
+			if (queued_id != -1) {
+				makeQueuedPost();
+				return null;
+			}
 			JSONObject holder = new JSONObject();
 			holder.put("first_name", first_name);
 			holder.put("last_name", last_name);
