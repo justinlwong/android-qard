@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,12 +23,14 @@ import com.qardapp.qard.Services;
 import com.qardapp.qard.comm.QardMessage;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
+import com.qardapp.qard.friends.profile.FriendsProfileAdapter;
 import com.qardapp.qard.qrcode.QRCodeManager;
 import com.qardapp.qard.util.ImageUtil;
 
 public class ProfileFragment extends BaseFragment{
 
 	private String lastUserId = "";
+	private FriendsProfileAdapter adapter;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +60,12 @@ public class ProfileFragment extends BaseFragment{
 			}
 		});
 		
+		GridView gridView = (GridView) rootView.findViewById(R.id.profile_gridview);
+		adapter = new FriendsProfileAdapter(
+				this.getActivity(),
+				null, this);
+		gridView.setAdapter(adapter);
+		
 		return rootView;
 	}
 
@@ -82,11 +91,14 @@ public class ProfileFragment extends BaseFragment{
 				}
 			}
 		} while (cursor.moveToNext()) ;
-		cursor.close();
+		//cursor.close();
 		if (number == null)
 			number = "";
+		adapter.changeCursor(cursor);
+		/*
 		SharedPreferences pref = getActivity().getSharedPreferences(getString(R.string.app_package_name), Context.MODE_PRIVATE);
 		String user_id = pref.getString("user_id", "noid");
+		
 		ImageView profilePic = (ImageView) getView().findViewById(R.id.profile_image);
 		profilePic.setImageBitmap(ImageUtil.getProfilePic(getActivity(), 0));
 		// Don't regenerate everytime
@@ -95,7 +107,7 @@ public class ProfileFragment extends BaseFragment{
 			String msg = QardMessage.encodeMessage(user_id, first_name, last_name, number);
 			QRCodeManager.genQRCode (msg, image); 
 		//	lastUserId = user_id;
-		//}
+		//}*/
 	}
 
 }

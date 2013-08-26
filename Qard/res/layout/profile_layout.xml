@@ -27,7 +27,6 @@
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bob" 
             android:textSize="25sp"
             android:layout_gravity="left"
             android:textColor="#000000"
@@ -37,7 +36,6 @@
             android:id="@+id/profile_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="###-####" 
             android:textSize="18sp"
             android:layout_gravity="left"
             android:textColor="#000000"
@@ -81,14 +79,21 @@
         android:background="#FF222222"
         android:textColor="#FFDDDDDD"
         android:text="Scan" />
-
-    <ImageView
-        android:id="@+id/profile_qr_code"
+    
+	<GridView
+        android:id="@+id/profile_gridview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/profile_scan"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/profile_info_box" />
+        android:layout_below="@id/profile_info_box"
+        android:padding="10dp"
+
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:numColumns="4"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp" />
 
 </RelativeLayout>
