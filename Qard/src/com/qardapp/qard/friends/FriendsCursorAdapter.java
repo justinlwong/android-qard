@@ -1,23 +1,22 @@
 package com.qardapp.qard.friends;
 
-import java.io.File;
+import java.lang.ref.WeakReference;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.support.v4.util.LruCache;
 import android.support.v4.widget.CursorAdapter;
-import android.telephony.PhoneNumberUtils;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AlphabetIndexer;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
-import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.qardapp.qard.R;
@@ -28,15 +27,34 @@ public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
 	
     AlphabetIndexer mAlphabetIndexer;
 
+    private LruCache<Integer, Bitmap> imageCache;
+    //private Bitmap defaultPic;
+    private static int EAGER_BUFFER = 12;
+    private SparseBooleanArray eagerMap;
+    
 	 static class ViewHolder {
 	    	TextView name;
 	    	TextView phone;
 	    	ImageView profilePic;
+	    	ProfileImageWorkerTask profileTask;
 	    	LinearLayout statusLayout;
 	    }
 
 	public FriendsCursorAdapter(Context context, Cursor c, int flags) {
 		super(context, c, flags);
+		eagerMap = new SparseBooleanArray();
+	    final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+	    final int cacheSize = maxMemory / 4;
+	    Log.d("Cache", cacheSize +"");
+	    imageCache = new LruCache<Integer, Bitmap>(cacheSize) {
+	        @Override
+	        protected int sizeOf(Integer key, Bitmap bitmap) {
+	            // The cache size will be measured in kilobytes rather than
+	            // number of items.
+	            return bitmap.getByteCount() / 1024;
+	        }
+	    };
+	    //defaultPic = BitmapFactory.decodeResource(context.getResources(), R.drawable.profile_default);
 	}
 
 	@Override
@@ -65,9 +83,45 @@ public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
 //    		holder.phone.setText(PhoneNumberUtils.formatNumber(phone));
     	
     	// Display Profile Pic
-    	String profilePicFile = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_PROFILE_PIC_LOC));
-    	holder.profilePic.setImageBitmap(ImageUtil.getProfilePic(context, id, profilePicFile));
-
+    	Bitmap bitmap = imageCache.get(id);
+    	holder.profilePic.setImageBitmap(bitmap);
+    	if (bitmap == null) {
+    		if (holder.profileTask == null) {
+	    		holder.profileTask = new ProfileImageWorkerTask(context, holder.profilePic);
+	    		holder.profileTask.execute(id);
+    		} else {
+    	    	if (holder.profileTask.getId() != id) {
+    	    		holder.profileTask.cancel(true);
+    	    		holder.profilePic.setImageBitmap(null);
+    	        	holder.profileTask = new ProfileImageWorkerTask(context, holder.profilePic);
+    	        	holder.profileTask.execute(id);
+    	    	} 			
+    		}
+    	}
+    	int pos = cursor.getPosition();
+    	while (cursor.moveToPrevious()) {
+    		int eager_id = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_ID));
+    		if (imageCache.get(eager_id) == null && eagerMap.get(eager_id) == false){
+    			eagerMap.put(eager_id, true);
+	    		holder.profileTask = new ProfileImageWorkerTask(context, null);
+	    		holder.profileTask.execute(eager_id);
+    		}
+    		if (cursor.getPosition() == pos - EAGER_BUFFER)
+    			break;
+    	}
+    	
+    	cursor.moveToPosition(pos);
+    	while (cursor.moveToNext()) {
+    		int eager_id = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_ID));
+    		if (imageCache.get(eager_id) == null && eagerMap.get(eager_id) == false){
+    			eagerMap.put(eager_id, true);
+	    		holder.profileTask = new ProfileImageWorkerTask(context, null);
+	    		holder.profileTask.execute(eager_id);
+    		}
+    		if (cursor.getPosition() == pos + EAGER_BUFFER)
+    			break;
+    	}
+    	cursor.moveToPosition(pos);
 //    	holder.statusLayout.removeAllViews();
 //    	if (cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_CONFIRMED)) == 0 &&
 //    			cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_HIDE_CONFIRMED)) == 0) {
@@ -101,8 +155,16 @@ public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
 //    	if (phone != null)
 //    		holder.phone.setText(PhoneNumberUtils.formatNumber(phone));
     	// Display Profile Pic
-    	String profilePicFile = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_PROFILE_PIC_LOC));
-    	holder.profilePic.setImageBitmap(ImageUtil.getProfilePic(context, id, profilePicFile));
+    	//String profilePicFile = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_PROFILE_PIC_LOC));
+    	Bitmap bitmap = imageCache.get(id);
+    	holder.profilePic.setImageBitmap(bitmap);
+    	if (bitmap == null) {
+    		holder.profileTask = new ProfileImageWorkerTask(context, holder.profilePic);
+    		holder.profileTask.execute(id);
+    	}
+    	else
+    		holder.profileTask = null;
+    	
     	
 //    	if (cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_CONFIRMED)) == 0 &&
 //    			cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_HIDE_CONFIRMED)) == 0) {
@@ -113,6 +175,47 @@ public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
 //    		holder.statusLayout.addView(status);
 //    	}
         return view;
+	}
+	
+	class ProfileImageWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
+	    private final WeakReference<ImageView> imageViewReference;
+	    private int id = 0;
+	    private Context context;
+	    
+	    public ProfileImageWorkerTask(Context context, ImageView imageView) {
+	        imageViewReference = new WeakReference<ImageView>(imageView);
+	        this.context = context;
+	    }
+
+	    public int getId () {
+	    	return id;
+	    }
+	    
+	    @Override
+	    protected Bitmap doInBackground(Integer... params) {
+	    	id = params[0];
+	    	Bitmap bitmap = imageCache.get(id);
+	    	if (bitmap == null) {
+	    		bitmap = ImageUtil.getProfilePic(context, id);
+	    		imageCache.put(id, bitmap);
+	    		eagerMap.delete(id);
+	    	}
+	        return bitmap;
+	    }
+
+	    @Override
+	    protected void onPostExecute(Bitmap bitmap) {
+	    	if (isCancelled()) {
+	            bitmap = null;
+	            return;
+	    	}
+	        if (imageViewReference != null && bitmap != null) {
+	            final ImageView imageView = imageViewReference.get();
+	            if (imageView != null) {
+	                imageView.setImageBitmap(bitmap);
+	            }
+	        }
+	    }
 	}
 	
 }

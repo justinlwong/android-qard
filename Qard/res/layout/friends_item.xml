@@ -5,17 +5,21 @@
     android:gravity="center">
     <ImageView
         android:id="@+id/friends_profile_pic"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="centerInside"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
         android:clickable="false"
-        android:focusable="false" />
+        android:focusable="false"
+        android:adjustViewBounds="false"
+        android:src="@drawable/profile_default" />
         
     <TextView
         android:id="@+id/friends_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_centerHorizontal="true"
         android:layout_below="@id/friends_profile_pic"
         android:clickable="false"
         android:focusable="false" />        
