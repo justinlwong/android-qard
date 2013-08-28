@@ -83,8 +83,9 @@ public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
 //    		holder.phone.setText(PhoneNumberUtils.formatNumber(phone));
     	
     	// Display Profile Pic
+    	//Log.d("id",full_name +" "+id);
+
     	Bitmap bitmap = imageCache.get(id);
-    	holder.profilePic.setImageBitmap(bitmap);
     	if (bitmap == null) {
     		if (holder.profileTask == null) {
 	    		holder.profileTask = new ProfileImageWorkerTask(context, holder.profilePic);
@@ -97,31 +98,38 @@ public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
     	        	holder.profileTask.execute(id);
     	    	} 			
     		}
-    	}
-    	int pos = cursor.getPosition();
-    	while (cursor.moveToPrevious()) {
-    		int eager_id = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_ID));
-    		if (imageCache.get(eager_id) == null && eagerMap.get(eager_id) == false){
-    			eagerMap.put(eager_id, true);
-	    		holder.profileTask = new ProfileImageWorkerTask(context, null);
-	    		holder.profileTask.execute(eager_id);
-    		}
-    		if (cursor.getPosition() == pos - EAGER_BUFFER)
-    			break;
+    	} else {
+    		if (holder.profileTask != null)
+    			holder.profileTask.cancel(true);
+        	holder.profilePic.setImageBitmap(bitmap);
     	}
     	
-    	cursor.moveToPosition(pos);
-    	while (cursor.moveToNext()) {
-    		int eager_id = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_ID));
-    		if (imageCache.get(eager_id) == null && eagerMap.get(eager_id) == false){
-    			eagerMap.put(eager_id, true);
-	    		holder.profileTask = new ProfileImageWorkerTask(context, null);
-	    		holder.profileTask.execute(eager_id);
-    		}
-    		if (cursor.getPosition() == pos + EAGER_BUFFER)
-    			break;
+    	int pos = cursor.getPosition();
+    	if (pos % EAGER_BUFFER == 1) {
+	    	while (cursor.moveToPrevious()) {
+	    		int eager_id = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_ID));
+	    		if (imageCache.get(eager_id) == null && eagerMap.get(eager_id) == false){
+	    			eagerMap.put(eager_id, true);
+		    		holder.profileTask = new ProfileImageWorkerTask(context, null);
+		    		holder.profileTask.execute(eager_id);
+	    		}
+	    		if (cursor.getPosition() == pos - EAGER_BUFFER)
+	    			break;
+	    	}
+	    	
+	    	cursor.moveToPosition(pos);
+	    	while (cursor.moveToNext()) {
+	    		int eager_id = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_ID));
+	    		if (imageCache.get(eager_id) == null && eagerMap.get(eager_id) == false){
+	    			eagerMap.put(eager_id, true);
+		    		holder.profileTask = new ProfileImageWorkerTask(context, null);
+		    		holder.profileTask.execute(eager_id);
+	    		}
+	    		if (cursor.getPosition() == pos + EAGER_BUFFER)
+	    			break;
+	    	}
+	    	cursor.moveToPosition(pos);
     	}
-    	cursor.moveToPosition(pos);
 //    	holder.statusLayout.removeAllViews();
 //    	if (cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_CONFIRMED)) == 0 &&
 //    			cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_HIDE_CONFIRMED)) == 0) {
@@ -211,7 +219,7 @@ public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
 	    	}
 	        if (imageViewReference != null && bitmap != null) {
 	            final ImageView imageView = imageViewReference.get();
-	            if (imageView != null) {
+	            if (imageView != null && !isCancelled()) {
 	                imageView.setImageBitmap(bitmap);
 	            }
 	        }

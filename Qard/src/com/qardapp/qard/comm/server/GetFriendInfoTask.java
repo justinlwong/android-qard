@@ -35,6 +35,7 @@ public class GetFriendInfoTask extends ServerTask{
 			Cursor cur = resolver.query(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, ""+ local_id), null, null, null, null);
 			cur.moveToFirst();
 			user_id = cur.getInt(cur.getColumnIndex(FriendsDatabaseHelper.COLUMN_USER_ID));
+			cur.close();
 			url = url + "/" + user_id;
 			makeGet(null);
 		} catch (Exception e) {

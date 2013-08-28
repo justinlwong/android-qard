@@ -76,6 +76,7 @@ public class GetFriendsTask extends ServerTask{
 							values.put(FriendsDatabaseHelper.COLUMN_USER_ID, user_id);	
 						resolver.update(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, ""+ local_id), values, null, null);
 					}
+					cur.close();
 				}
 			}
 			Log.e("Server", response.toString());
