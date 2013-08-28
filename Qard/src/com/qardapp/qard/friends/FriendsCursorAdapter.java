@@ -165,13 +165,11 @@ public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
     	// Display Profile Pic
     	//String profilePicFile = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_PROFILE_PIC_LOC));
     	Bitmap bitmap = imageCache.get(id);
+    	if (bitmap == null)
+    		bitmap = ImageUtil.getProfilePic(context, id);
     	holder.profilePic.setImageBitmap(bitmap);
-    	if (bitmap == null) {
-    		holder.profileTask = new ProfileImageWorkerTask(context, holder.profilePic);
-    		holder.profileTask.execute(id);
-    	}
-    	else
-    		holder.profileTask = null;
+    	imageCache.put(id, bitmap);
+    	holder.profileTask = null;
     	
     	
 //    	if (cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_CONFIRMED)) == 0 &&
