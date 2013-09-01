@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" 
-    android:background="#DDDDDD">
+    android:background="#FFFFFF">
 
     <ImageView
         android:id="@+id/profile_image"
@@ -11,6 +11,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:paddingLeft="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/profile_default" />
 
     <LinearLayout
@@ -21,6 +23,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/profile_image"
         android:gravity="center"
+        android:layout_marginTop="10dp"
         android:orientation="vertical" >
 
         <TextView
@@ -42,9 +45,11 @@
             android:paddingLeft="25dp"/>
     </LinearLayout>
 	<View android:id="@+id/friend_profile_divider"
-        android:layout_width="match_parent"
-        android:layout_height="5dp" 
-        android:background = "#FFFFFF"
+        android:layout_width="320dp"
+        android:layout_height="2dp" 
+        android:background = "#DDDDDD"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
 	    android:layout_below="@id/profile_info_box">
         
     </View> 
@@ -84,10 +89,12 @@
         android:id="@+id/profile_gridview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/friend_profile_divider"
         android:layout_above="@id/profile_scan"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/profile_info_box"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:padding="10dp"
 
         android:gravity="center"

@@ -49,7 +49,7 @@
     </LinearLayout>
     <View android:id="@+id/friend_profile_divider"
         android:layout_width="match_parent"
-        android:layout_height="5dp" 
+        android:layout_height="2dp" 
         android:background = "#FFFFFF"
 	    android:layout_below="@id/friend_profile_info_box">
         
