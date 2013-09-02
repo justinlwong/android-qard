@@ -30,7 +30,7 @@ public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
     private LruCache<Integer, Bitmap> imageCache;
     //private Bitmap defaultPic;
     private static int EAGER_BUFFER = 12;
-    private SparseBooleanArray eagerMap;
+    //private SparseBooleanArray eagerMap;
     
 	 static class ViewHolder {
 	    	TextView name;
@@ -42,7 +42,7 @@ public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
 
 	public FriendsCursorAdapter(Context context, Cursor c, int flags) {
 		super(context, c, flags);
-		eagerMap = new SparseBooleanArray();
+		//eagerMap = new SparseBooleanArray();
 	    final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
 	    final int cacheSize = maxMemory / 4;
 	    Log.d("Cache", cacheSize +"");
@@ -103,7 +103,7 @@ public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
     			holder.profileTask.cancel(true);
         	holder.profilePic.setImageBitmap(bitmap);
     	}
-    	
+    	/*
     	int pos = cursor.getPosition();
     	if (pos % EAGER_BUFFER == 1) {
 	    	while (cursor.moveToPrevious()) {
@@ -129,7 +129,7 @@ public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
 	    			break;
 	    	}
 	    	cursor.moveToPosition(pos);
-    	}
+    	}*/
 //    	holder.statusLayout.removeAllViews();
 //    	if (cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_CONFIRMED)) == 0 &&
 //    			cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_HIDE_CONFIRMED)) == 0) {
@@ -204,7 +204,7 @@ public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
 	    	if (bitmap == null) {
 	    		bitmap = ImageUtil.getProfilePic(context, id);
 	    		imageCache.put(id, bitmap);
-	    		eagerMap.delete(id);
+	    		//eagerMap.delete(id);
 	    	}
 	        return bitmap;
 	    }
