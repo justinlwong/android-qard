@@ -53,13 +53,9 @@ public class QRCodeDisplayActivity extends Activity {
 		profile_send_text.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				int start = 0;
-				int end = 0;
 				String webUrl = QardMessage.getMessage(getApplicationContext());
-				start = webUrl.indexOf("f=")+2;
-				end = webUrl.indexOf("&");
 				
-				String smsBody= webUrl.substring(start,end) + " " + webUrl.substring(end+3) + "'s Nexcircle Web Profile: " + webUrl;
+				String smsBody= webUrl.substring(webUrl.indexOf("f=")+2,webUrl.indexOf("&")) + " " + webUrl.substring(webUrl.indexOf("&")+3) + "'s Nexcircle Web Profile: " + webUrl;
 				Intent sendIntent = new Intent(Intent.ACTION_VIEW);
 				sendIntent.putExtra("sms_body", smsBody); 
 				sendIntent.setType("vnd.android-dir/mms-sms");
@@ -70,15 +66,11 @@ public class QRCodeDisplayActivity extends Activity {
 		profile_send_share.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				int start = 0;
-				int end = 0;
 				String webUrl = QardMessage.getMessage(getApplicationContext());
-				start = webUrl.indexOf("f=")+2;
-				end = webUrl.indexOf("&");
 				
 				Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
 				sharingIntent.setType("text/plain");
-				String shareBody = webUrl.substring(start,end) + " " + webUrl.substring(end+3) + "'s Nexcircle Web Profile: " + webUrl;
+				String shareBody = webUrl.substring(webUrl.indexOf("f=")+2,webUrl.indexOf("&")) + " " + webUrl.substring(webUrl.indexOf("&")+3) + "'s Nexcircle Web Profile: " + webUrl;
 				sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
 				sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
 				startActivity(Intent.createChooser(sharingIntent, "Share your profile via"));
