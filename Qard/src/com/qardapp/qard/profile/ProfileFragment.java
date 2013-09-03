@@ -75,6 +75,8 @@ public class ProfileFragment extends BaseFragment{
 		Cursor cursor = res.query(FriendsProvider.MY_URI, null, null, null, null);
 		
 		cursor.moveToFirst();
+		ImageView profilePic = (ImageView) getView().findViewById(R.id.profile_image);
+		profilePic.setImageBitmap(ImageUtil.getProfilePic(getActivity(), 0));
 		
 		TextView nameView = (TextView) getView().findViewById(R.id.profile_name);
 		String first_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FIRST_NAME));
@@ -95,12 +97,12 @@ public class ProfileFragment extends BaseFragment{
 		if (number == null)
 			number = "";
 		adapter.changeCursor(cursor);
+		
 		/*
 		SharedPreferences pref = getActivity().getSharedPreferences(getString(R.string.app_package_name), Context.MODE_PRIVATE);
 		String user_id = pref.getString("user_id", "noid");
 		
-		ImageView profilePic = (ImageView) getView().findViewById(R.id.profile_image);
-		profilePic.setImageBitmap(ImageUtil.getProfilePic(getActivity(), 0));
+		
 		// Don't regenerate everytime
 		//if (!(lastUserId.equals(user_id))) {
 			ImageView image = (ImageView) getView().findViewById(R.id.profile_qr_code);
