@@ -341,7 +341,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 				//new AddFriendTask(this, queue_id).execute();
 			}
 			else if (type == FriendsDatabaseHelper.QUEUED_UPDATE_SERVICES) {
-				new AddServiceTask(this, queue_id).execute();
+				//new AddServiceTask(this, queue_id).execute();
 			}
 		}
 	}

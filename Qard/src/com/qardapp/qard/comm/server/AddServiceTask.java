@@ -1,10 +1,15 @@
 package com.qardapp.qard.comm.server;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.qardapp.qard.database.FriendsDatabaseHelper;
+import com.qardapp.qard.database.FriendsProvider;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
 
 public class AddServiceTask extends ServerTask{
 
@@ -62,6 +67,27 @@ public class AddServiceTask extends ServerTask{
 			if (token != null && response.has("user_id")) {
 				String new_id = response.getString("user_id");
 				String access_token = response.getString("access_token");
+				JSONArray services = response.getJSONArray("services");
+				ContentResolver resolver = context.getContentResolver();
+				for (int i = 0; i < services.length(); i++) {
+					JSONObject service = services.getJSONObject(i);
+					
+					ContentValues values = new ContentValues();
+					values.put(FriendsDatabaseHelper.COLUMN_FIRST_NAME, service.getString("first_name"));
+					values.put(FriendsDatabaseHelper.COLUMN_LAST_NAME, service.getString("last_name"));
+					values.put(FriendsDatabaseHelper.COLUMN_USER_ID, service.getInt("id"));	
+					resolver.update(FriendsProvider.MY_URI, values, null, null);
+
+					values = new ContentValues();
+					values.put(FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID, 0);
+					values.put(FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID, service.getInt("service_id"));
+					values.put(FriendsDatabaseHelper.COLUMN_FS_DATA, service.getString("data"));	
+					String where = FriendsDatabaseHelper.COLUMN_FS_FRIEND_ID + "=? AND " + FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID + "=?";
+					String[] args = new String[] { 0 +"", "" + service.getInt("service_id")};
+					resolver.delete(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "0/service/"+service_id), where, args);
+					resolver.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "0/service/"+service_id), values);
+
+				}
 				ServerHelper.setNewUser(context, new_id, access_token);
 			}
 		} catch (Exception e) {
