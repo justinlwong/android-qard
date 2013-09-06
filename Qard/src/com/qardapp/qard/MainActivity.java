@@ -2,27 +2,28 @@ package com.qardapp.qard;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -31,7 +32,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.qardapp.qard.comm.QardMessage;
 import com.qardapp.qard.comm.server.AddFriendTask;
-import com.qardapp.qard.comm.server.AddServiceTask;
 import com.qardapp.qard.comm.server.GetFriendsWithServicesTask;
 import com.qardapp.qard.comm.server.NewUserTask;
 import com.qardapp.qard.comm.server.ServerNotifications;
@@ -40,8 +40,8 @@ import com.qardapp.qard.database.FriendsProvider;
 import com.qardapp.qard.friends.FriendsFragment;
 import com.qardapp.qard.profile.ProfileFragment;
 import com.qardapp.qard.qrcode.QRCodeManager;
+import com.qardapp.qard.settings.SettingsAccountFragment;
 import com.qardapp.qard.settings.SettingsFragment;
-import com.qardapp.qard.settings.SettingsProfileFragment;
 import com.qardapp.qard.util.ImageUtil;
 
 public class MainActivity extends SherlockFragmentActivity implements LoaderCallbacks<ArrayList<ServerNotifications>> {
@@ -64,12 +64,41 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	public static int REFRESH_LOADER_ID = 0;
 	public static int NEW_USER_LOADER_ID = 1;
 	
+	SharedPreferences mPrefs;
+	final String welcomeScreenShownPref = "welcomeScreenShown";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);		
 
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+	    // second argument is the default to use if the preference can't be found
+	    Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
+
+	    if (!welcomeScreenShown) {
+	        // here you can launch another activity if you like
+	        // the code below will display a popup
+
+	    	Intent intent = new Intent(MainActivity.this, Login_activity.class);
+	        startActivity(intent);
+	        
+	    	/*
+	        String whatsNewTitle = "whatsNewTitle";
+	        String whatsNewText = "whatsNewText";
+	        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle(whatsNewTitle).setMessage(whatsNewText).setPositiveButton(
+	                "ok", new DialogInterface.OnClickListener() {
+	                    public void onClick(DialogInterface dialog, int which) {
+	                        dialog.dismiss();
+	                    }
+	                }).show();
+	                */
+	    	
+	        SharedPreferences.Editor editor = mPrefs.edit();
+	        editor.putBoolean(welcomeScreenShownPref, true);
+	        editor.commit(); // Very important to save the preference
+	    }
 		// !! NOTE: Reset database on app update for testing 
 		// Token Setup
 		//ServerHelper.resetUser(this);

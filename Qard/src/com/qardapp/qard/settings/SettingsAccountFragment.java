@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.qardapp.qard.BaseFragment;
+import com.qardapp.qard.Login_activity;
+import com.qardapp.qard.MainActivity;
 import com.qardapp.qard.R;
 import com.qardapp.qard.comm.server.QardLoginActivity;
 import com.qardapp.qard.comm.server.ServerHelper;
@@ -37,6 +39,14 @@ public class SettingsAccountFragment extends BaseFragment {
 				Intent intent = new Intent(getActivity(),FacebookLoginActivity.class);
 				intent.putExtra("launchType", 1);
 				getActivity().startActivityForResult(intent,0);
+			}
+		});
+		Button skip_login = (Button) rootView.findViewById(R.id.skip_btn);
+		skip_login.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent1 = new Intent(getActivity(), MainActivity.class);
+				getActivity().startActivity(intent1);
 			}
 		});
 		
