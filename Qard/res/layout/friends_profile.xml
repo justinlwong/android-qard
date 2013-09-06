@@ -26,6 +26,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/friend_profile_image"
         android:gravity="center"
+        android:layout_marginTop="10dp"
         android:orientation="vertical" >
 
         <TextView
@@ -52,7 +53,7 @@
         android:layout_width="320dp"
         android:layout_height="2dp" 
         android:background = "#DDDDDD"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
 	    android:layout_below="@id/friend_profile_info_box">
         
