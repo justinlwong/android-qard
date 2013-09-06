@@ -28,6 +28,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.Settings;
 import com.facebook.model.GraphUser;
+import com.qardapp.qard.MainActivity;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.comm.server.AddServiceTask;
@@ -141,6 +142,8 @@ public class FacebookLoginActivity extends Activity {
 	    						    progDialog.cancel();
 				        			}
 				        		}
+				        		Intent intent1 = new Intent(FacebookLoginActivity.this, MainActivity.class);
+				        		FacebookLoginActivity.this.startActivity(intent1);
 	    						activity.finish();
                             }
                         }
