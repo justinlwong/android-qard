@@ -3,18 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    android:background="#DDDDDD">
+    android:background="#FFFFFF">
 
     <ImageView
         android:id="@+id/friend_profile_image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:scaleType="fitCenter"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="10dp"
+        android:paddingLeft="10dp"
+        android:layout_marginLeft="20dp"
         android:src="@drawable/profile_default" />
 
     <LinearLayout
@@ -48,9 +49,11 @@
             />
     </LinearLayout>
     <View android:id="@+id/friend_profile_divider"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="2dp" 
-        android:background = "#FFFFFF"
+        android:background = "#DDDDDD"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
 	    android:layout_below="@id/friend_profile_info_box">
         
     </View> 
@@ -73,6 +76,8 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/friend_profile_status_view"
         android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
 
         android:gravity="center"
         android:horizontalSpacing="10dp"
