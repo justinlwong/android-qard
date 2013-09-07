@@ -299,6 +299,9 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		frag = getSupportFragmentManager().findFragmentByTag(FRAGNAME_SETTINGS_PROFILE);
 		if (frag != null && frag.isVisible())
 			((BaseFragment) frag).updateViews();
+		ImageView menuMe = (ImageView) findViewById(R.id.menu_me);
+		if (menuMe != null)
+			menuMe.setImageBitmap(ImageUtil.getProfilePic(this, 0));
 	}
 	
 	@Override
