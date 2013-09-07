@@ -29,9 +29,9 @@ public class Login_activity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent(Login_activity.this, FacebookLoginActivity.class);
 				intent.putExtra("launchType", 1);
+				//intent.putExtra("loginactivity", "login");
 				Login_activity.this.startActivityForResult(intent,0);
-				Intent intent1 = new Intent(getApplicationContext(), Login_activity.class);
-				intent1.putExtra("loginactivity", "login");
+				
 			}
 		});
 		Button skip_login = (Button) findViewById(R.id.skip_btn);
@@ -39,9 +39,11 @@ public class Login_activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent1 = new Intent(Login_activity.this, MainActivity.class);
+				//Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+				//intent2.putExtra("loginactivity", "skip");
 				Login_activity.this.startActivity(intent1);
-				Intent intent2 = new Intent(getApplicationContext(), Login_activity.class);
-				intent2.putExtra("loginactivity", "skip");
+				
+				
 			}
 		});
 	    
