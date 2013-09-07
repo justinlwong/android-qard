@@ -94,10 +94,21 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	                    }
 	                }).show();
 	                */
-	    	
 	        SharedPreferences.Editor editor = mPrefs.edit();
 	        editor.putBoolean(welcomeScreenShownPref, true);
 	        editor.commit(); // Very important to save the preference
+	        /*
+	        Bundle extra = getIntent().getExtras();
+			if (extra != null) {
+				String loginactivity = extra.getString("loginactivity");
+				if (loginactivity.equals("login") || loginactivity.equals("skip")){
+					
+		        SharedPreferences.Editor editor = mPrefs.edit();
+		        editor.putBoolean(welcomeScreenShownPref, true);
+		        editor.commit(); // Very important to save the preference
+				}
+			}
+			*/
 	    }
 		// !! NOTE: Reset database on app update for testing 
 		// Token Setup
