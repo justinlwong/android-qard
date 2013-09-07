@@ -3,8 +3,10 @@ package com.qardapp.qard.comm.server;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
+import com.qardapp.qard.util.ImageUtil;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -86,6 +88,18 @@ public class AddServiceTask extends ServerTask{
 					String[] args = new String[] { 0 +"", "" + service.getInt("service_id")};
 					resolver.delete(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "0/service/"+service_id), where, args);
 					resolver.insert(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "0/service/"+service_id), values);
+					
+					// If service is facebook, grab picture
+					if (service.getInt("service_id") == Services.FACEBOOK.id)
+					{
+		        		Thread thread = new Thread(new Runnable(){
+		        		    @Override
+		        		    public void run() {
+		        		        ImageUtil.getFBProfilePic(context, data, 0);
+		        		    }
+		        		});
+		        		thread.start();
+					}
 
 				}
 				ServerHelper.setNewUser(context, new_id, access_token);
