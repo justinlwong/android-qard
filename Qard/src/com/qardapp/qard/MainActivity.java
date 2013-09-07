@@ -73,7 +73,6 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		setContentView(R.layout.activity_main);		
 
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-
 	    // second argument is the default to use if the preference can't be found
 	    Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
 
@@ -94,9 +93,9 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	                    }
 	                }).show();
 	                */
-	        SharedPreferences.Editor editor = mPrefs.edit();
-	        editor.putBoolean(welcomeScreenShownPref, true);
-	        editor.commit(); // Very important to save the preference
+	        //SharedPreferences.Editor editor = mPrefs.edit();
+	        //editor.putBoolean(welcomeScreenShownPref, true);
+	        //editor.commit(); // Very important to save the preference
 	        /*
 	        Bundle extra = getIntent().getExtras();
 			if (extra != null) {
