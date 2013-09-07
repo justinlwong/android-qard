@@ -131,7 +131,7 @@ public class FacebookLoginActivity extends Activity {
 				        		    	if (type == 0) {
 						                    Toast.makeText(activity, "Added " + Services.FACEBOOK.name + " information!", Toast.LENGTH_LONG).show();
 				        		    	} else {
-						                    Toast.makeText(activity, "Added credentials!", Toast.LENGTH_LONG).show();				        		    		
+						                    Toast.makeText(activity, "Successfully logged in as "+name+"!", Toast.LENGTH_LONG).show();				        		    		
 				        		    	}
 				        		    }
 				        		});

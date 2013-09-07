@@ -70,7 +70,10 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);		
+		setContentView(R.layout.activity_main);	
+		
+		// refresh fragments
+        //this.refreshFragments();
 
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
