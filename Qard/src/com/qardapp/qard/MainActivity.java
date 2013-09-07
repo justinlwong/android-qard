@@ -76,7 +76,6 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
         //this.refreshFragments();
 
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-
 	    // second argument is the default to use if the preference can't be found
 	    Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
 
@@ -97,10 +96,21 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	                    }
 	                }).show();
 	                */
-	    	
-	        SharedPreferences.Editor editor = mPrefs.edit();
-	        editor.putBoolean(welcomeScreenShownPref, true);
-	        editor.commit(); // Very important to save the preference
+	        //SharedPreferences.Editor editor = mPrefs.edit();
+	        //editor.putBoolean(welcomeScreenShownPref, true);
+	        //editor.commit(); // Very important to save the preference
+	        /*
+	        Bundle extra = getIntent().getExtras();
+			if (extra != null) {
+				String loginactivity = extra.getString("loginactivity");
+				if (loginactivity.equals("login") || loginactivity.equals("skip")){
+					
+		        SharedPreferences.Editor editor = mPrefs.edit();
+		        editor.putBoolean(welcomeScreenShownPref, true);
+		        editor.commit(); // Very important to save the preference
+				}
+			}
+			*/
 	    }
 		// !! NOTE: Reset database on app update for testing 
 		// Token Setup
@@ -302,6 +312,9 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		frag = getSupportFragmentManager().findFragmentByTag(FRAGNAME_SETTINGS_PROFILE);
 		if (frag != null && frag.isVisible())
 			((BaseFragment) frag).updateViews();
+		ImageView menuMe = (ImageView) findViewById(R.id.menu_me);
+		if (menuMe != null)
+			menuMe.setImageBitmap(ImageUtil.getProfilePic(this, 0));
 	}
 	
 	@Override
