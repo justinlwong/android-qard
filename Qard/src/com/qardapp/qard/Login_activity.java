@@ -35,7 +35,7 @@ public class Login_activity extends Activity {
 				SharedPreferences.Editor editor = mPrefs.edit();
 		        editor.putBoolean(welcomeScreenShownPref, true);
 		        editor.commit(); // Very important to save the preference
-				//intent.putExtra("launchType", 1);
+				intent.putExtra("launchType", 1);
 				//intent.putExtra("loginactivity", "login");
 				Login_activity.this.startActivityForResult(intent,0);
 				
