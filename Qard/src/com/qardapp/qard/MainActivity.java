@@ -70,11 +70,9 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	SharedPreferences mPrefs;
 	final String welcomeScreenShownPref = "welcomeScreenShown";
 	static final int LOGIN_ACTIVITY = 500;
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);	
+	
+	public void loadActivity(){
+	setContentView(R.layout.activity_main);	
 		
 		// refresh fragments
         //this.refreshFragments();
@@ -145,9 +143,14 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		
 		// !! TEST: GET FACEBOOK USER INFO
 		//FacebookConnect fc = new FacebookConnect(this);
-		//fc.getUserInfo();
-		
+		//fc.getUserInfo();	
+	}
 
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		this.loadActivity();
 			
 	}
 	
@@ -272,7 +275,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
 			trans.replace(R.id.main_container, fragment, FRAGNAME_PROFILE);
 			trans.addToBackStack(null);
-			trans.commit();
+			trans.commitAllowingStateLoss();
 			return fragment;
 		}
 		else if (id == FRAG_FRIENDS) {
@@ -287,7 +290,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
 			trans.replace(R.id.main_container, fragment, FRAGNAME_FRIENDS);
 			trans.addToBackStack(null);
-			trans.commit();
+			trans.commitAllowingStateLoss();
 			// Close keyboard
 			FrameLayout layout = (FrameLayout) MainActivity.this
 					.findViewById(R.id.main_container);
@@ -306,7 +309,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
 			trans.replace(R.id.main_container, fragment, FRAGNAME_SETTINGS);
 			trans.addToBackStack(null);
-			trans.commit();
+			trans.commitAllowingStateLoss();
 			return fragment;
 		}
 		return null;
@@ -353,11 +356,11 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	{  
 		if (requestCode == LOGIN_ACTIVITY) {
 			Log.d("login","returned to main");
+			refreshFragments();
 			SharedPreferences.Editor editor = mPrefs.edit();
 	        editor.putBoolean(welcomeScreenShownPref, true);
 	        editor.commit(); // Very important to save the preference
-			refreshFragments();
-			this.normalView();
+			this.loadActivity();
 		} else {
 			qrcode = QRCodeManager.checkScanActivityResult(this, requestCode, resultCode, data);
 			if (qrcode != null) {
