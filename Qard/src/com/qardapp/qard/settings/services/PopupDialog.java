@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -43,6 +45,8 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
     static Boolean wasMyOwnNumber;
     static Boolean workDone;
     final static int SMS_ROUNDTRIP_TIMOUT = 30000;
+    View view;
+    Button okB;
 
     public PopupDialog() {
         // Empty constructor required for DialogFragment
@@ -59,7 +63,7 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
         wasMyOwnNumber = false;
         workDone = false;
         
-        View view = null;
+        view = null;
         
         if (serviceId != Services.WEBPAGE.id)
         {
@@ -71,7 +75,7 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
         }
 
 
-        Button okB = (Button)view.findViewById(R.id.okButton);
+        okB = (Button)view.findViewById(R.id.okButton);
         Button cancelB = (Button)view.findViewById(R.id.cancelButton);       
 
         p = this;
@@ -209,27 +213,35 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
         protected void onPostExecute(String result)
         {
             // TODO Auto-generated method stub
-            if(progress.isShowing())
+
+            if(wasMyOwnNumber)
             {
-                progress.dismiss();
-                if(wasMyOwnNumber)
-                {
-                    //Toast.makeText(getApplicationContext(), "Number matched.", Toast.LENGTH_LONG).show();
-	                //Toast.makeText(getActivity(), "Added Phone information!", Toast.LENGTH_LONG).show();
-                    wasMyOwnNumber = false;
-                    workDone = false;
-                    p.dismiss();
-                }
-                else
-                {
-	                //Toast.makeText(getActivity(), "Could not verify number!", Toast.LENGTH_LONG).show();
-                    //Toast.makeText(getApplicationContext(), "Wrong number.", Toast.LENGTH_LONG).show();
-                    wasMyOwnNumber = false;
-                    workDone = false;
-                    p.dismiss();
-                    return;
-                }
+                //Toast.makeText(getApplicationContext(), "Number matched.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(), "Added Phone information!", Toast.LENGTH_LONG).show();
+            	mText.setText("Verified!");
+                wasMyOwnNumber = false;
+                workDone = false;
+                //p.dismiss();
             }
+            else
+            {
+                //Toast.makeText(getActivity(), "Could not verify number!", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Wrong number.", Toast.LENGTH_LONG).show();
+            	mText.setText("Could not verify number.");
+                wasMyOwnNumber = false;
+                workDone = false;
+                //p.dismiss();
+                return;
+            }
+            
+            okB.setOnClickListener(new View.OnClickListener() {			
+    			@Override
+    			public void onClick(View v) {
+    				p.dismiss();
+    				
+    			}
+    		});
+
             super.onPostExecute(result);
         }
 
@@ -255,10 +267,16 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
         @Override
         protected void onPreExecute() 
         {
+        	LinearLayout layout = ((LinearLayout)mEditText.getParent());
+        	LinearLayout.LayoutParams lp = new    LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+        	layout.removeView(mEditText);
+        	mText.setText("Checking mobile number...");
+        	mText.setTextSize(18);
+        	mText.setLayoutParams(lp);
             // TODO Auto-generated method stub
-            progress = ProgressDialog.show(getActivity(), "","Checking Mobile Number...");
-            progress.setIndeterminate(true);
-            progress.getWindow().setLayout(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            //progress = ProgressDialog.show(getActivity(), "","Checking Mobile Number...");
+            //progress.setIndeterminate(true);
+            //progress.getWindow().setLayout(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
             super.onPreExecute();
         }
     }

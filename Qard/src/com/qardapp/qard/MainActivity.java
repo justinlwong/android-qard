@@ -356,11 +356,16 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	{  
 		if (requestCode == LOGIN_ACTIVITY) {
 			Log.d("login","returned to main");
-			refreshFragments();
-			SharedPreferences.Editor editor = mPrefs.edit();
-	        editor.putBoolean(welcomeScreenShownPref, true);
-	        editor.commit(); // Very important to save the preference
-			this.loadActivity();
+			if (resultCode == RESULT_OK){    
+			    // refresh only profile for speed
+				Fragment frag = getSupportFragmentManager().findFragmentByTag(FRAGNAME_PROFILE);
+				if (frag != null && frag.isVisible())
+					((BaseFragment) frag).updateViews();
+				SharedPreferences.Editor editor = mPrefs.edit();
+		        editor.putBoolean(welcomeScreenShownPref, true);
+		        editor.commit(); // Very important to save the preference
+				this.loadActivity();
+			}
 		} else {
 			qrcode = QRCodeManager.checkScanActivityResult(this, requestCode, resultCode, data);
 			if (qrcode != null) {
