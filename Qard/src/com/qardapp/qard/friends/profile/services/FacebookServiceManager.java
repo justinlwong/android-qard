@@ -13,11 +13,20 @@ public class FacebookServiceManager extends ServiceManager {
 	public static String PACKAGE_NAME = "com.facebook.katana";
 	public static String FB_FALLBACK_URL_PREFIX = "https://www.facebook.com/";
 	public static Integer FB_IMAGE = R.drawable.facebook;
+	public Integer launchFlag;
+	static final int LOGIN_ACTIVITY = 500;
 	
 	// Description of data (include examples)
 	// data - FB user id (eg. raymond.lam.73)
 	public FacebookServiceManager(Activity activity) {
 		super(activity, FB_IMAGE);
+		this.launchFlag = 0;
+	}
+	
+	public FacebookServiceManager(Activity activity, int launchFlag)
+	{
+		super(activity, FB_IMAGE);
+		this.launchFlag = launchFlag;
 	}
 
 	@Override
@@ -47,8 +56,8 @@ public class FacebookServiceManager extends ServiceManager {
 	@Override
 	public void startLoginIntent() {
 		Intent intent = new Intent(activity,FacebookLoginActivity.class);
-		intent.putExtra("launchType", 0);
-		activity.startActivityForResult(intent,0);
+		intent.putExtra("launchType", launchFlag);
+		activity.startActivityForResult(intent,LOGIN_ACTIVITY);
 	}
 	
 }

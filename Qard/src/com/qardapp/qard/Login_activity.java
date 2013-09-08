@@ -1,6 +1,8 @@
 package com.qardapp.qard;
 
+import com.facebook.Session;
 import com.qardapp.qard.settings.services.FacebookLoginActivity;
+import com.qardapp.qard.util.ImageUtil;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,8 +10,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 /*
  * Activity to show the splash screen
@@ -18,6 +23,7 @@ public class Login_activity extends Activity {
 
 	SharedPreferences mPrefs;
 	final String welcomeScreenShownPref = "welcomeScreenShown";
+	static final int LOGIN_REQUEST = 1;
 
 	// On create, show the spash screen
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +43,7 @@ public class Login_activity extends Activity {
 		        editor.commit(); // Very important to save the preference
 				intent.putExtra("launchType", 1);
 				//intent.putExtra("loginactivity", "login");
-				Login_activity.this.startActivityForResult(intent,0);
+				Login_activity.this.startActivityForResult(intent,LOGIN_REQUEST);
 				
 			}
 		});
@@ -59,6 +65,21 @@ public class Login_activity extends Activity {
 	    
 	}
 	
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == LOGIN_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                // When facebook login finishes we come here and end this activity
+            	Log.d("login", "finished login");
+            	setResult(Activity.RESULT_OK);
+            	
+            	this.finish();
+            }
+        }        
+    }
+    
 
 
 }

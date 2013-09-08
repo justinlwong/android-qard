@@ -142,8 +142,9 @@ public class FacebookLoginActivity extends Activity {
 	    						    progDialog.cancel();
 				        			}
 				        		}
-				        		Intent intent1 = new Intent(FacebookLoginActivity.this, MainActivity.class);
-				        		FacebookLoginActivity.this.startActivity(intent1);
+				        		//Intent intent1 = new Intent(FacebookLoginActivity.this, MainActivity.class);
+				        		//FacebookLoginActivity.this.startActivity(intent1);
+				        		setResult(Activity.RESULT_OK);
 	    						activity.finish();
                             }
                         }

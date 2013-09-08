@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -38,10 +39,12 @@ import com.qardapp.qard.comm.server.ServerNotifications;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 import com.qardapp.qard.friends.FriendsFragment;
+import com.qardapp.qard.friends.profile.services.FacebookServiceManager;
 import com.qardapp.qard.profile.ProfileFragment;
 import com.qardapp.qard.qrcode.QRCodeManager;
 import com.qardapp.qard.settings.SettingsAccountFragment;
 import com.qardapp.qard.settings.SettingsFragment;
+import com.qardapp.qard.settings.services.FacebookLoginActivity;
 import com.qardapp.qard.util.ImageUtil;
 
 public class MainActivity extends SherlockFragmentActivity implements LoaderCallbacks<ArrayList<ServerNotifications>> {
@@ -66,6 +69,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	
 	SharedPreferences mPrefs;
 	final String welcomeScreenShownPref = "welcomeScreenShown";
+	static final int LOGIN_ACTIVITY = 500;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,9 +87,29 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	        // here you can launch another activity if you like
 	        // the code below will display a popup
 
-	    	Intent intent = new Intent(MainActivity.this, Login_activity.class);
-	        startActivity(intent);
+	    	//Intent intent = new Intent(MainActivity.this, Login_activity.class);
+	        //startActivityForResult(intent, LOGIN_ACTIVITY);
 	        
+		    setContentView(R.layout.settings_account_layout2);
+		    mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+		    // second argument is the default to use if the preference can't be found
+		    //Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
+		    Button login = (Button) findViewById(R.id.login_btn);
+			login.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					FacebookServiceManager mgr = new FacebookServiceManager(MainActivity.this, 1);
+					mgr.startLoginIntent();
+				}
+			});
+			Button skip_login = (Button) findViewById(R.id.skip_btn);
+			skip_login.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					MainActivity.this.normalView();			
+			
+				}
+			});	        
 	    	/*
 	        String whatsNewTitle = "whatsNewTitle";
 	        String whatsNewText = "whatsNewText";
@@ -111,6 +135,8 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 				}
 			}
 			*/
+	    } else {
+	    	this.normalView();
 	    }
 		// !! NOTE: Reset database on app update for testing 
 		// Token Setup
@@ -121,6 +147,12 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		//FacebookConnect fc = new FacebookConnect(this);
 		//fc.getUserInfo();
 		
+
+			
+	}
+	
+	public void normalView() {
+		setContentView(R.layout.activity_main);	
 		// Set up the action bar.
 		final ActionBar actionBar = getSupportActionBar();
 		LayoutInflater inflater = getLayoutInflater();
@@ -225,7 +257,6 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		    	}
 			}
 		}
-			
 	}
 
 	public Fragment switchFragments (int id) {
@@ -320,11 +351,20 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{  
-		qrcode = QRCodeManager.checkScanActivityResult(this, requestCode, resultCode, data);
-		if (qrcode != null) {
-			Toast.makeText(this, "Scan Result = " + qrcode, Toast.LENGTH_SHORT).show();
+		if (requestCode == LOGIN_ACTIVITY) {
+			Log.d("login","returned to main");
+			SharedPreferences.Editor editor = mPrefs.edit();
+	        editor.putBoolean(welcomeScreenShownPref, true);
+	        editor.commit(); // Very important to save the preference
+			refreshFragments();
+			this.normalView();
+		} else {
+			qrcode = QRCodeManager.checkScanActivityResult(this, requestCode, resultCode, data);
+			if (qrcode != null) {
+				Toast.makeText(this, "Scan Result = " + qrcode, Toast.LENGTH_SHORT).show();
+			}
+			refreshFragments();
 		}
-		refreshFragments();
 	}
 
 
@@ -389,6 +429,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 				//new AddServiceTask(this, queue_id).execute();
 			}
 		}
+		
 	}
 
 }
