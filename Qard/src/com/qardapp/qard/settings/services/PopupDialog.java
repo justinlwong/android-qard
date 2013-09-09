@@ -34,7 +34,6 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
     private EditText mEditText;
     private TextView mText;
     private int serviceId;
-    private String serviceType;
     private String userInput;
     PopupDialog p;
 	private SharedPreferences mPrefs;
@@ -44,7 +43,7 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
     ProgressDialog progress;
     static Boolean wasMyOwnNumber;
     static Boolean workDone;
-    final static int SMS_ROUNDTRIP_TIMOUT = 30000;
+    final static int SMS_ROUNDTRIP_TIMOUT = 5000;
     View view;
     Button okB;
 
@@ -62,7 +61,10 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
         
         wasMyOwnNumber = false;
         workDone = false;
-        
+        mPrefs = getActivity().getSharedPreferences("tokens", 0);        
+		SharedPreferences.Editor editor = mPrefs.edit();
+		editor.putBoolean("wasMyOwnNumber", false);
+		editor.commit();            
         view = null;
         
         if (serviceId != Services.WEBPAGE.id)
@@ -150,6 +152,36 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
         return false;
     }
     
+    public boolean normalUpdate()
+    {
+
+      
+        UpdateDatabase.updateDatabase(userInput, serviceId, getActivity());
+        
+        // Add to username preferences
+        mPrefs = getActivity().getSharedPreferences("tokens", 0);
+		SharedPreferences.Editor editor = mPrefs.edit();
+		editor.putString(service.name+"_username",userInput);
+		editor.commit();    
+		
+		getActivity().runOnUiThread(new Runnable() {
+		    public void run() {
+		    	if (serviceId != Services.WEBPAGE.id)
+		    	{
+	                Toast.makeText(getActivity(), "Added " + service.name + " information!", Toast.LENGTH_LONG).show();
+		    	} else {
+	                Toast.makeText(getActivity(), "Added Note!", Toast.LENGTH_LONG).show();		    		
+		    	}
+                // Refresh settings page when the service call is not an activity (eg. PopupDialog)
+                if (getActivity() instanceof MainActivity) {
+                	((MainActivity) getActivity()).refreshFragments();
+                }
+		    }
+		});
+        this.dismiss();    	
+        return true;
+    }
+    
     public boolean update()
     {
         // Get user input
@@ -158,6 +190,12 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
         // For phone, we have to verify number through text
         if (serviceId == Services.PHONE.id)
         {
+		    if (userInput.length() == 0)
+		    {
+		        Toast.makeText(getActivity(), "Field must not be empty.", Toast.LENGTH_LONG).show();
+		        this.dismiss();
+		        return false;
+		    }
             phNo = userInput;
             // Store phone number so we can check from sms receiver
             mPrefs = getActivity().getSharedPreferences("tokens", 0);
@@ -166,41 +204,18 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
     		editor.commit();    
             new CheckOwnMobileNumber().execute();
         } else {
-
-	        ViewGroup layout = (ViewGroup) mEditText.getParent();
-	        layout.removeView(mEditText);
-	        layout.removeView(mText);
+        	ViewGroup layout = (ViewGroup) mEditText.getParent();
+            layout.removeView(mEditText);
+            layout.removeView(mText);
+  	      
+		    if (userInput.length() == 0)
+		    {
+		        Toast.makeText(getActivity(), "Field must not be empty.", Toast.LENGTH_LONG).show();
+		        this.dismiss();
+		        return false;
+		    }
+            normalUpdate();
 	        
-	        if (userInput.length() == 0)
-	        {
-	            Toast.makeText(getActivity(), "Field must not be empty.", Toast.LENGTH_LONG).show();
-	            this.dismiss();
-	            return false;
-	        }
-	        
-	        UpdateDatabase.updateDatabase(userInput, serviceId, getActivity());
-	        
-	        // Add to username preferences
-	        mPrefs = getActivity().getSharedPreferences("tokens", 0);
-			SharedPreferences.Editor editor = mPrefs.edit();
-			editor.putString(service.name+"_username",userInput);
-			editor.commit();    
-			
-			getActivity().runOnUiThread(new Runnable() {
-			    public void run() {
-			    	if (serviceId != Services.WEBPAGE.id && serviceId != Services.PHONE.id)
-			    	{
-		                Toast.makeText(getActivity(), "Added " + service.name + " information!", Toast.LENGTH_LONG).show();
-			    	} else {
-		                Toast.makeText(getActivity(), "Added Note!", Toast.LENGTH_LONG).show();		    		
-			    	}
-	                // Refresh settings page when the service call is not an activity (eg. PopupDialog)
-	                if (getActivity() instanceof MainActivity) {
-	                	((MainActivity) getActivity()).refreshFragments();
-	                }
-			    }
-			});
-	        this.dismiss();
         }
 
         return true;
@@ -219,8 +234,20 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
                 //Toast.makeText(getApplicationContext(), "Number matched.", Toast.LENGTH_LONG).show();
                 //Toast.makeText(getActivity(), "Added Phone information!", Toast.LENGTH_LONG).show();
             	mText.setText("Verified!");
+            	// Set flag back to false
+        		SharedPreferences.Editor editor = mPrefs.edit();
+        		editor.putBoolean("wasMyOwnNumber", false);
+        		editor.commit();           	
                 wasMyOwnNumber = false;
                 workDone = false;
+                okB.setOnClickListener(new View.OnClickListener() {			
+        			@Override
+        			public void onClick(View v) {
+        				normalUpdate();
+        				p.dismiss();
+        				
+        			}
+        		});
                 //p.dismiss();
             }
             else
@@ -228,19 +255,23 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
                 //Toast.makeText(getActivity(), "Could not verify number!", Toast.LENGTH_LONG).show();
                 //Toast.makeText(getApplicationContext(), "Wrong number.", Toast.LENGTH_LONG).show();
             	mText.setText("Could not verify number.");
+        		SharedPreferences.Editor editor = mPrefs.edit();
+        		editor.putBoolean("wasMyOwnNumber", false);
+        		editor.commit(); 
                 wasMyOwnNumber = false;
                 workDone = false;
+                
+                okB.setOnClickListener(new View.OnClickListener() {			
+        			@Override
+        			public void onClick(View v) {
+        				p.dismiss();
+        				
+        			}
+        		});
                 //p.dismiss();
-                return;
+                //return;
             }
-            
-            okB.setOnClickListener(new View.OnClickListener() {			
-    			@Override
-    			public void onClick(View v) {
-    				p.dismiss();
-    				
-    			}
-    		});
+          
 
             super.onPostExecute(result);
         }
@@ -268,7 +299,7 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
         protected void onPreExecute() 
         {
         	LinearLayout layout = ((LinearLayout)mEditText.getParent());
-        	LinearLayout.LayoutParams lp = new    LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+        	LinearLayout.LayoutParams lp = new    LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         	layout.removeView(mEditText);
         	mText.setText("Checking mobile number...");
         	mText.setTextSize(18);
