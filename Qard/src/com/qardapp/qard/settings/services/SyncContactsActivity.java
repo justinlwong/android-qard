@@ -210,9 +210,9 @@ public class SyncContactsActivity extends Activity {
         
         a = this;
         
-        new RetrieveContacts().execute();  
+        //new RetrieveContacts().execute();  
         //new SendInviteActivity();
-        SendInviteActivity.sendInvite(getContentResolver(), getApplicationContext());
+        SendInviteActivity.sendInvite(this);
 
         //finish();
        
