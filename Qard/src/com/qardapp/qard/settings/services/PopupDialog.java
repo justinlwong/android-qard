@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.qardapp.qard.MainActivity;
 import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
+import com.qardapp.qard.database.FriendsDatabaseHelper;
 
 public class PopupDialog extends DialogFragment implements OnEditorActionListener{
 
@@ -43,7 +44,7 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
     ProgressDialog progress;
     static Boolean wasMyOwnNumber;
     static Boolean workDone;
-    final static int SMS_ROUNDTRIP_TIMOUT = 5000;
+    final static int SMS_ROUNDTRIP_TIMOUT = 15000;
     View view;
     Button okB;
 
@@ -196,6 +197,8 @@ public class PopupDialog extends DialogFragment implements OnEditorActionListene
 		        this.dismiss();
 		        return false;
 		    }
+		    // standardize phone number
+		    userInput = userInput.replaceAll("[^\\d.]", "");
             phNo = userInput;
             // Store phone number so we can check from sms receiver
             mPrefs = getActivity().getSharedPreferences("tokens", 0);

@@ -46,7 +46,7 @@ public class SyncContactsActivity extends Activity {
 		String[] args = new String[] { first, lastname, String.valueOf(Services.PHONE.id)};
 		Cursor c = cr.query(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, "/service_data"), new String[]{fsprefix+FriendsDatabaseHelper.COLUMN_FS_DATA}, where, args, null);
 		
-		if (c.moveToFirst())
+		if (c.moveToFirst())	
 		{
 			while (c.isAfterLast() == false)
 			{
@@ -159,6 +159,15 @@ public class SyncContactsActivity extends Activity {
     		                  Log.d("here",first + " " + cNumber + " " + cEmail);                      	  
                           }
                           
+                          // format phone number before adding
+                          
+                          // strip spaces
+                          cNumber = cNumber.replaceAll("[^\\d.]","");
+                          //cNumber = cNumber.replace("(","").replace(")","").replace("+","").replace("-", "").replace(" ", "");
+                          // leave country code in ... but on server we have to check for both possibility of no country code or country code
+                          //cNumber = cNumber.startsWith("1") ? cNumber.substring(1) : cNumber;
+                          
+                          
                           // Update Database
                           updateDatabase(cr, first, last, cNumber, cEmail);
                           
@@ -210,7 +219,7 @@ public class SyncContactsActivity extends Activity {
         
         a = this;
         
-        //new RetrieveContacts().execute();  
+        new RetrieveContacts().execute();  
         //new SendInviteActivity();
         SendInviteActivity.sendInvite(this);
 
