@@ -4,21 +4,23 @@ import com.qardapp.qard.R;
 import com.qardapp.qard.Services;
 import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
+import com.qardapp.qard.friends.profile.FriendProfileFragment;
 
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 public class SendInviteActivity{
 	public static void sendInvite(Context context){
-		//String user_id = "";
 		ContentResolver cr = context.getContentResolver();
-		//String fsprefix = FriendsDatabaseHelper.TABLE_FRIEND_SERVICES + ".";
 		String fprefix = FriendsDatabaseHelper.TABLE_FRIENDS + ".";
 		String fsprefix = FriendsDatabaseHelper.TABLE_FRIEND_SERVICES + ".";
 		//String where = fprefix+FriendsDatabaseHelper.COLUMN_USER_ID+ "=? AND " + fsprefix+FriendsDatabaseHelper.COLUMN_FS_SERVICE_ID + "=?";
@@ -26,35 +28,31 @@ public class SendInviteActivity{
 		//String[] args = new String[] {user_id, String.valueOf(Services.PHONE.id)};
 		String[] args = new String[] {};
 		Cursor c = cr.query(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, ""), new String[]{fsprefix+FriendsDatabaseHelper.COLUMN_FS_DATA}, where, args, null);
-		//Cursor c = cr.query(Uri.withAppendedPath(FriendsProvider.CONTENT_URI, ""), null, where, null, null);
-		//Log.d("test","count:"+c.getColumnCount());
+		
 		if (c.moveToFirst())
 		{
 			while (c.isAfterLast() == false)
 			{
-				
-				/*
-				if (c.isNull(c.getColumnIndex(FriendsDatabaseHelper.COLUMN_USER_ID))){
-					Log.d("testg", "testcase"+i);
-				}
-				else{
-					Log.d("testg1", "testg1"+i);
-				}
-				i++;
-				*/
 				String phone_no = c.getString(c.getColumnIndex(fsprefix+FriendsDatabaseHelper.COLUMN_FS_DATA));  
 				Log.d("invite",phone_no);
-				// Duplicate so don't add this
+				/*
+				setContentView(R.layout.friends_profile);
+				Button mButton=(Button)findViewById(R.id.send_btn);
+				mButton.setTextColor(Color.parseColor("#FF0000")); // custom color
+				//mButton.setTextColor(Color.RED); // use default color
+				mButton.setBackgroundResource(R.drawable.button_shape);
 				
-//				if (user_id == null)
-//				{
-//					Log.d("null",user_id);
-//					return;
-//				} else {
-//					//Log.d("norepeat",phone + " " + phoneMatch);
-//					Log.e("errorhere",user_id);
-//				}
-				
+				Button login = (Button) rootView.findViewById(R.id.login_btn);
+				login.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(getActivity(),FacebookLoginActivity.class);
+						intent.putExtra("launchType", 1);
+						getActivity().startActivityForResult(intent,0);
+					}
+				});
+				*/
 				c.moveToNext();
 			}
 
