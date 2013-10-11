@@ -55,9 +55,9 @@
         android:clickable="true"
         android:padding="5dp"
         android:src="@drawable/navigation_refresh" />
-
+        
     <ImageView
-        android:id="@+id/menu_search"
+        android:id="@+id/menu_notifications"
         android:layout_width="@dimen/abs__action_bar_default_height"
         android:layout_height="@dimen/abs__action_bar_default_height"
         android:layout_alignParentTop="true"
@@ -66,7 +66,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:padding="5dp"
-        android:src="@drawable/navigation_search" />
+        android:src="@drawable/notification_icon" />
 
     <ImageView
         android:id="@+id/menu_camera"
@@ -74,7 +74,7 @@
         android:layout_height="@dimen/abs__action_bar_default_height"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="5dp"
-        android:layout_toLeftOf="@id/menu_search"
+        android:layout_toLeftOf="@id/menu_notifications"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:padding="5dp"

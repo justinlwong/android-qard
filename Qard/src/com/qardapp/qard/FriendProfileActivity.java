@@ -103,12 +103,12 @@ public class FriendProfileActivity extends SherlockActivity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			finish();
-		case R.id.menu_search:
-			Intent intent = this.getIntent();
-			intent.putExtra("launch", "search");
-			this.setResult(RESULT_OK, intent);
-			finish();
-			break;
+//		case R.id.menu_search:
+//			Intent intent = this.getIntent();
+//			intent.putExtra("launch", "search");
+//			this.setResult(RESULT_OK, intent);
+//			finish();
+//			break;
 		case R.id.menu_camera:
 			// mViewPager.setCurrentItem(0);
 			QRCodeManager.scanQRCode(this);

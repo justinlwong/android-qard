@@ -72,12 +72,13 @@ public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
 		} else {
 			full_name = first_name;
 		}
-		
-		if (last_name.length() > 0)
+		if (last_name != null)
 		{
-			full_name += " " + last_name.charAt(0) + ".";
+			if (last_name.length() > 0)
+			{
+				full_name += " " + last_name.charAt(0) + ".";
+			}
 		}
-		
     	holder.name.setText(full_name);
 //    	if (phone != null)
 //    		holder.phone.setText(PhoneNumberUtils.formatNumber(phone));
@@ -154,9 +155,12 @@ public class FriendsCursorAdapter extends CursorAdapter implements Filterable{
 		String first_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FIRST_NAME));
 		String last_name = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_LAST_NAME));
 		String full_name = first_name;
-		if (last_name.length() > 0)
+		if (last_name != null)
 		{
-			full_name += " " + last_name.charAt(0) + ".";
+			if (last_name.length() > 0)
+			{
+				full_name += " " + last_name.charAt(0) + ".";
+			}
 		}
     	holder.name.setText(full_name);
 //    	String phone = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));

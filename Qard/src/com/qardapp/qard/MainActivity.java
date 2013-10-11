@@ -40,6 +40,7 @@ import com.qardapp.qard.database.FriendsDatabaseHelper;
 import com.qardapp.qard.database.FriendsProvider;
 import com.qardapp.qard.friends.FriendsFragment;
 import com.qardapp.qard.friends.profile.services.FacebookServiceManager;
+import com.qardapp.qard.notifications.NotificationsFragment;
 import com.qardapp.qard.profile.ProfileFragment;
 import com.qardapp.qard.qrcode.QRCodeManager;
 import com.qardapp.qard.settings.SettingsAccountFragment;
@@ -54,6 +55,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	public static int FRAG_PROFILE = 0;
 	public static int FRAG_FRIENDS = 1;
 	public static int FRAG_SETTINGS = 2;
+	public static int FRAG_NOTIFICATIONS = 3;
 	
 	public static String FRAGNAME_PROFILE = "FRAGNAME_PROFILE";
 	public static String FRAGNAME_FRIENDS = "FRAGNAME_FRIENDS";
@@ -62,6 +64,7 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 	public static String FRAGNAME_SETTINGS_PROFILE = "FRAGNAME_SETTINGS_PROFILE";
 	public static String FRAGNAME_SETTINGS_ACCOUNT = "FRAGNAME_SETTINGS_ACCOUNT";
 	public static String FRAGNAME_SETTINGS_ABOUT = "FRAGNAME_SETTINGS_ABOUT";
+	public static String FRAGNAME_NOTIFICATIONS = "FRAGNAME_NOTIFICATIONS";
 
 	
 	public static int REFRESH_LOADER_ID = 0;
@@ -194,12 +197,11 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 				MainActivity.this.switchFragments(FRAG_FRIENDS);
 			}
 		});
-		((ImageView) v.findViewById(R.id.menu_search)).setOnClickListener(new OnClickListener() {
+		((ImageView) v.findViewById(R.id.menu_notifications)).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Fragment fragment = MainActivity.this.switchFragments(FRAG_FRIENDS);
-				((FriendsFragment) fragment).openSearchKeyboard();
+				MainActivity.this.switchFragments(FRAG_NOTIFICATIONS);
 			}
 		});
 		((ImageView) v.findViewById(R.id.menu_camera)).setOnClickListener(new OnClickListener() {
@@ -312,6 +314,21 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 			trans.commitAllowingStateLoss();
 			return fragment;
 		}
+		else if (id == FRAG_NOTIFICATIONS) {
+			Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGNAME_NOTIFICATIONS);
+			if (fragment == null) {
+				Log.e("Hi", "Created new notifications frag");
+				fragment =  new NotificationsFragment();
+			}
+			// Don't do anything if already visible
+			if (fragment.isVisible())
+				return fragment;
+			FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+			trans.replace(R.id.main_container, fragment, FRAGNAME_NOTIFICATIONS);
+			trans.addToBackStack(null);
+			trans.commitAllowingStateLoss();
+			return fragment;
+		}
 		return null;
 	}
 	
@@ -344,6 +361,9 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderCall
 		if (frag != null && frag.isVisible())
 			((BaseFragment) frag).updateViews();
 		frag = getSupportFragmentManager().findFragmentByTag(FRAGNAME_SETTINGS_PROFILE);
+		if (frag != null && frag.isVisible())
+			((BaseFragment) frag).updateViews();
+		frag = getSupportFragmentManager().findFragmentByTag(FRAGNAME_NOTIFICATIONS);
 		if (frag != null && frag.isVisible())
 			((BaseFragment) frag).updateViews();
 		ImageView menuMe = (ImageView) findViewById(R.id.menu_me);

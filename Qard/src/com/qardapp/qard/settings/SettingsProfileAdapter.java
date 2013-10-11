@@ -163,6 +163,8 @@ public class SettingsProfileAdapter extends BaseAdapter{
 				do {
 					int index = cursor.getInt(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_SERVICE_PRIORITY));
 					dataList[index-1] = cursor.getString(cursor.getColumnIndex(FriendsDatabaseHelper.COLUMN_FS_DATA));
+					// need to change this, since loading the profile won't already have this stored in preferences
+					// maybe on user sign in, do a quick set of api requests and then save the preferences?
 					userList[index-1] = mPrefs.getString(serviceList.get(index-1).name+"_username","-1");
 				} while (cursor.moveToNext());
 			}
