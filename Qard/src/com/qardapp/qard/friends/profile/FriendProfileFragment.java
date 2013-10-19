@@ -82,11 +82,12 @@ public class FriendProfileFragment extends BaseFragment{
 		    		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		    		LinearLayout v = (LinearLayout)inflater.inflate(R.layout.friends_profile_status, statusView);
 
-		    		ImageView statusIcon = (ImageView) v.findViewById(R.id.friends_profile_status_image);
-		    		statusIcon.setImageResource(R.drawable.icon_exclamation_red);
+		    		//ImageView statusIcon = (ImageView) v.findViewById(R.id.friends_profile_status_image);
+		    		//statusIcon.setImageResource(R.drawable.icon_exclamation_red);
 		    		
 		    		Button button = (Button) v.findViewById(R.id.friends_profile_status_ok);
-		    		button.setText("Click to confirm friendship");
+		    		button.setText("Click to Confirm Friendship");
+		    		//button.setBackgroundColor(16777216);
 		    		button.setOnClickListener(new OnClickListener() {
 						
 						@Override

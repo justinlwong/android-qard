@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="36dp" >
 
+    <!--  
     <ImageView
         android:id="@+id/friends_profile_status_image"
         android:layout_width="36dp"
@@ -11,7 +12,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:scaleType="centerInside" />
-    
+        
+        android:layout_toRightOf="@id/friends_profile_status_image"
+        
+    -->
 
 
     <Button
@@ -19,9 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/friends_profile_status_image"
+        android:background="#0075B4"
         android:layout_alignParentBottom="true"
-        android:background="#00000000"
         android:text="Button" />
 
     <ImageButton
